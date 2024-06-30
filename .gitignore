@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask specific
+instance/
+.webassets-cache
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# MacOS specific
+.DS_Store
+
+# Log files
+*.log
+
+# Database files
+*.sqlite3
+
+# Python virtual environment
+venv/
+
+# Node modules (if using Node.js for frontend dependencies)
+node_modules/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Static and media files (if generated during runtime)
+static/media/
+static/uploads/

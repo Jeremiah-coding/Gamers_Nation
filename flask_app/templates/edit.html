@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/videogame_form.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Edit Videogame</title>
+</head>
+<body>
+    <div class="button-container">
+        <a href="/videogames" class="btn">Hub</a>
+        <a href="/users/logout" class="btn">Logout</a>
+    </div>
+    <div class="container">
+        <h1>Edit Videogame</h1>
+        <form action="/videogames/{{ videogame.id }}/update" method="POST">
+            <input type="hidden" name="from_account" value="true">
+            <div class="group">
+                <label for="title" class="form-label">Title</label>
+                <input class="form-control" id="title" type="text" name="title" value="{{ videogame.title }}" required>
+            </div>
+            <div class="group">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3" name="description" required>{{ videogame.description }}</textarea>
+            </div>
+            <div class="group">
+                <label for="system" class="form-label">System</label>
+                <textarea class="form-control" id="system" rows="3" name="system" required>{{ videogame.system }}</textarea>
+            </div>
+            <button type="submit" class="btn">Update</button>
+        </form>
+    </div>
+</body>
+</html>

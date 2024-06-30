@@ -1,0 +1,92 @@
+body {
+    background: radial-gradient(circle, #1b2735, #090a0f); /* Sci-fi inspired gradient */
+    color: #fff;
+    font-family: 'Cinzel', serif;
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.header-container h1 {
+    margin: 0 10px; /* Adjust margin to position the GIFs closer or further from the text */
+    font-size: 2.5rem;
+}
+
+.header-gif {
+    width: 100px; /* Adjust the size as needed */
+    height: auto;
+}
+
+.forms-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.form-container {
+    width: 48%;
+}
+
+.label {
+    margin-bottom: 10px;
+}
+
+.label input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn {
+    background-color: #00ffcc;
+    color: #1b2735;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #ff69b4;
+    transform: translateY(-3px);
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.flashes li {
+    background-color: #333;
+    border-left: 5px solid #00ffcc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

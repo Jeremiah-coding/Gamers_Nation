@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeyyFriend</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <div class="header-container">
+            <img src="/static/images/Peeka.gif" alt="GIF Image" class="header-gif"> 
+            <img src="/static/images/Gengar.gif" alt="GIF Image" class="header-gif" >
+            <img src="/static/images/Umbreon.gif" alt="GIF Image" class="header-gif">
+            <h1>Gamers Nation</h1>
+            <img src="/static/images/Bulbasaur.gif" alt="GIF Image" class="header-gif"> 
+            <img src="/static/images/Mew.gif" alt="GIF Image" class="header-gif" >
+            <img src="/static/images/Luxray.gif" alt="GIF Image" class="header-gif">
+        </div>
+        <div class="forms-container">
+            <div class="form-container">
+                <h2>Register</h2>
+                <!-- register errors here -->
+                <ul class="flashes">
+                    {% with messages = get_flashed_messages(category_filter=["register"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <li>{{message}}</li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </ul>
+                <form action="/users/register" method="post">
+                    <div class="label">
+                        <label for="first_name">First Name</label>
+                        <input type="text" name="first_name" id="first_name">
+                    </div>
+                    <div class="label">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" name="last_name" id="last_name">
+                    </div>
+                    <div class="label">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email">
+                    </div>
+                    <div class="label">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <div class="label">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" name="confirm_password" id="confirm_password">
+                    </div>
+                    <button class="btn" type="submit">Register</button>
+                </form>
+            </div>
+            <div class="form-container">
+                <h2>Login</h2>
+                <!-- login errors here -->
+                <ul class="flashes">
+                    {% with messages = get_flashed_messages(category_filter=["login"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <li>{{message}}</li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </ul>
+                <form action="/users/login" method="post">
+                    <div class="label">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email">
+                    </div>
+                    <div class="label">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <button class="btn" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

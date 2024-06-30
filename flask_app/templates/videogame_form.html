@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/videogame_form.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Add A Videogame</title>
+</head>
+<body>
+    <div class="background-container"></div>
+    <div class="content">
+        <div class="button-container">
+            <a href="/videogames" class="btn">Hub</a>
+            <a href="/users/logout" class="btn">Logout</a>
+        </div>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            
+            <form action="/videogames/save" method="post">
+                <input type="hidden" name="users_id" value="{{ session['user_id'] }}">
+                <h1>Add A Videogame</h1>
+                <div class="group">
+                    <label for="title" class="form-label">Title</label>
+                    <input class="form-control" id="title" type="text" name="title" required>
+                </div>
+                <div class="group">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+                </div>
+                <div class ="group">
+                    <label for="system" class="form-label">System</label>
+                    <textarea class="form-control" id="system" rows="3" name="system" required></textarea>
+                </div>
+                <button type="submit" class="btn">Create</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

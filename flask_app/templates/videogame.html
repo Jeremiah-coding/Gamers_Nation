@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/videogame.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Videogame</title>
+</head>
+<body>
+    <div class="button-container">
+        <a href="/videogames" class="btn">Hub</a>
+        <a href="/users/logout" class="btn">Logout</a>
+        <a href="/user/account" class="btn">Account</a>
+        <a href="/videogames/form" class="btn b">Add A Videogame</a>
+    </div>
+    <h1>{{ videogames.title }}</h1>
+    <div>
+        <p> {{ videogames.description }}</p>
+    </div>
+    <div>
+        <p>{{ videogames.system }}</p>
+    </div>
+    <div>
+        <p>Added by: {{ videogames.user.first_name }} {{ videogames.user.last_name }}</p>
+    </div>
+</body>
+</html>

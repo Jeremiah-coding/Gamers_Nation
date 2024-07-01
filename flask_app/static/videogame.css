@@ -101,7 +101,7 @@ button:hover, .btn:hover {
 .bottom-right-images {
     position: absolute;
     bottom: 70px; /* Position it directly under the bottom-right box */
-    right: 80px;
+    right: 90px;
     display: flex;
     gap: 10px;
     padding: 10px;

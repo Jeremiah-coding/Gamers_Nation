@@ -17,7 +17,7 @@ body {
     justify-content: center;
     width: 100%;
     position: absolute;
-    top: 80px; /* Move the GIF down by adjusting this value */
+    top: 40px; /* Move the GIF down by adjusting this value */
 }
 
 .left-pic-container,
@@ -41,8 +41,8 @@ body {
 }
 
 .avatar-gif {
-    width: 160px; /* Adjusted size to make the GIF twice as big */
-    height: 160px; /* Adjusted size to make the GIF twice as big */
+    width: 200px; /* Adjusted size to make the GIF twice as big */
+    height: 200px; /* Adjusted size to make the GIF twice as big */
 }
 
 .content {

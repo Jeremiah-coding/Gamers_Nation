@@ -9,6 +9,7 @@ class Games:
         self.title = data["title"]
         self.description = data["description"]
         self.system = data["system"]
+        self.image_url = data.get("image_url")
         self.user_id = data["user_id"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
@@ -35,8 +36,8 @@ class Games:
     @classmethod
     def save(cls, form_data):
         query = """
-        INSERT INTO videogames (title, description, `system`, user_id)
-        VALUES (%(title)s, %(description)s, %(system)s, %(user_id)s);
+        INSERT INTO videogames (title, description, `system`, image_url, user_id)
+        VALUES (%(title)s, %(description)s, %(system)s, %(image_url)s, %(user_id)s);
         """
         return connectToMySQL(cls._db).query_db(query, form_data)
 
@@ -88,7 +89,7 @@ class Games:
             return False
         query = """
         UPDATE videogames
-        SET title = %(title)s, description = %(description)s, `system` = %(system)s, updated_at = NOW()
+        SET title = %(title)s, description = %(description)s, `system` = %(system)s, image_url = %(image_url)s, updated_at = NOW()
         WHERE id = %(id)s AND user_id = %(user_id)s;
         """
         return connectToMySQL(cls._db).query_db(query, form_data)

@@ -45,6 +45,7 @@ def register():
         "last_name": request.form['last_name'],
         "email": request.form['email'],
         "password": hashed_pw,
+        "avatar_url": "/static/images/Shadow.gif"  # Default avatar URL
     }
     user_id = User.register(user_data)
     session["user_id"] = user_id
@@ -98,7 +99,8 @@ def update_account():
         "id": user_id,
         "first_name": request.form["first_name"],
         "last_name": request.form["last_name"],
-        "email": request.form["email"]
+        "email": request.form["email"],
+        "avatar_url": request.form["avatar_url"]
     }
     
     if not User.validate_update(form_data):

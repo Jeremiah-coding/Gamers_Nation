@@ -16,14 +16,36 @@
         <a href="/videogames/form" class="btn b">Add A Videogame</a>
     </div>
     <h1>{{ videogames.title }}</h1>
+    {% if videogames.image_url %}
+    <div class="image-container">
+        <img src="{{ videogames.image_url }}" alt="{{ videogames.title }}" class="game-image">
+    </div>
+    {% endif %}
     <div>
-        <p> {{ videogames.description }}</p>
+        <p>{{ videogames.description }}</p>
     </div>
     <div>
         <p>{{ videogames.system }}</p>
     </div>
     <div>
         <p>Added by: {{ videogames.user.first_name }} {{ videogames.user.last_name }}</p>
+    </div>
+    <div class="bottom-right">
+        <p>Like this game? Check it out Here!</a></p>
+    </div>
+    <div class="bottom-right-images">
+        <a href="https://store.playstation.com/en-us/pages/latest/?emcid=pa-co-421879&gclid=d7633112f78912386845579317276924&gclsrc=3p.ds&msclkid=d7633112f78912386845579317276924">
+            <img src="/static/images/Playstation.jpg" alt="Playstation">
+        </a>
+        <a href="https://www.microsoft.com/store/b/xbox">
+            <img src="/static/images/Xbox.jpg" alt="Xbox">
+        </a>
+        <a href="https://store.nintendo.com/">
+            <img src="/static/images/NS.jpg" alt="Nintendo">
+        </a>
+        <a href="https://store.steampowered.com/">
+            <img src="/static/images/Steam.jpg" alt="Steam">
+        </a>
     </div>
 </body>
 </html>

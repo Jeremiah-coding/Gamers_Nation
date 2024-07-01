@@ -27,7 +27,7 @@
 
     {% if updated_success %}
     <div class="flash success">
-        Videogame updated successfully!
+        Account updated successfully!
     </div>
     {% endif %}
     
@@ -46,8 +46,36 @@
         <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" required>
         
         <label for="email" class="form-label">Email:</label>
-        <input type="email" name="email" id="email" value="{{ user.email }}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
+        <input type="email" name="email" id="email" value="{{ user.email }}" required>
         
+        <label for="avatar_url" class="form-label">Change Your Avatar?</label>
+        <div class="custom-select">
+            <div class="selected">
+                <img src="{{ user.avatar_url if user.avatar_url else '/static/images/Shadow.gif' }}" alt="Selected Avatar" id="selected-avatar">
+            </div>
+            <div class="options">
+                <div class="option" data-value="/static/images/Shadow.gif">
+                    <img src="/static/images/Shadow.gif" alt="Shadow">
+                </div>
+                <div class="option" data-value="/static/images/Sonic.gif">
+                    <img src="/static/images/Sonic.gif" alt="Sonic">
+                </div>
+                <div class="option" data-value="/static/images/Peeka.gif">
+                    <img src="/static/images/Peeka.gif" alt="Peeka">
+                </div>
+                <div class="option" data-value="/static/images/Neo.gif">
+                    <img src="/static/images/Neo.gif" alt="Neo">
+                </div>
+                <div class="option" data-value="/static/images/RubyR.gif">
+                    <img src="/static/images/RubyR.gif" alt="RubyR">
+                </div>
+                <div class="option" data-value="/static/images/Weiss.gif">
+                    <img src="/static/images/Weiss.gif" alt="Weiss">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="avatar_url" id="avatar_url" value="{{ user.avatar_url if user.avatar_url else '/static/images/Shadow.gif' }}">
+
         <button type="submit" class="btn">Update</button>
     </form>
     
@@ -78,5 +106,26 @@
             {% endfor %}
         </tbody>
     </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const selected = document.querySelector('.selected');
+            const optionsContainer = document.querySelector('.options');
+            const optionsList = document.querySelectorAll('.option');
+
+            selected.addEventListener('click', () => {
+                optionsContainer.classList.toggle('active');
+            });
+
+            optionsList.forEach(o => {
+                o.addEventListener('click', () => {
+                    const imgSrc = o.querySelector('img').src;
+                    const value = o.getAttribute('data-value');
+                    document.getElementById('selected-avatar').src = imgSrc;
+                    document.getElementById('avatar_url').value = value;
+                    optionsContainer.classList.remove('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

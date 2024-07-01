@@ -9,6 +9,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
+    position: relative; /* Added position relative */
 }
 
 h1 {
@@ -60,4 +61,62 @@ button, .btn {
 button:hover, .btn:hover {
     background-color: #ff69b4; /* Dark pink color */
     transform: translateY(-3px); /* Slightly move up */
+}
+
+.image-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.game-image {
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 150px; /* Move the box up */
+    right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.bottom-right p {
+    color: #00ffcc; /* Sci-fi neon color */
+    margin: 0;
+}
+
+.bottom-right a {
+    color: #ff69b4; /* Dark pink color for the link */
+    text-decoration: none;
+}
+
+.bottom-right a:hover {
+    text-decoration: underline;
+}
+
+.bottom-right-images {
+    position: absolute;
+    bottom: 70px; /* Position it directly under the bottom-right box */
+    right: 80px;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.bottom-right-images img {
+    max-width: 62.5px; /* Increase the image size by 25% from 50px to 62.5px */
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s; /* Add transition for hover effect */
+}
+
+.bottom-right-images img:hover {
+    transform: translateY(-3px); /* Move up slightly */
 }

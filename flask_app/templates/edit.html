@@ -29,6 +29,10 @@
                 <label for="system" class="form-label">System</label>
                 <textarea class="form-control" id="system" rows="3" name="system" required>{{ videogame.system }}</textarea>
             </div>
+            <div class="group">
+                <label for="image_url" class="form-label">Image URL (optional)</label>
+                <input class="form-control" id="image_url" type="text" name="image_url" value="{{ videogame.image_url }}">
+            </div>
             <button type="submit" class="btn">Update</button>
         </form>
     </div>

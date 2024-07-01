@@ -17,29 +17,33 @@ body {
     justify-content: center;
     width: 100%;
     position: absolute;
-    top: 10px; /* Move the GIF up by adjusting this value */
+    top: 80px; /* Move the GIF down by adjusting this value */
 }
 
-.left-gif-container,
-.right-gif-container {
+.left-pic-container,
+.right-pic-container {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
 
-.left-gif-container {
+.left-pic-container {
     left: 0;
 }
 
-.right-gif-container {
+.right-pic-container {
     right: 0;
 }
 
-.side-gif {
+.Pics {
     width: 400px; /* Adjusted size to make the images twice as big */
     height: auto;
 }
 
+.avatar-gif {
+    width: 160px; /* Adjusted size to make the GIF twice as big */
+    height: 160px; /* Adjusted size to make the GIF twice as big */
+}
 
 .content {
     width: 100%;
@@ -48,7 +52,7 @@ body {
 }
 
 .header-container {
-    margin-top: 120px; /* Adjust to ensure the header is below the top GIF */
+    margin-top: 200px; /* Adjust to ensure the header is below the top GIF */
     text-align: center;
 }
 
@@ -132,6 +136,7 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: #333;
+    cursor: pointer; /* Change cursor to pointer (finger) on hover */
 }
 
 /* Style for new games */
@@ -142,4 +147,5 @@ tr:hover {
 
 .new-game:hover td {
     background-color: #777; /* Lighter grey on hover */
+    cursor: pointer; /* Change cursor to pointer (finger) on hover */
 }

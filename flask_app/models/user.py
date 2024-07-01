@@ -16,6 +16,7 @@ class User:
         self.password = data["password"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
+        self.avatar_url = data.get("avatar_url", "/static/images/Shadow.gif")  # Default to shadow GIF
 
     @staticmethod
     def validate_register(form_data):
@@ -83,8 +84,8 @@ class User:
     @classmethod
     def register(cls, user_data):
         query = """
-        INSERT INTO users (first_name, last_name, email, password)
-        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);
+        INSERT INTO users (first_name, last_name, email, password, avatar_url)
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, %(avatar_url)s);
         """
         return connectToMySQL(cls._db).query_db(query, user_data)
 
@@ -114,7 +115,7 @@ class User:
     def update_user(cls, form_data):
         query = """
         UPDATE users
-        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s
+        SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s, avatar_url = %(avatar_url)s
         WHERE id = %(id)s;
         """
         return connectToMySQL(cls._db).query_db(query, form_data)

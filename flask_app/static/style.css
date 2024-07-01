@@ -90,3 +90,16 @@ body {
     margin-bottom: 10px;
     border-radius: 5px;
 }
+.pikachu-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pikachu-gif {
+    width: 150px; /* Adjusted size to make Pikachu larger */
+    height: auto;
+}
+.teddiursa-gif {
+    width: 80px; /* Adjust this value to make it slightly smaller */
+    height: auto;
+}

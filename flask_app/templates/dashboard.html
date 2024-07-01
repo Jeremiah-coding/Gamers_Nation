@@ -10,15 +10,15 @@
 </head>
 <body>
     <div class="top-gif-container">
-        <img src="/static/images/Shadow.gif" alt="Top GIF">
+        <img src="{{ user.avatar_url if user.avatar_url else '/static/images/Shadow.gif' }}" alt="Top GIF" class="avatar-gif">
     </div>
 
-    <div class="left-gif-container">
-        <img src="/static/images/Girl_Two.png" alt="Left GIF" class="side-gif">
+    <div class="left-pic-container">
+        <img src="/static/images/Girl_Two.png" alt="Left Pic" class="Pics">
     </div>
 
-    <div class="right-gif-container">
-        <img src="/static/images/Killua.png" alt="Right GIF" class="side-gif">
+    <div class="right-pic-container">
+        <img src="/static/images/Killua.png" alt="Right Pic" class="Pics">
     </div>
     
     <div class="button-container">
@@ -54,8 +54,14 @@
     </div>
     {% endif %}
     
+    {% if deleted_success %}
+    <div class="flash success">
+        Videogame deleted successfully!
+    </div>
+    {% endif %}
+    
     <h2>Games Your Friends Have Been Obsessed With Lately</h2>
-    <table class="table">
+    <table class="table new-game">
         <thead>
             <tr class="words">
                 <th scope="col">Title</th>
@@ -65,7 +71,7 @@
         </thead>
         <tbody>
             {% for videogame in videogames %}
-            <tr class="new-game">
+            <tr>
                 <td><a href="/videogames/{{ videogame.id }}" class="title-link">{{ videogame.title }}</a></td>
                 <td>{{ videogame.system }}</td>
                 <td>
@@ -83,7 +89,7 @@
     </table>
 
     <h2>Your Favorite Games</h2>
-    <table class="table">
+    <table class="table new-game">
         <thead>
             <tr class="words">
                 <th scope="col">Title</th>
@@ -94,7 +100,7 @@
         </thead>
         <tbody>
             {% for favorite in favorites %}
-            <tr class="new-game">
+            <tr>
                 <td><a href="/videogames/{{ favorite.id }}" class="title-link">{{ favorite.title }}</a></td>
                 <td>{{ favorite.description | truncate(10) }}</td> <!-- Truncate to 10 characters -->
                 <td>{{ favorite.system }}</td>

@@ -13,4 +13,9 @@ def truncate(s, length):
 from flask_app.controllers import users
 from flask_app.controllers import games
 
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'booka_123'
+app.config['MYSQL_DB'] = 'videogames_schema'
+
 app.secret_key = "KeepItLowkey"

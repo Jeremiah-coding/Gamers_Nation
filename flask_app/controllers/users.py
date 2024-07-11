@@ -1,15 +1,44 @@
-from flask import render_template, redirect, session, request, flash, make_response
+from flask import render_template, request, redirect, session, flash, url_for, make_response
+from authlib.integrations.flask_client import OAuth
 from flask_app import app, bcrypt
 from flask_app.models.user import User
 from flask_app.models.games import Games
 from functools import wraps
+import json
+import os
+import requests
+
+# Load client secrets from JSON file
+try:
+    with open(os.path.join(os.path.dirname(__file__), '..', 'client_secret.json')) as f:
+        secrets = json.load(f)['web']
+except FileNotFoundError:
+    print("The client_secret.json file was not found.")
+    secrets = {}
+except json.JSONDecodeError:
+    print("The client_secret.json file is not a valid JSON file.")
+    secrets = {}
+
+oauth = OAuth(app)
+
+# Configure OAuth with Google
+google = oauth.register(
+    name='google',
+    client_id=secrets.get('client_id'),
+    client_secret=secrets.get('client_secret'),
+    authorize_url=secrets.get('auth_uri'),
+    access_token_url=secrets.get('token_uri'),
+    jwks_uri='https://www.googleapis.com/oauth2/v3/certs',  # Correct JWKS URI
+    client_kwargs={'scope': 'openid profile email'},
+    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo'
+)
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
             flash("You must be logged in first", "error")
-            return redirect("/")
+            return redirect(url_for('google_login'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -65,6 +94,50 @@ def login():
     session['user_id'] = potential_user.id
     return redirect("/videogames")
 
+@app.route('/login')
+def google_login():
+    redirect_uri = url_for('authorize', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@app.route('/login/callback')
+def authorize():
+    try:
+        token = google.authorize_access_token()
+        print("Token received:", token)
+        
+        user_info = google.parse_id_token(token, nonce=token.get('nonce'))
+        print("User info received:", user_info)
+        
+        user = User.find_by_email(user_info['email'])
+
+        if not user:
+            # Create a new user if one doesn't exist
+            user_data = {
+                'first_name': user_info.get('given_name', ''),
+                'last_name': user_info.get('family_name', ''),
+                'email': user_info['email'],
+                'google_id': user_info['sub'],
+                'avatar_url': user_info['picture'],
+                'password': None  # Set password to None for OAuth users
+            }
+            user_id = User.create(user_data)
+            user = User.find_by_user_id(user_id)
+
+        session['user_id'] = user.id
+        flash('You have successfully logged in.', 'success')
+        return redirect(url_for('all_Games'))
+    except Exception as e:
+        # Print the exception for debugging purposes
+        print("Error during authorization:", str(e))
+        
+        # Log JWKS URI and response for debugging
+        jwks_response = requests.get(secrets.get('auth_provider_x509_cert_url'))
+        print("JWKS URI:", secrets.get('auth_provider_x509_cert_url'))
+        print("JWKS URI response:", jwks_response.text)
+        
+        flash('Authorization failed. Please try again.', 'error')
+        return redirect(url_for('index'))
+
 @app.route("/users/logout")
 def logout():
     session.clear()
@@ -90,11 +163,11 @@ def account():
 def update_account():
     user_id = session.get('user_id')
     user = User.find_by_user_id(user_id)
-    
+
     if not user:
         flash("User not found", "error")
         return redirect("/")
-    
+
     form_data = {
         "id": user_id,
         "first_name": request.form["first_name"],
@@ -102,10 +175,10 @@ def update_account():
         "email": request.form["email"],
         "avatar_url": request.form["avatar_url"]
     }
-    
+
     if not User.validate_update(form_data):
         return redirect("/user/account")
-    
+
     User.update_user(form_data)
     flash("Account updated successfully", "success")
     return redirect("/user/account")
@@ -117,12 +190,12 @@ def delete_user_videogames(videogames_id):
     user_id = session.get('user_id')
     if not user_id:
         return redirect("/")
-    
+
     videogames = Games.get_by_id(videogames_id)
     if not videogames or videogames.user_id != user_id:
         flash("You are not authorized to delete this videogame", "error")
     else:
         Games.delete({"id": videogames_id})
         flash("Videogame deleted successfully", "success")
-    
+
     return redirect("/user/account")

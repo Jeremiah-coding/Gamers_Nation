@@ -103,3 +103,20 @@ body {
     width: 80px; /* Adjust this value to make it slightly smaller */
     height: auto;
 }
+.google-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #00ffcc; 
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.google-btn:hover {
+    background-color: #ff69b4; 
+}

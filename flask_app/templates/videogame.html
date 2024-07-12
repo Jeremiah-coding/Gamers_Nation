@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/static/flavicon.jpg/Bulbasaur.jpg" type="image/jpeg">
+    <link rel="icon" href="/static/favicon.jpg" type="image/jpeg"> <!-- Ensure this path is correct -->
     <link rel="stylesheet" href="/static/videogame.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <title>Videogame</title>
@@ -35,7 +35,10 @@
         <p>Added by: {{ videogames.user.first_name }} {{ videogames.user.last_name }}</p>
     </div>
     <div class="bottom-right">
-        <p>Like this game? Check it out Here!</a></p>
+        <div class="dance-gif">
+            <img src="/static/images/Dance.gif" alt="Gif-Image">
+        </div>
+        <p>Like this game? Check it out Here!</p>
     </div>
     <div class="bottom-right-images">
         <a href="https://store.playstation.com/en-us/pages/latest/?emcid=pa-co-421879&gclid=d7633112f78912386845579317276924&gclsrc=3p.ds&msclkid=d7633112f78912386845579317276924">
@@ -53,17 +56,16 @@
     </div>
     <script>
        document.addEventListener('DOMContentLoaded', function () {
-    const gameVideo = document.querySelector('.game-video');
+           const gameVideo = document.querySelector('.game-video');
 
-    if (gameVideo) {
-        gameVideo.play().catch(error => {
-            console.log('Error playing video:', error);
-        });
-    } else {
-        console.log('Video element not found');
-    }
-});
-
+           if (gameVideo) {
+               gameVideo.play().catch(error => {
+                   console.log('Error playing video:', error);
+               });
+           } else {
+               console.log('Video element not found');
+           }
+       });
     </script>
 </body>
 </html>

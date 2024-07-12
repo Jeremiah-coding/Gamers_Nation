@@ -88,6 +88,7 @@ button:hover, .btn:hover {
     right: 20px;
     padding: 10px;
     border-radius: 5px;
+    text-align: center; /* Ensure text is centered */
 }
 
 .bottom-right p {
@@ -136,4 +137,17 @@ bottom-right a:hover {
 
 .game-video {
     margin-top: 20px;
+}
+
+/* Style for dance gif */
+
+.dance-gif {
+    margin-bottom: 10px; /* Add some space below the gif */
+}
+
+.dance-gif img {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

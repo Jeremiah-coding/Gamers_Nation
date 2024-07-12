@@ -63,7 +63,8 @@ def save_videogame():
         "title": request.form["title"],
         "description": request.form["description"],
         "system": request.form["system"],
-        "image_url": request.form["image_url"] if request.form["image_url"] else None,  # Add image_url handling
+        "image_url": request.form.get("image_url"),
+        "video_url": request.form.get("video_url"),
         "user_id": user_id
     }
 
@@ -93,7 +94,8 @@ def update_videogame(videogames_id):
         "title": request.form["title"],
         "description": request.form["description"],
         "system": request.form["system"],
-        "image_url": request.form["image_url"] if request.form["image_url"] else None,  # Add image_url handling
+        "image_url": request.form.get("image_url"),
+        "video_url": request.form.get("video_url"),
         "user_id": user_id
     }
 

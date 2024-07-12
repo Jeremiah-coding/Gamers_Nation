@@ -68,12 +68,18 @@ button:hover, .btn:hover {
     margin: 20px 0;
 }
 
-.game-image {
+.game-image, .game-video {
     width: 100%;
     max-width: 600px; /* Adjust as needed */
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+.video-wrapper {
+    text-align: center;
+    margin: 20px 0;
 }
 
 .bottom-right {
@@ -94,7 +100,7 @@ button:hover, .btn:hover {
     text-decoration: none;
 }
 
-.bottom-right a:hover {
+bottom-right a:hover {
     text-decoration: underline;
 }
 
@@ -119,4 +125,15 @@ button:hover, .btn:hover {
 
 .bottom-right-images img:hover {
     transform: translateY(-3px); /* Move up slightly */
+}
+
+/* Additional styling for the media container */
+
+.media-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.game-video {
+    margin-top: 20px;
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/flavicon.jpg/Bulbasaur.jpg" type="image/jpeg">
     <link rel="stylesheet" href="/static/videogame.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <title>Videogame</title>
@@ -17,8 +18,11 @@
     </div>
     <h1>{{ videogames.title }}</h1>
     {% if videogames.image_url %}
-    <div class="image-container">
+    <div class="media-container">
         <img src="{{ videogames.image_url }}" alt="{{ videogames.title }}" class="game-image">
+        {% if videogames.video_url %}
+        <iframe class="game-video" src="https://www.youtube.com/embed/{{ videogames.video_url.split('v=')[1] }}" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
     </div>
     {% endif %}
     <div>
@@ -47,5 +51,19 @@
             <img src="/static/images/Steam.jpg" alt="Steam">
         </a>
     </div>
+    <script>
+       document.addEventListener('DOMContentLoaded', function () {
+    const gameVideo = document.querySelector('.game-video');
+
+    if (gameVideo) {
+        gameVideo.play().catch(error => {
+            console.log('Error playing video:', error);
+        });
+    } else {
+        console.log('Video element not found');
+    }
+});
+
+    </script>
 </body>
 </html>

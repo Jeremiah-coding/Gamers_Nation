@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/flavicon.jpg/Bulbasaur.jpg" type="image/jpeg">
     <link rel="stylesheet" href="/static/videogame_form.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <title>Add A Videogame</title>
@@ -42,8 +43,12 @@
                     <textarea class="form-control" id="system" rows="3" name="system" required></textarea>
                 </div>
                 <div class="group">
-                    <label for="image_url" class="form-label">Image URL (optional)</label>
+                    <label for="image_url" class="form-label">Image URL</label>
                     <input class="form-control" id="image_url" type="text" name="image_url">
+                </div>
+                <div class="group">
+                    <label for="video_url" class="form-label">Video URL (YouTube Link)</label>
+                    <input class="form-control" id="video_url" type="text" name="video_url">
                 </div>
                 <button type="submit" class="btn">Create</button>
             </form>

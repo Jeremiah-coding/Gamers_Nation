@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/flavicon.jpg/Bulbasaur.jpg" type="image/jpeg">
     <link rel="stylesheet" href="/static/videogame_form.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <title>Edit Videogame</title>
@@ -32,6 +33,10 @@
             <div class="group">
                 <label for="image_url" class="form-label">Image URL (optional)</label>
                 <input class="form-control" id="image_url" type="text" name="image_url" value="{{ videogame.image_url }}">
+            </div>
+            <div class="group">
+                <label for="video_url" class="form-label">Video URL (Must Be A Youtube Link!)</label>
+                <input class="form-control" id="video_url" type="text" name="video_url" value="{{ videogame.video_url }}">
             </div>
             <button type="submit" class="btn">Update</button>
         </form>

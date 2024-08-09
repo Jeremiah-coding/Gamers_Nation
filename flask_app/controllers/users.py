@@ -11,7 +11,7 @@ import requests
 # Load client secrets from JSON file
 try:
     with open(os.path.join(os.path.dirname(__file__), '..', 'client_secret.json')) as f:
-        secrets = json.load(f)['web']
+        secrets = json.load(f)
 except FileNotFoundError:
     print("The client_secret.json file was not found.")
     secrets = {}
@@ -24,13 +24,24 @@ oauth = OAuth(app)
 # Configure OAuth with Google
 google = oauth.register(
     name='google',
-    client_id=secrets.get('client_id'),
-    client_secret=secrets.get('client_secret'),
-    authorize_url=secrets.get('auth_uri'),
-    access_token_url=secrets.get('token_uri'),
-    jwks_uri='https://www.googleapis.com/oauth2/v3/certs',  # Correct JWKS URI
+    client_id=secrets['web']['client_id'],
+    client_secret=secrets['web']['client_secret'],
+    authorize_url=secrets['web']['auth_uri'],
+    access_token_url=secrets['web']['token_uri'],
+    jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
     client_kwargs={'scope': 'openid profile email'},
     userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo'
+)
+
+# Configure OAuth with Facebook
+facebook = oauth.register(
+    name='facebook',
+    client_id=secrets['facebook']['client_id'],
+    client_secret=secrets['facebook']['client_secret'],
+    authorize_url='https://www.facebook.com/v10.0/dialog/oauth',
+    access_token_url='https://graph.facebook.com/v10.0/oauth/access_token',
+    userinfo_endpoint='https://graph.facebook.com/me?fields=id,name,email,picture',
+    client_kwargs={'scope': 'email'},
 )
 
 def login_required(f):
@@ -120,7 +131,7 @@ def authorize():
                 'avatar_url': user_info['picture'],
                 'password': None  # Set password to None for OAuth users
             }
-            user_id = User.create(user_data)
+            user_id = User.create_google(user_data)
             user = User.find_by_user_id(user_id)
 
         session['user_id'] = user.id
@@ -131,10 +142,51 @@ def authorize():
         print("Error during authorization:", str(e))
         
         # Log JWKS URI and response for debugging
-        jwks_response = requests.get(secrets.get('auth_provider_x509_cert_url'))
-        print("JWKS URI:", secrets.get('auth_provider_x509_cert_url'))
+        jwks_response = requests.get(secrets['web']['auth_provider_x509_cert_url'])
+        print("JWKS URI:", secrets['web']['auth_provider_x509_cert_url'])
         print("JWKS URI response:", jwks_response.text)
         
+        flash('Authorization failed. Please try again.', 'error')
+        return redirect(url_for('index'))
+
+@app.route('/login/facebook')
+def facebook_login():
+    redirect_uri = url_for('facebook_authorize', _external=True)
+    return facebook.authorize_redirect(redirect_uri)
+
+@app.route('/login/facebook/callback')
+def facebook_authorize():
+    try:
+        token = facebook.authorize_access_token()
+        print("Token received:", token)
+        
+        resp = facebook.get('https://graph.facebook.com/me?fields=id,name,email,picture', token=token)
+        user_info = resp.json()
+        print("User info received:", user_info)
+
+        # Handle the case where email is not available
+        email = user_info.get('email', f"{user_info['id']}@facebook.com")
+        
+        user = User.find_by_email(email)
+
+        if not user:
+            # Create a new user if one doesn't exist
+            user_data = {
+                'first_name': user_info.get('name', '').split(' ')[0],
+                'last_name': user_info.get('name', '').split(' ')[-1],
+                'email': email,
+                'facebook_id': user_info['id'],
+                'avatar_url': user_info['picture']['data']['url'],
+                'password': None  # Set password to None for OAuth users
+            }
+            user_id = User.create_facebook(user_data)
+            user = User.find_by_user_id(user_id)
+
+        session['user_id'] = user.id
+        flash('You have successfully logged in.', 'success')
+        return redirect(url_for('all_Games'))
+    except Exception as e:
+        print("Error during authorization:", str(e))
         flash('Authorization failed. Please try again.', 'error')
         return redirect(url_for('index'))
 

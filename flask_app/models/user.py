@@ -14,7 +14,8 @@ class User:
         self.last_name = data["last_name"]
         self.email = data["email"]
         self.password = data.get("password")
-        self.google_id = data.get("google_id")  # Added google_id
+        self.google_id = data.get("google_id")
+        self.facebook_id = data.get("facebook_id")
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
         self.avatar_url = data.get("avatar_url", "/static/images/Shadow.gif")  # Default to shadow GIF
@@ -122,9 +123,16 @@ class User:
         return connectToMySQL(cls._db).query_db(query, form_data)
 
     @classmethod
-    def create(cls, user_data):
+    def create_google(cls, user_data):
         query = """
         INSERT INTO users (first_name, last_name, email, google_id, avatar_url, created_at, updated_at)
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(google_id)s, %(avatar_url)s, NOW(), NOW());
+        """
+        return connectToMySQL(cls._db).query_db(query, user_data)
+    @classmethod
+    def create_facebook(cls, user_data):
+        query = """
+        INSERT INTO users (first_name, last_name, email, facebook_id, avatar_url, created_at, updated_at)
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(facebook_id)s, %(avatar_url)s, NOW(), NOW());
         """
         return connectToMySQL(cls._db).query_db(query, user_data)

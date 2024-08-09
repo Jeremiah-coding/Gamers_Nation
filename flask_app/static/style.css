@@ -103,7 +103,8 @@ body {
     width: 80px; /* Adjust this value to make it slightly smaller */
     height: auto;
 }
-.google-btn {
+.google-btn,
+.facebook-btn {
     display: inline-block;
     padding: 10px 20px;
     font-size: 16px;
@@ -117,6 +118,7 @@ body {
     cursor: pointer;
 }
 
-.google-btn:hover {
+.google-btn:hover,
+.facebook-btn:hover {
     background-color: #ff69b4; 
 }

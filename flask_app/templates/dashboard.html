@@ -26,6 +26,7 @@
         <a href="/users/logout" class="btn logout">Logout</a>
         <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
         <a href="/user/account" class="btn account">Account</a>
+        <a href="/videogames/igdb/login" class="btn logout">All Games</a>
     </div>
     <div class="header-container">
         <h1 class="text">Welcome To Your Hub, {{ user.first_name }} {{ user.last_name }}</h1>
@@ -62,32 +63,30 @@
     {% endif %}
     
     <h2>Games Your Friends Have Been Obsessed With Lately</h2>
-    <table class="table new-game">
-        <thead>
-            <tr class="words">
-                <th scope="col">Title</th>
-                <th scope="col">System</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    
+    <div class="carousel-container">
+        <!-- Double arrows for previous and next buttons -->
+        <button id="prev-arrow" class="arrow">⇐</button>
+        
+        <div class="carousel-slide">
             {% for videogame in videogames %}
-            <tr>
-                <td><a href="/videogames/{{ videogame.id }}" class="title-link">{{ videogame.title }}</a></td>
-                <td>{{ videogame.system }}</td>
-                <td>
-                    {% if videogame.user_id == session['user_id'] %}
+            <div class="game-slide" data-url="/videogames/{{ videogame.id }}">
+                <img src="{{ videogame.image_url }}" alt="{{ videogame.title }}" class="game-cover">
+                <p class="system">{{ videogame.system }}</p>
+                <div class="actions">
                     <a href="/videogames/{{ videogame.id }}/edit" class="btn">Edit</a>
                     <form action="/videogames/{{ videogame.id }}/delete" method="POST" style="display:inline;">
                         <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete this video game?');">Delete</button>
                     </form>
-                    {% endif %}
                     <a href="/favorites/add/{{ videogame.id }}" class="btn add-to-favorites">Add to Favorites</a>
-                </td>
-            </tr>
+                </div>
+            </div>
             {% endfor %}
-        </tbody>
-    </table>
+        </div>
+        
+        <!-- Double arrows for previous and next buttons -->
+        <button id="next-arrow" class="arrow">⇒</button>
+    </div>
 
     <h2>Your Favorite Games</h2>
     <table class="table new-game">
@@ -112,5 +111,36 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.game-slide');
+            let currentSlide = 0;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    slide.style.display = index === currentSlide ? 'block' : 'none';
+                });
+            }
+
+            document.getElementById('prev-arrow').addEventListener('click', function() {
+                currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;
+                updateSlides();
+            });
+
+            document.getElementById('next-arrow').addEventListener('click', function() {
+                currentSlide = (currentSlide === slides.length - 1) ? 0 : currentSlide + 1;
+                updateSlides();
+            });
+
+            slides.forEach(slide => {
+                slide.addEventListener('click', function() {
+                    window.location.href = slide.getAttribute('data-url');
+                });
+            });
+
+            updateSlides(); // Initialize carousel
+        });
+    </script>
 </body>
 </html>

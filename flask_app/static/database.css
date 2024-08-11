@@ -1,0 +1,164 @@
+/* General body and header styling */
+body {
+    background: radial-gradient(circle, #1b2735, #090a0f); /* Sci-fi inspired gradient */
+    color: #fff;
+    font-family: 'Cinzel', serif;
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+.header-container {
+    margin-bottom: 40px; /* Space the header from the content */
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+
+h1 {
+    color: #00ffcc; /* Sci-fi neon color */
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ffcc, 0 0 50px #00ffcc;
+    font-weight: bold;
+}
+
+/* Button container styling for top-right placement */
+.button-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #00ffcc;
+    color: #1b2735;
+    border: none;
+    padding: 5px 15px; /* Reduced padding for smaller buttons */
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 0.875rem; /* Smaller font size */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Box shadow for buttons */
+}
+
+.btn:hover {
+    background-color: #ff69b4; /* Dark pink color */
+    transform: translateY(-3px); /* Slightly move up */
+}
+
+/* Styling for the search form and filter container */
+#search-form,
+.filter-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Space between the search bar and filter bar */
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filter-container {
+    margin-top: 0; /* Remove top margin to bring filter closer to the search bar */
+}
+
+#search-input,
+#genre-select {
+    background-color: #222;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    appearance: none; /* Remove default dropdown arrow for the select input */
+}
+
+#search-input:focus,
+#genre-select:focus {
+    border-color: #ff69b4;
+    box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+    outline: none;
+}
+
+button,
+#filter-button {
+    background-color: #00ffcc;
+    color: #1b2735;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    font-size: 1rem;
+}
+
+button:hover,
+#filter-button:hover {
+    background-color: #ff69b4; /* Dark pink color */
+    transform: translateY(-3px); /* Slightly move up */
+}
+
+/* Games list and game card styling */
+.games-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid layout */
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.game {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Soft glow effect */
+    transition: transform 0.3s, background-color 0.3s;
+    text-align: center; /* Center align the content */
+}
+
+.game:hover {
+    transform: translateY(-10px); /* Slight lift effect */
+    background-color: #333; /* Darken the background on hover */
+}
+
+.game-cover {
+    width: 100%;
+    max-width: 250px;  /* Limit the maximum width to ensure the image is not stretched */
+    height: auto;
+    object-fit: cover;  /* Ensure the image fits nicely within the container */
+    border-radius: 5px;
+    margin-bottom: 15px;
+    image-rendering: auto;  /* Default rendering, may improve image quality */
+    image-rendering: -webkit-optimize-contrast; /* Try optimizing contrast */
+}
+
+p {
+    margin: 10px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+strong {
+    color: #00ffcc; /* Highlighted text color */
+}
+
+/* Make sure images and other content don't overflow */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}

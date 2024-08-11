@@ -1,3 +1,4 @@
+/* General body and header styling */
 body {
     background: radial-gradient(circle, #1b2735, #090a0f); /* Sci-fi inspired gradient */
     color: #fff;
@@ -95,6 +96,7 @@ button, .btn {
     text-align: center;
     display: inline-block;
     font-size: 0.875rem; /* Smaller font size */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Box shadow for buttons */
 }
 
 button:hover, .btn:hover {
@@ -102,12 +104,87 @@ button:hover, .btn:hover {
     transform: translateY(-3px); /* Slightly move up */
 }
 
-table {
+/* Carousel styling */
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.carousel-slide {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+}
+
+.game-slide {
+    display: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+ .game-cover {
+    width: 350px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.4s ease; /* Smooth transition for the glow */
+}
+
+.game-cover:hover {
+    box-shadow: 0 0 15px 10px rgba(255, 105, 180, 0.5), /* Pink glow */
+                0 0 25px 20px rgba(255, 255, 255, 0.5); /* White glow */
+}
+
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+
+.arrow {
+    font-size: 3rem; /* Increased the size of the arrows */
+    color: #000; /* Color of the arrows */
+    background-color: transparent; /* Ensure no background */
+    border: none; /* No border */
+    padding: 0; /* No padding */
+    cursor: pointer; /* Pointer cursor */
+    position: absolute;
+    top: 35%;
+   
+}
+
+.arrow:hover {
+    background-color: #ff69b4; /* Dark pink color */
+    transform: translateY(-2px); /* Slightly move up */
+}
+
+#prev-arrow {
+    left: 25%;
+}
+
+#next-arrow {
+    right: 25%;
+}
+
+
+/* Games list and game card styling for favorite games */
+.table.new-game {
     width: 100%;
     max-width: 800px;
     margin-bottom: 20px;
     border-collapse: collapse;
-    z-index: 1; /* Ensure table is above GIFs */
+    z-index: 1;
 }
 
 th, td {
@@ -136,16 +213,15 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: #333;
-    cursor: pointer; /* Change cursor to pointer (finger) on hover */
+    cursor: pointer;
 }
 
-/* Style for new games */
 .new-game td {
     background-color: #555; /* Default grey background for new games */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    transition: background-color 0.3s;
 }
 
 .new-game:hover td {
     background-color: #777; /* Lighter grey on hover */
-    cursor: pointer; /* Change cursor to pointer (finger) on hover */
+    cursor: pointer;
 }

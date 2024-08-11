@@ -136,3 +136,8 @@ class User:
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(facebook_id)s, %(avatar_url)s, NOW(), NOW());
         """
         return connectToMySQL(cls._db).query_db(query, user_data)
+    @classmethod
+    def delete_user(cls, user_id):
+        query = "DELETE FROM users WHERE id = %(id)s;"
+        data = {"id": user_id}
+        connectToMySQL(cls._db).query_db(query, data)

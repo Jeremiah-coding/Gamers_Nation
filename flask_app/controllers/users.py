@@ -251,3 +251,26 @@ def delete_user_videogames(videogames_id):
         flash("Videogame deleted successfully", "success")
 
     return redirect("/user/account")
+# Route to initiate account deletion (shows confirmation message)
+@app.route("/user/account/delete", methods=["GET", "POST"])
+@login_required
+@no_cache
+def delete_account():
+    if request.method == "POST":
+        user_id = session.get('user_id')
+        user = User.find_by_user_id(user_id)
+
+        if not user:
+            flash("User not found", "error")
+            return redirect("/")
+
+        # Perform the deletion
+        User.delete_user(user_id)
+        session.clear()  # Clear session after deletion
+        flash("Your account has been deleted successfully.", "success")
+        return redirect(url_for('index'))
+    
+    # If GET request, just show the confirmation page
+    flash("Are you sure you want to delete your account? This action cannot be undone.", "warning")
+    return render_template("confirm_delete.html")
+

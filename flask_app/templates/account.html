@@ -79,6 +79,11 @@
 
         <button type="submit" class="btn">Update</button>
     </form>
+
+    <!-- Delete Account Button -->
+    <form action="/user/account/delete" method="POST" style="margin-top: 20px;">
+        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">Delete Account</button>
+    </form>
     
     <h2>Your Games</h2>
     <table class="table">

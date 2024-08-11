@@ -1,9 +1,11 @@
-from flask import render_template, request, redirect, session, flash, make_response, url_for
+from flask import render_template, request, redirect, session, flash, make_response, url_for, jsonify
 from flask_app import app
 from flask_app.models.games import Games
 from flask_app.models.user import User
 from flask_app.models.favorites import Favorites
 from functools import wraps
+import requests
+
 
 def login_required(f):
     @wraps(f)
@@ -23,6 +25,115 @@ def no_cache(view):
         response.headers['Expires'] = '0'
         return response
     return no_cache_view
+
+
+CLIENT_ID = 'rctfju3cojvlxxl2irml3308q0s9gg'
+REDIRECT_URI = 'http://localhost:5000/oauth/callback'  # Adjust this to your correct domain/port
+
+@app.route('/videogames/igdb/login')
+def igdb_login():
+    auth_url = (
+        f"https://id.twitch.tv/oauth2/authorize?client_id={CLIENT_ID}"
+        f"&redirect_uri={REDIRECT_URI}&response_type=token&scope=user:read:email"
+    )
+    return redirect(auth_url)
+@app.route('/oauth/callback')
+def oauth_callback():
+    # Handle the callback from Twitch
+    # For example, you could render the igdb_games.html template directly
+    return render_template('database.html')
+@app.route('/fetch-games')
+def fetch_games():
+    access_token = request.args.get('access_token')
+    url = 'https://api.igdb.com/v4/games'
+    headers = {
+        'Client-ID': 'rctfju3cojvlxxl2irml3308q0s9gg',
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'text/plain'
+    }
+    body = 'fields name,summary,cover.url,first_release_date,platforms.name,rating; sort rating desc; limit 10;'
+    response = requests.post(url, headers=headers, data=body)
+    return jsonify(response.json())
+@app.route('/search-games')
+def search_games():
+    access_token = request.args.get('access_token')
+    query = request.args.get('query')
+    url = 'https://api.igdb.com/v4/games'
+    headers = {
+        'Client-ID': 'rctfju3cojvlxxl2irml3308q0s9gg',
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'text/plain'
+    }
+    
+    # Include the search query in the request body
+    body = f"""
+    search "{query}";
+    fields name,summary,cover.url,first_release_date,platforms.name,rating;
+    limit 10;
+    """
+    
+    response = requests.post(url, headers=headers, data=body)
+    return jsonify(response.json())
+@app.route('/fetch-top-games')
+def fetch_top_games():
+    access_token = request.args.get('access_token')
+    url = 'https://api.igdb.com/v4/games'
+    headers = {
+        'Client-ID': 'rctfju3cojvlxxl2irml3308q0s9gg',
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'text/plain'
+    }
+    
+    # Request top-rated games
+    body = """
+    fields name,summary,cover.url,first_release_date,platforms.name,rating;
+    sort rating desc;
+    limit 10;
+    """
+    
+    response = requests.post(url, headers=headers, data=body)
+    return jsonify(response.json())
+@app.route('/filter-games')
+def filter_games():
+    access_token = request.args.get('access_token')
+    genre_name = request.args.get('genre')
+
+    # Map genre names to IGDB genre IDs (example IDs, replace with actual IDs)
+    genre_map = {
+        "Strategy": 15,
+        "Fighting": 4,
+        "Adventure": 31,
+        "Platform": 9,
+        "RPG": 12,
+        "MOBA": 36,
+        "Racing": 10,
+        "Family": 7,
+        "Music": 7,
+         }
+
+    genre_id = genre_map.get(genre_name)
+    
+    if not genre_id:
+        return jsonify([])
+
+    url = 'https://api.igdb.com/v4/games'
+    headers = {
+        'Client-ID': 'rctfju3cojvlxxl2irml3308q0s9gg',
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'text/plain'
+    }
+    
+    # Fetch top 15 games in the selected genre
+    body = f"""
+    fields name,summary,cover.url,first_release_date,platforms.name,rating;
+    where genres = ({genre_id});
+    sort rating desc;
+    limit 15;
+    """
+    
+    response = requests.post(url, headers=headers, data=body)
+    return jsonify(response.json())
+
 
 @app.route("/videogames")
 @login_required

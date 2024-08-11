@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Games</title>
+    <link rel="icon" href="/static/flavicon.jpg/Bulbasaur.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="/static/database.css"> <!-- Your CSS file -->
+</head>
+<body>
+    <div class="header-container">
+        <h1>Games Players Around The World Love</h1>
+         <div class="button-container">
+        <a href="/users/logout" class="btn logout">Logout</a>
+        <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
+        <a href="/user/account" class="btn account">Account</a>
+        <a href="/videogames" class="btn logout">Hub</a>
+    </div>
+        <form id="search-form">
+            <input type="text" id="search-input" placeholder="Enter game name..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="filter-container">
+            <label for="genre-select"></label>
+            <select id="genre-select">
+                <option value="">Select a Genre</option>
+               
+                <option value="Fighting">Fighting</option>
+                <option value="Adventure">Adventure</option>
+                
+                <option value="RPG">RPG</option>
+                <option value="MOBA">MOBA</option>
+                
+                <option value="Family">Family</option>
+             
+            </select>
+            <button id="filter-button">Filter</button>
+        </div>
+    </div>
+
+    <div class="games-list">
+        <!-- Games will be populated via JavaScript -->
+    </div>
+
+    <script>
+        // Extract the access token from the URL fragment
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get('access_token');
+
+        if (accessToken) {
+            console.log('Access Token:', accessToken);
+
+            // Prepopulate the top-rated games when the page loads
+            fetchTopRatedGames(accessToken);
+
+            // Handle form submission for search
+            const form = document.getElementById('search-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form from submitting the traditional way
+                const query = document.getElementById('search-input').value;
+                searchGames(query, accessToken);
+            });
+
+            // Handle genre filtering
+            const filterButton = document.getElementById('filter-button');
+            filterButton.addEventListener('click', function() {
+                const genre = document.getElementById('genre-select').value;
+                if (genre) {
+                    filterGamesByGenre(genre, accessToken);
+                }
+            });
+
+            function fetchTopRatedGames(accessToken) {
+                // Make the API call to fetch top-rated games via the Flask server-side proxy
+                fetch(`/fetch-top-games?access_token=${accessToken}`)
+                .then(response => {
+                    console.log('Response status:', response.status); // Log response status
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(games => {
+                    console.log('Fetched top games:', games);  // Log the fetched games data
+                    displayGames(games);
+                })
+                .catch(error => console.error('Error fetching top games:', error));  // Log any errors
+            }
+
+            function searchGames(query, accessToken) {
+                // Make the API call to search games via the Flask server-side proxy
+                fetch(`/search-games?access_token=${accessToken}&query=${encodeURIComponent(query)}`)
+                .then(response => {
+                    console.log('Response status:', response.status); // Log response status
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(games => {
+                    console.log('Fetched games:', games);  // Log the fetched games data
+                    displayGames(games);
+                })
+                .catch(error => console.error('Error fetching games:', error));  // Log any errors
+            }
+
+            function filterGamesByGenre(genre, accessToken) {
+                // Make the API call to filter games by genre via the Flask server-side proxy
+                fetch(`/filter-games?access_token=${accessToken}&genre=${encodeURIComponent(genre)}`)
+                .then(response => {
+                    console.log('Response status:', response.status); // Log response status
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(games => {
+                    console.log('Fetched games by genre:', games);  // Log the fetched games data
+                    displayGames(games);
+                })
+                .catch(error => console.error('Error filtering games:', error));  // Log any errors
+            }
+
+            function displayGames(games) {
+                const gamesList = document.querySelector('.games-list');
+                gamesList.innerHTML = ''; // Clear previous results
+                games.forEach(game => {
+                    const gameDiv = document.createElement('div');
+                    gameDiv.classList.add('game');
+
+                    // Modify the cover URL to request a higher resolution image
+                    let coverUrl = game.cover ? game.cover.url.replace('t_thumb', 't_cover_big') : '';
+
+                    let gameHTML = `<h2>${game.name}</h2>`;
+                    if (coverUrl) {
+                        gameHTML += `<img src="${coverUrl}" alt="${game.name} cover" class="game-cover">`;
+                    }
+                    gameHTML += `
+                        <p><strong>Released:</strong> ${new Date(game.first_release_date * 1000).toLocaleDateString()}</p>
+                        <p><strong>Rating:</strong> ${game.rating}</p>
+                        <p><strong>Platforms:</strong> ${game.platforms.map(p => p.name).join(', ')}</p>
+                        <p>${game.summary}</p>
+                    `;
+                    gameDiv.innerHTML = gameHTML;
+                    gamesList.appendChild(gameDiv);
+                });
+            }
+        } else {
+            console.error('No access token found.');
+        }
+    </script>
+</body>
+</html>

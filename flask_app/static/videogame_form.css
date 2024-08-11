@@ -130,3 +130,39 @@ button[type="submit"]:hover {
     background-color: #ff69b4; /* Dark pink color */
     transform: translateY(-3px); /* Slightly move up */
 }
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        top: 10px;
+        right: 10px;
+    }
+
+    h1, h2 {
+        font-size: 1.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select.form-control {
+        padding: 8px;
+    }
+
+    button[type="submit"], .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .selected, .option img {
+        width: 60px;
+        height: 60px;
+    }
+}

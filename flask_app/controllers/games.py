@@ -28,7 +28,9 @@ def no_cache(view):
 
 
 CLIENT_ID = 'rctfju3cojvlxxl2irml3308q0s9gg'
-REDIRECT_URI = 'https://gamersnation.org/oauth/callback'  # Adjust this to your correct domain/port
+REDIRECT_URI = 'HTTP://localhost:5000/oauth/callback'
+
+
 
 @app.route('/videogames/igdb/login')
 def igdb_login():

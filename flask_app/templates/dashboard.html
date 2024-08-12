@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/static/dash.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <title>Dashboard</title>
+    
+       
 </head>
 <body>
     <div class="top-gif-container">
@@ -22,12 +24,17 @@
         <img src="/static/images/Killua.png" alt="Right Pic" class="Pics">
     </div>
     
-    <div class="button-container">
-        <a href="/users/logout" class="btn logout">Logout</a>
-        <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
-        <a href="/user/account" class="btn account">Account</a>
-        <a href="/videogames/igdb/login" class="btn logout">All Games</a>
+    <!-- Dropdown container -->
+    <div class="dropdown">
+        <button class="dropbtn">Menu</button>
+        <div class="dropdown-content">
+            <a href="/users/logout" class="btn logout">Logout</a>
+            <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
+            <a href="/user/account" class="btn account">Account</a>
+            <a href="/videogames/igdb/login" class="btn logout">All Games</a>
+        </div>
     </div>
+
     <div class="header-container">
         <h1 class="text">Welcome To Your Hub, {{ user.first_name }} {{ user.last_name }}</h1>
     </div>
@@ -111,6 +118,16 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Crunchyroll and Manga images with links -->
+    <div class="bottom-left-container">
+        <a href="https://www.crunchyroll.com" target="_blank">
+            <img src="/static/images/Crunchy.png" alt="Crunchyroll">
+        </a>
+        <a href="https://www.viz.com/" target="_blank">
+            <img src="/static/images/Viz.png" alt="Manga">
+        </a>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

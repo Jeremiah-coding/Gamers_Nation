@@ -73,14 +73,49 @@ h1, h2 {
     border-radius: 5px;
 }
 
-.button-container {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+/* Dropdown Styling */
+.dropdown {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1; /* Ensure buttons are above GIFs */
+    top: 10px;
+    right: 10px;
+    display: inline-block;
+}
+
+.dropdown .dropbtn {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 160px;
+    z-index: 1;
+    right: 0;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #575757;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #575757;
 }
 
 button, .btn {
@@ -128,8 +163,7 @@ button:hover, .btn:hover {
     cursor: pointer;
 }
 
-
- .game-cover {
+.game-cover {
     width: 350px;
     height: 230px;
     object-fit: cover;
@@ -143,14 +177,11 @@ button:hover, .btn:hover {
                 0 0 25px 20px rgba(255, 255, 255, 0.5); /* White glow */
 }
 
-
 .actions {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
-
-
 
 .arrow {
     font-size: 3rem; /* Increased the size of the arrows */
@@ -161,7 +192,6 @@ button:hover, .btn:hover {
     cursor: pointer; /* Pointer cursor */
     position: absolute;
     top: 35%;
-   
 }
 
 .arrow:hover {
@@ -176,7 +206,6 @@ button:hover, .btn:hover {
 #next-arrow {
     right: 25%;
 }
-
 
 /* Games list and game card styling for favorite games */
 .table.new-game {
@@ -225,6 +254,7 @@ tr:hover {
     background-color: #777; /* Lighter grey on hover */
     cursor: pointer;
 }
+
 /* Responsive Design for Mobile */
 @media screen and (max-width: 768px) {
     body {
@@ -260,4 +290,33 @@ tr:hover {
         width: 60px;
         height: 60px;
     }
+}
+* Additional styles for the images and their positioning */
+      /* Container for the images in the bottom left corner */
+.bottom-left-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px; /* Space between the images */
+}
+
+.bottom-left-container img {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 5px; /* Optional: add rounded corners */
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    padding: 5px;
+}
+
+.bottom-left-container a:first-child img:hover { /* Crunchyroll image */
+    transform: translateY(-3px); /* Slight hover up effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow on hover */
+    background-color: rgba(255, 255, 0, 0.3); /* Light yellow transparent background */
+}
+
+.bottom-left-container a:last-child img:hover { /* Manga image */
+    transform: translateY(-3px); /* Slight hover up effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow on hover */
+    background-color: rgba(255, 0, 0, 0.3); /* Light red transparent background */
 }

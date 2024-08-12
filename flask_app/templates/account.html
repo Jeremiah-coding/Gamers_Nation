@@ -10,10 +10,14 @@
     <title>Account</title>
 </head>
 <body>
-    <div class="button-container">
-        <a href="/users/logout" class="btn logout">Logout</a>
-        <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
-        <a href="/videogames" class="btn logout">Hub</a>
+    <div class="dropdown">
+        <button class="dropbtn">Menu</button>
+        <div class="dropdown-content">
+            <a href="/users/logout" class="btn logout">Logout</a>
+            <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
+            <a href="/videogames/igdb/login" class="btn logout">All Games</a>
+            <a href="/videogames" class="btn">Hub</a>
+        </div>
     </div>
     <h1>Account Information</h1>
     {% with messages = get_flashed_messages(with_categories=true) %}

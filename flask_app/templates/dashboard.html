@@ -124,7 +124,7 @@
         <a href="https://www.crunchyroll.com" target="_blank">
             <img src="/static/images/Crunchy.png" alt="Crunchyroll">
         </a>
-        <a href="https://www.viz.com/" target="_blank">
+        <a  href="https://www.viz.com/" target="_blank">
             <img src="/static/images/Viz.png" alt="Manga">
         </a>
     </div>
@@ -138,7 +138,7 @@
                 slides.forEach((slide, index) => {
                     slide.style.display = index === currentSlide ? 'block' : 'none';
                 });
-            }
+            } 
 
             document.getElementById('prev-arrow').addEventListener('click', function() {
                 currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;

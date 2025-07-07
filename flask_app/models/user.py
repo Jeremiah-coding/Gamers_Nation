@@ -98,8 +98,8 @@ class User:
         """
         data = {"email": email}
         results = connectToMySQL(cls._db).query_db(query, data)
-        if results:
-            return cls(results[0])
+        if results:  # Check if results are non-empty
+            return cls(results[0])  # Return User object if a match is found
         return None
 
     @classmethod
@@ -129,6 +129,7 @@ class User:
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(google_id)s, %(avatar_url)s, NOW(), NOW());
         """
         return connectToMySQL(cls._db).query_db(query, user_data)
+
     @classmethod
     def create_facebook(cls, user_data):
         query = """
@@ -136,8 +137,9 @@ class User:
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(facebook_id)s, %(avatar_url)s, NOW(), NOW());
         """
         return connectToMySQL(cls._db).query_db(query, user_data)
+
     @classmethod
     def delete_user(cls, user_id):
         query = "DELETE FROM users WHERE id = %(id)s;"
         data = {"id": user_id}
-        connectToMySQL(cls._db).query_db(query, data)
+        return connectToMySQL(cls._db).query_db(query, data)

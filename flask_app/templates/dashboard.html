@@ -81,15 +81,20 @@
                 <img src="{{ videogame.image_url }}" alt="{{ videogame.title }}" class="game-cover">
                 <p class="system">{{ videogame.system }}</p>
                 <div class="actions">
+                    {% if videogame.user_id == current_user_id %}
                     <a href="/videogames/{{ videogame.id }}/edit" class="btn">Edit</a>
                     <form action="/videogames/{{ videogame.id }}/delete" method="POST" style="display:inline;">
                         <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete this video game?');">Delete</button>
                     </form>
+                    {% endif %}
                     <a href="/favorites/add/{{ videogame.id }}" class="btn add-to-favorites">Add to Favorites</a>
                 </div>
             </div>
             {% endfor %}
         </div>
+        
+        
+
         
         <!-- Double arrows for previous and next buttons -->
         <button id="next-arrow" class="arrow">⇒</button>

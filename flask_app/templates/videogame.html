@@ -26,7 +26,14 @@
     <div class="media-container">
         <img src="{{ videogames.image_url }}" alt="{{ videogames.title }}" class="game-image">
         {% if videogames.video_url %}
-        <iframe class="game-video" src="https://www.youtube.com/embed/{{ videogames.video_url.split('v=')[1] }}" frameborder="0" allowfullscreen></iframe>
+        <iframe
+        class="game-video"
+        src="https://www.youtube.com/embed/{{ videogames.video_url | extract_youtube_id }}"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+      
+
         {% endif %}
     </div>
     {% endif %}

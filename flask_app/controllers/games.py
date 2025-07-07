@@ -149,7 +149,7 @@ def all_Games():
     removed_from_favorites = request.args.get('removed_from_favorites')
     created_success = request.args.get('created_success')
     updated_success = request.args.get('updated_success')
-    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success)
+    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success, current_user_id=user_id)
 
 @app.route("/videogames/form")
 @login_required

@@ -165,7 +165,7 @@ def show_videogame(videogames_id):
     if not videogames:
         flash("Videogame not found", "error")
         return redirect("/videogames")
-    return render_template("videogame.html", videogames=videogames)
+    return render_template("videogame.html", videogame=videogames.__dict__)
 
 @app.route("/videogames/save", methods=["POST"])
 @login_required
@@ -195,7 +195,7 @@ def edit_videogame_form(videogames_id):
     if not videogame or videogame.user_id != session.get('user_id'):
         flash("You are not authorized to edit this Videogame", "error")
         return redirect("/videogames")
-    return render_template("edit.html", videogame=videogame)
+    return render_template("edit.html", videogame=videogame.__dict__)
 
 @app.route("/videogames/<int:videogames_id>/update", methods=["POST"])
 @login_required

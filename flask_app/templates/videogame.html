@@ -22,19 +22,19 @@
         </div>
     </div>
 
-    <h1>{{ videogames.title }}</h1>
+    <h1>{{ videogame.title }}</h1>
 
-    {% if videogames.image_url or videogames.video_url %}
+    {% if videogame.image_url or videogame.video_url %}
     <div class="media-container">
-        {% if videogames.image_url %}
-        <img src="{{ videogames.image_url }}" alt="{{ videogames.title }}" class="game-image">
+        {% if videogame.image_url %}
+        <img src="{{ videogame.image_url }}" alt="{{ videogame.title }}" class="game-image">
         {% endif %}
-        
-        {% if videogames.video_url %}
+
+        {% if videogame.video_url %}
         <!-- Embed YouTube video -->
         <iframe
             class="game-video"
-            src="https://www.youtube.com/embed/{{ videogames.video_url | extract_youtube_id }}"
+            src="https://www.youtube.com/embed/{{ videogame.video_url | extract_youtube_id }}"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -43,13 +43,13 @@
     {% endif %}
 
     <div>
-        <p>{{ videogames.description }}</p>
+        <p>{{ videogame.description }}</p>
     </div>
     <div>
-        <p>{{ videogames.system }}</p>
+        <p>{{ videogame.system }}</p>
     </div>
     <div>
-        <p>Added by: {{ videogames.user.first_name }} {{ videogames.user.last_name }}</p>
+        <p>Added by: {{ videogame.user.first_name }} {{ videogame.user.last_name }}</p>
     </div>
 
     <div class="bottom-right">
@@ -60,13 +60,13 @@
     </div>
 
     <div class="bottom-right-images">
-        <a href="https://store.playstation.com/en-us/pages/latest/?emcid=pa-co-421879&gclid=d7633112f78912386845579317276924&gclsrc=3p.ds&msclkid=d7633112f78912386845579317276924">
+        <a href="https://store.playstation.com/en-us/pages/latest/">
             <img src="/static/images/Playstation.jpg" alt="Playstation">
         </a>
         <a href="https://www.microsoft.com/store/b/xbox">
             <img src="/static/images/Xbox.jpg" alt="Xbox">
         </a>
-        <a href= "https://www.nintendo.com/us/store/">
+        <a href="https://www.nintendo.com/us/store/">
             <img src="/static/images/NS.jpg" alt="Nintendo">
         </a>
         <a href="https://store.steampowered.com/">

@@ -32,6 +32,8 @@
 
         {% if videogame.video_url %}
         <!-- Embed YouTube video -->
+      <p>Video URL raw: {{ videogame.video_url }}</p>
+
         <iframe
             class="game-video"
             src="https://www.youtube.com/embed/{{ videogame.video_url | extract_youtube_id }}"

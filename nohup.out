@@ -1,0 +1,1757 @@
+[2025-07-07 16:26:30 +0000] [1443] [INFO] Starting gunicorn 20.1.0
+[2025-07-07 16:26:30 +0000] [1443] [INFO] Listening at: http://0.0.0.0:8000 (1443)
+[2025-07-07 16:26:30 +0000] [1443] [INFO] Using worker: sync
+[2025-07-07 16:26:30 +0000] [1444] [INFO] Booting worker with pid: 1444
+[2025-07-07 16:26:30 +0000] [1444] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/util.py", line 384, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'wsgi'
+[2025-07-07 16:26:30 +0000] [1444] [INFO] Worker exiting (pid: 1444)
+[2025-07-07 16:26:30 +0000] [1445] [INFO] Booting worker with pid: 1445
+[2025-07-07 16:26:30 +0000] [1445] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/util.py", line 384, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'wsgi'
+[2025-07-07 16:26:30 +0000] [1445] [INFO] Worker exiting (pid: 1445)
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 202, in run
+    self.manage_workers()
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 551, in manage_workers
+    self.spawn_workers()
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 623, in spawn_workers
+    time.sleep(0.1 * random.random())
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 525, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/bin/gunicorn", line 33, in <module>
+    sys.exit(load_entry_point('gunicorn==20.1.0', 'console_scripts', 'gunicorn')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 67, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]").run()
+  File "/usr/lib/python3/dist-packages/gunicorn/app/base.py", line 231, in run
+    super().run()
+  File "/usr/lib/python3/dist-packages/gunicorn/app/base.py", line 72, in run
+    Arbiter(self).run()
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 229, in run
+    self.halt(reason=inst.reason, exit_status=inst.exit_status)
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 342, in halt
+    self.stop()
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 393, in stop
+    time.sleep(0.1)
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 525, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+[2025-07-07 16:35:13 +0000] [1465] [INFO] Starting gunicorn 22.0.0
+[2025-07-07 16:35:13 +0000] [1465] [INFO] Listening at: http://0.0.0.0:8000 (1465)
+[2025-07-07 16:35:13 +0000] [1465] [INFO] Using worker: sync
+[2025-07-07 16:35:13 +0000] [1466] [INFO] Booting worker with pid: 1466
+[2025-07-07 16:35:14 +0000] [1467] [INFO] Booting worker with pid: 1467
+[2025-07-07 16:35:14 +0000] [1468] [INFO] Booting worker with pid: 1468
+[2025-07-07 16:35:15 +0000] [1467] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:35:15 +0000] [1467] [INFO] Worker exiting (pid: 1467)
+The client_secret.json file was not found.
+[2025-07-07 16:35:15 +0000] [1466] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:35:15 +0000] [1466] [INFO] Worker exiting (pid: 1466)
+The client_secret.json file was not found.
+[2025-07-07 16:35:15 +0000] [1468] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:35:15 +0000] [1468] [INFO] Worker exiting (pid: 1468)
+The client_secret.json file was not found.
+[2025-07-07 16:35:15 +0000] [1465] [ERROR] Worker (pid:1468) exited with code 3
+[2025-07-07 16:35:15 +0000] [1465] [ERROR] Worker (pid:1467) exited with code 3
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 209, in run
+    self.sleep()
+[2025-07-07 16:35:15 +0000] [1465] [ERROR] Worker (pid:1466) exited with code 3
+object address  : 0x7b334ed094e0
+object refcount : 3
+object type     : 0xf3160e0
+object type name: HaltServer
+object repr     : HaltServer('Worker failed to boot.', 3)
+lost sys.stderr
+[2025-07-07 16:39:46 +0000] [1488] [INFO] Starting gunicorn 22.0.0
+[2025-07-07 16:39:46 +0000] [1488] [INFO] Listening at: http://0.0.0.0:8000 (1488)
+[2025-07-07 16:39:46 +0000] [1488] [INFO] Using worker: sync
+[2025-07-07 16:39:46 +0000] [1489] [INFO] Booting worker with pid: 1489
+[2025-07-07 16:39:46 +0000] [1490] [INFO] Booting worker with pid: 1490
+[2025-07-07 16:39:46 +0000] [1491] [INFO] Booting worker with pid: 1491
+[2025-07-07 16:39:47 +0000] [1489] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:39:47 +0000] [1489] [INFO] Worker exiting (pid: 1489)
+The client_secret.json file was not found.
+[2025-07-07 16:39:47 +0000] [1490] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:39:47 +0000] [1490] [INFO] Worker exiting (pid: 1490)
+The client_secret.json file was not found.
+[2025-07-07 16:39:47 +0000] [1491] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:39:47 +0000] [1491] [INFO] Worker exiting (pid: 1491)
+The client_secret.json file was not found.
+[2025-07-07 16:39:47 +0000] [1488] [ERROR] Worker (pid:1489) exited with code 3
+[2025-07-07 16:39:47 +0000] [1488] [ERROR] Worker (pid:1490) was sent SIGTERM!
+[2025-07-07 16:39:47 +0000] [1488] [ERROR] Worker (pid:1491) was sent SIGTERM!
+[2025-07-07 16:39:47 +0000] [1488] [ERROR] Shutting down: Master
+[2025-07-07 16:39:47 +0000] [1488] [ERROR] Reason: Worker failed to boot.
+[2025-07-07 16:41:27 +0000] [1496] [INFO] Starting gunicorn 22.0.0
+[2025-07-07 16:41:27 +0000] [1496] [INFO] Listening at: http://0.0.0.0:8000 (1496)
+[2025-07-07 16:41:27 +0000] [1496] [INFO] Using worker: sync
+[2025-07-07 16:41:27 +0000] [1497] [INFO] Booting worker with pid: 1497
+[2025-07-07 16:41:27 +0000] [1498] [INFO] Booting worker with pid: 1498
+[2025-07-07 16:41:27 +0000] [1499] [INFO] Booting worker with pid: 1499
+[2025-07-07 16:41:28 +0000] [1497] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:41:28 +0000] [1497] [INFO] Worker exiting (pid: 1497)
+The client_secret.json file was not found.
+[2025-07-07 16:41:28 +0000] [1496] [ERROR] Worker (pid:1497) exited with code 3
+[2025-07-07 16:41:28 +0000] [1498] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:41:28 +0000] [1498] [INFO] Worker exiting (pid: 1498)
+The client_secret.json file was not found.
+[2025-07-07 16:41:28 +0000] [1499] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 18, in <module>
+    from flask_app.controllers import users
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/users.py", line 27, in <module>
+    client_id=secrets['web']['client_id'],
+              ~~~~~~~^^^^^^^
+KeyError: 'web'
+[2025-07-07 16:41:28 +0000] [1499] [INFO] Worker exiting (pid: 1499)
+The client_secret.json file was not found.
+[2025-07-07 16:41:28 +0000] [1496] [ERROR] Worker (pid:1498) exited with code 3
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 209, in run
+    self.sleep()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 360, in sleep
+    ready = select.select([self.PIPE[0]], [], [], 1.0)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 530, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/bin/gunicorn", line 8, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 67, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 236, in run
+    super().run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 72, in run
+    Arbiter(self).run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 229, in run
+    self.halt(reason=inst.reason, exit_status=inst.exit_status)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 342, in halt
+    self.stop()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 396, in stop
+    time.sleep(0.1)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 530, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+[2025-07-07 16:55:29 +0000] [1590] [INFO] Starting gunicorn 20.1.0
+[2025-07-07 16:55:29 +0000] [1590] [INFO] Listening at: http://0.0.0.0:8000 (1590)
+[2025-07-07 16:55:29 +0000] [1590] [INFO] Using worker: sync
+[2025-07-07 16:55:29 +0000] [1591] [INFO] Booting worker with pid: 1591
+[2025-07-07 16:55:29 +0000] [1591] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/util.py", line 384, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 1, in <module>
+    from flask import Flask
+ModuleNotFoundError: No module named 'flask'
+[2025-07-07 16:55:29 +0000] [1591] [INFO] Worker exiting (pid: 1591)
+[2025-07-07 16:55:29 +0000] [1590] [INFO] Shutting down: Master
+[2025-07-07 16:55:29 +0000] [1590] [INFO] Reason: Worker failed to boot.
+[2025-07-07 17:07:12 +0000] [1738] [INFO] Starting gunicorn 22.0.0
+[2025-07-07 17:07:12 +0000] [1738] [INFO] Listening at: http://0.0.0.0:8000 (1738)
+[2025-07-07 17:07:12 +0000] [1738] [INFO] Using worker: sync
+[2025-07-07 17:07:12 +0000] [1739] [INFO] Booting worker with pid: 1739
+[2025-07-07 17:07:12 +0000] [1740] [INFO] Booting worker with pid: 1740
+[2025-07-07 17:07:12 +0000] [1741] [INFO] Booting worker with pid: 1741
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 23;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 21;
+        
+Running Query: 
+        SELECT * FROM users WHERE email = 'jdouglas@co.henry.ga.us';
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        UPDATE users
+        SET first_name = 'Tempest', last_name = 'Jones', email = 'jdouglas@co.henry.ga.us', avatar_url = '/static/images/Sonic.gif'
+        WHERE id = 4;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: ()
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 19;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: ()
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE user_id = 4;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        UPDATE users
+        SET first_name = 'Tempest', last_name = 'Jones', email = 'jdouglas@co.henry.ga.us', avatar_url = '/static/images/Weiss.gif'
+        WHERE id = 4;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: ()
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: ()
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: ()
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: ()
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 19;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE user_id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+Running Query: INSERT INTO favorites (user_id, videogame_id) VALUES (4, 2);
+Add to Favorites Result: 45
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 11;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 4;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 23;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        UPDATE users
+        SET first_name = 'Tempest', last_name = 'Jones', email = 'jdouglas@co.henry.ga.us', avatar_url = '/static/images/Shadow.gif'
+        WHERE id = 4;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE user_id = 4;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 4;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: [2025-07-07 18:36:44 +0000] [1741] [WARNING] Invalid request from ip=152.32.135.81: Invalid HTTP request line: ''
+[2025-07-07 19:20:21 +0000] [1738] [INFO] Handling signal: hup
+[2025-07-07 19:20:21 +0000] [1738] [INFO] Hang up: Master
+[2025-07-07 19:20:21 +0000] [1738] [ERROR] Worker (pid:1739) was sent SIGHUP!
+[2025-07-07 19:20:21 +0000] [1738] [ERROR] Worker (pid:1740) was sent SIGHUP!
+[2025-07-07 19:20:21 +0000] [1738] [ERROR] Worker (pid:1741) was sent SIGHUP!
+[2025-07-07 19:20:21 +0000] [2051] [INFO] Booting worker with pid: 2051
+[2025-07-07 19:20:21 +0000] [2053] [INFO] Booting worker with pid: 2053
+[2025-07-07 19:20:21 +0000] [2052] [INFO] Booting worker with pid: 2052
+[2025-07-07 19:28:09 +0000] [2210] [INFO] Starting gunicorn 22.0.0
+[2025-07-07 19:28:09 +0000] [2210] [INFO] Listening at: http://0.0.0.0:8000 (2210)
+[2025-07-07 19:28:09 +0000] [2210] [INFO] Using worker: sync
+[2025-07-07 19:28:09 +0000] [2211] [INFO] Booting worker with pid: 2211
+[2025-07-07 19:28:09 +0000] [2212] [INFO] Booting worker with pid: 2212
+[2025-07-07 19:28:09 +0000] [2213] [INFO] Booting worker with pid: 2213
+[2025-07-07 19:53:50 +0000] [2307] [INFO] Starting gunicorn 22.0.0
+[2025-07-07 19:53:50 +0000] [2307] [INFO] Listening at: http://0.0.0.0:8000 (2307)
+[2025-07-07 19:53:50 +0000] [2307] [INFO] Using worker: sync
+[2025-07-07 19:53:50 +0000] [2308] [INFO] Booting worker with pid: 2308
+[2025-07-07 19:53:50 +0000] [2309] [INFO] Booting worker with pid: 2309
+[2025-07-07 19:53:50 +0000] [2310] [INFO] Booting worker with pid: 2310
+[2025-07-07 20:05:48 +0000] [2330] [INFO] Starting gunicorn 22.0.0
+[2025-07-07 20:05:48 +0000] [2330] [INFO] Listening at: http://0.0.0.0:8000 (2330)
+[2025-07-07 20:05:48 +0000] [2330] [INFO] Using worker: sync
+[2025-07-07 20:05:48 +0000] [2331] [INFO] Booting worker with pid: 2331
+[2025-07-07 20:05:48 +0000] [2332] [INFO] Booting worker with pid: 2332
+[2025-07-07 20:05:49 +0000] [2333] [INFO] Booting worker with pid: 2333
+[2025-07-07 22:26:02 +0000] [2330] [INFO] Handling signal: hup
+[2025-07-07 22:26:02 +0000] [2330] [INFO] Hang up: Master
+[2025-07-07 22:26:02 +0000] [2330] [ERROR] Worker (pid:2332) was sent SIGHUP!
+[2025-07-07 22:26:02 +0000] [2330] [ERROR] Worker (pid:2333) was sent SIGHUP!
+[2025-07-07 22:26:02 +0000] [2330] [ERROR] Worker (pid:2331) was sent SIGHUP!
+[2025-07-07 22:26:02 +0000] [2612] [INFO] Booting worker with pid: 2612
+[2025-07-07 22:26:02 +0000] [2611] [INFO] Booting worker with pid: 2611
+[2025-07-07 22:26:02 +0000] [2613] [INFO] Booting worker with pid: 2613
+[2025-07-07 23:15:06 +0000] [2612] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <exception str() failed>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+                                         ^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+[2025-07-07 23:15:06 +0000] [2612] [INFO] Worker exiting (pid: 2612)
+[2025-07-07 23:15:07 +0000] [2330] [ERROR] Worker (pid:2612) exited with code 255
+[2025-07-07 23:15:07 +0000] [2330] [ERROR] Worker (pid:2612) exited with code 255.
+[2025-07-07 23:15:07 +0000] [2679] [INFO] Booting worker with pid: 2679
+[2025-07-07 23:15:12 +0000] [2679] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <exception str() failed>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+                                         ^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+TypeError: not all arguments converted during string formatting
+[2025-07-07 23:15:12 +0000] [2679] [INFO] Worker exiting (pid: 2679)
+[2025-07-07 23:15:12 +0000] [2330] [ERROR] Worker (pid:2679) exited with code 255
+[2025-07-07 23:15:12 +0000] [2330] [ERROR] Worker (pid:2679) exited with code 255.
+[2025-07-07 23:15:12 +0000] [2681] [INFO] Booting worker with pid: 2681
+[2025-07-07 23:15:46 +0000] [2330] [CRITICAL] WORKER TIMEOUT (pid:2613)
+[2025-07-07 23:15:46 +0000] [2613] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-07-07 23:15:46 +0000] [2613] [INFO] Worker exiting (pid: 2613)
+[2025-07-07 23:15:46 +0000] [2683] [INFO] Booting worker with pid: 2683
+[2025-07-08 05:42:22 +0000] [2681] [WARNING] Invalid request from ip=3.149.59.26: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-07-08 15:13:17 +0000] [7402] [INFO] Starting gunicorn 22.0.0
+[2025-07-08 15:13:17 +0000] [7402] [INFO] Listening at: http://0.0.0.0:8000 (7402)
+[2025-07-08 15:13:17 +0000] [7402] [INFO] Using worker: sync
+[2025-07-08 15:13:17 +0000] [7403] [INFO] Booting worker with pid: 7403
+[2025-07-08 15:13:18 +0000] [7404] [INFO] Booting worker with pid: 7404
+[2025-07-08 15:13:18 +0000] [7405] [INFO] Booting worker with pid: 7405
+[2025-07-08 15:14:14,990] ERROR in app: Exception on /videogames/2 [GET]
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 16, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 22, in no_cache_view
+    response = make_response(view(*args, **kwargs))
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168, in show_videogame
+    return render_template("videogame.html", videogame=videogames.__dict__)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/ubuntu/Gamers_Nation/flask_app/templates/videogame.html", line 25, in top-level template code
+    <h1>{{ videogames.title }}</h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'videogames' is undefined
+[2025-07-08 15:14:21,897] ERROR in app: Exception on /videogames/2 [GET]
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 16, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 22, in no_cache_view
+    response = make_response(view(*args, **kwargs))
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168, in show_videogame
+    return render_template("videogame.html", videogame=videogames.__dict__)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/ubuntu/Gamers_Nation/flask_app/templates/videogame.html", line 25, in top-level template code
+    <h1>{{ videogames.title }}</h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'videogames' is undefined
+[2025-07-08 15:14:27,494] ERROR in app: Exception on /videogames/2 [GET]
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 16, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 22, in no_cache_view
+    response = make_response(view(*args, **kwargs))
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168, in show_videogame
+    return render_template("videogame.html", videogame=videogames.__dict__)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/ubuntu/Gamers_Nation/flask_app/templates/videogame.html", line 25, in top-level template code
+    <h1>{{ videogames.title }}</h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'videogames' is undefined
+[2025-07-08 15:14:33,251] ERROR in app: Exception on /videogames/21 [GET]
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 16, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 22, in no_cache_view
+    response = make_response(view(*args, **kwargs))
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168, in show_videogame
+    return render_template("videogame.html", videogame=videogames.__dict__)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/ubuntu/Gamers_Nation/flask_app/templates/videogame.html", line 25, in top-level template code
+    <h1>{{ videogames.title }}</h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'videogames' is undefined
+[2025-07-08 15:27:26 +0000] [7511] [INFO] Starting gunicorn 22.0.0
+[2025-07-08 15:27:26 +0000] [7511] [INFO] Listening at: http://0.0.0.0:8000 (7511)
+[2025-07-08 15:27:26 +0000] [7511] [INFO] Using worker: sync
+[2025-07-08 15:27:26 +0000] [7512] [INFO] Booting worker with pid: 7512
+[2025-07-08 15:27:26 +0000] [7513] [INFO] Booting worker with pid: 7513
+[2025-07-08 15:27:26 +0000] [7514] [INFO] Booting worker with pid: 7514
+[2025-07-08 15:32:30 +0000] [7524] [INFO] Starting gunicorn 22.0.0
+[2025-07-08 15:32:30 +0000] [7524] [INFO] Listening at: http://0.0.0.0:8000 (7524)
+[2025-07-08 15:32:30 +0000] [7524] [INFO] Using worker: sync
+[2025-07-08 15:32:30 +0000] [7525] [INFO] Booting worker with pid: 7525
+[2025-07-08 15:32:30 +0000] [7526] [INFO] Booting worker with pid: 7526
+[2025-07-08 15:32:30 +0000] [7527] [INFO] Booting worker with pid: 7527
+[2025-07-08 15:42:03 +0000] [7622] [INFO] Starting gunicorn 20.1.0
+[2025-07-08 15:42:03 +0000] [7622] [INFO] Listening at: http://0.0.0.0:8000 (7622)
+[2025-07-08 15:42:03 +0000] [7622] [INFO] Using worker: sync
+[2025-07-08 15:42:03 +0000] [7623] [INFO] Booting worker with pid: 7623
+[2025-07-08 15:42:03 +0000] [7623] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/usr/lib/python3/dist-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/gunicorn/util.py", line 384, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 1, in <module>
+    from flask import Flask
+ModuleNotFoundError: No module named 'flask'
+[2025-07-08 15:42:03 +0000] [7623] [INFO] Worker exiting (pid: 7623)
+[2025-07-08 15:42:04 +0000] [7622] [INFO] Shutting down: Master
+[2025-07-08 15:42:04 +0000] [7622] [INFO] Reason: Worker failed to boot.
+[2025-07-08 15:45:23 +0000] [7639] [INFO] Starting gunicorn 22.0.0
+[2025-07-08 15:45:23 +0000] [7639] [INFO] Listening at: http://0.0.0.0:8000 (7639)
+[2025-07-08 15:45:23 +0000] [7639] [INFO] Using worker: sync
+[2025-07-08 15:45:23 +0000] [7640] [INFO] Booting worker with pid: 7640
+[2025-07-08 15:45:23 +0000] [7641] [INFO] Booting worker with pid: 7641
+[2025-07-08 15:45:23 +0000] [7642] [INFO] Booting worker with pid: 7642
+Running Query: 
+        SELECT * FROM users WHERE id = 1;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 1;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}, {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}, {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}, {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Favorite Added: {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}
+Favorite Added: {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}
+Favorite Added: {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+Running Query: 
+        SELECT * FROM users WHERE id = 1;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 1;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}, {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}, {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}, {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Favorite Added: {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}
+Favorite Added: {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}
+Favorite Added: {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+Running Query: 
+        UPDATE videogames
+        SET title = 'Poppy Playtime ', description = 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', `system` = 'Playstation, Xbox, Switch, PC', image_url = 'https://assets.altarofgaming.com/wp-content/uploads/2022/10/poppy-playtime-game-cover-altar-of-gaming.jpg', video_url = 'https://www.youtube.com/watch?v=Qp4WwE_6nUc', updated_at = NOW()
+        WHERE id = 2 AND user_id = 1;
+        
+Something went wrong (1054, "Unknown column 'video_url' in 'field list'")
+Running Query: 
+        SELECT * FROM users WHERE id = 1;
+        
+Running Query: [2025-07-08 17:02:01 +0000] [7763] [INFO] Starting gunicorn 22.0.0
+[2025-07-08 17:02:01 +0000] [7763] [INFO] Listening at: http://0.0.0.0:8000 (7763)
+[2025-07-08 17:02:01 +0000] [7763] [INFO] Using worker: sync
+[2025-07-08 17:02:01 +0000] [7764] [INFO] Booting worker with pid: 7764
+[2025-07-08 17:02:01 +0000] [7765] [INFO] Booting worker with pid: 7765
+[2025-07-08 17:02:01 +0000] [7766] [INFO] Booting worker with pid: 7766
+[2025-07-08 18:05:22 +0000] [7916] [INFO] Starting gunicorn 22.0.0
+[2025-07-08 18:05:22 +0000] [7916] [INFO] Listening at: http://0.0.0.0:8000 (7916)
+[2025-07-08 18:05:22 +0000] [7916] [INFO] Using worker: sync
+[2025-07-08 18:05:22 +0000] [7917] [INFO] Booting worker with pid: 7917
+[2025-07-08 18:05:22 +0000] [7918] [INFO] Booting worker with pid: 7918
+[2025-07-08 18:05:22 +0000] [7919] [INFO] Booting worker with pid: 7919
+[2025-07-08 18:05:23 +0000] [7917] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 34, in <module>
+    from flask_app.controllers import games
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168
+    print("DEBUG - videogame object:, videogames.__dict__)
+          ^
+SyntaxError: unterminated string literal (detected at line 168)
+[2025-07-08 18:05:23 +0000] [7917] [INFO] Worker exiting (pid: 7917)
+[2025-07-08 18:05:23 +0000] [7916] [ERROR] Worker (pid:7917) exited with code 3
+[2025-07-08 18:05:23 +0000] [7918] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 34, in <module>
+    from flask_app.controllers import games
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168
+    print("DEBUG - videogame object:, videogames.__dict__)
+          ^
+SyntaxError: unterminated string literal (detected at line 168)
+[2025-07-08 18:05:23 +0000] [7918] [INFO] Worker exiting (pid: 7918)
+[2025-07-08 18:05:23 +0000] [7919] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 34, in <module>
+    from flask_app.controllers import games
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168
+    print("DEBUG - videogame object:, videogames.__dict__)
+          ^
+SyntaxError: unterminated string literal (detected at line 168)
+[2025-07-08 18:05:23 +0000] [7919] [INFO] Worker exiting (pid: 7919)
+[2025-07-08 18:05:23 +0000] [7916] [ERROR] Worker (pid:7918) exited with code 3
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 209, in run
+    self.sleep()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 360, in sleep
+    ready = select.select([self.PIPE[0]], [], [], 1.0)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 530, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/bin/gunicorn", line 8, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 67, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 236, in run
+    super().run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 72, in run
+    Arbiter(self).run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 229, in run
+    self.halt(reason=inst.reason, exit_status=inst.exit_status)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 342, in halt
+    self.stop()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 396, in stop
+    time.sleep(0.1)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 530, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+[2025-07-08 18:15:52 +0000] [7943] [INFO] Starting gunicorn 22.0.0
+[2025-07-08 18:15:52 +0000] [7943] [INFO] Listening at: http://0.0.0.0:8000 (7943)
+[2025-07-08 18:15:52 +0000] [7943] [INFO] Using worker: sync
+[2025-07-08 18:15:52 +0000] [7944] [INFO] Booting worker with pid: 7944
+[2025-07-08 18:15:52 +0000] [7945] [INFO] Booting worker with pid: 7945
+[2025-07-08 18:15:52 +0000] [7946] [INFO] Booting worker with pid: 7946
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+DEBUG - videogame object: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC', 'image_url': 'https://assets.altarofgaming.com/wp-content/uploads/2022/10/poppy-playtime-game-cover-altar-of-gaming.jpg', 'video_url': '', 'user_id': 1, 'created_at': datetime.datetime(2024, 6, 27, 23, 34, 37), 'updated_at': datetime.datetime(2024, 6, 30, 23, 26, 11), 'user': {'first_name': 'Tempest', 'last_name': 'Tokumori'}}
+Running Query: 
+        SELECT * FROM users WHERE id = 1;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 1;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}, {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}, {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}, {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Favorite Added: {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}
+Favorite Added: {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}
+Favorite Added: {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}
+Running Query: 
+        UPDATE videogames
+        SET title = 'Poppy Playtime ', description = 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', `system` = 'Playstation, Xbox, Switch, PC', image_url = 'https://assets.altarofgaming.com/wp-content/uploads/2022/10/poppy-playtime-game-cover-altar-of-gaming.jpg', video_url = 'https://www.youtube.com/watch?v=xMQm8ubM-Cw', updated_at = NOW()
+        WHERE id = 2 AND user_id = 1;
+        
+Something went wrong (1054, "Unknown column 'video_url' in 'field list'")
+Running Query: 
+        SELECT * FROM users WHERE id = 1;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 1;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}, {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}, {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}, {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Favorite Added: {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}
+Favorite Added: {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+DEBUG - videogame object: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC', 'image_url': 'https://assets.altarofgaming.com/wp-content/uploads/2022/10/poppy-playtime-game-cover-altar-of-gaming.jpg', 'video_url': '', 'user_id': 1, 'created_at': datetime.datetime(2024, 6, 27, 23, 34, 37), 'updated_at': datetime.datetime(2024, 6, 30, 23, 26, 11), 'user': {'first_name': 'Tempest', 'last_name': 'Tokumori'}}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+DEBUG - videogame object: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC', 'image_url': 'https://assets.altarofgaming.com/wp-content/uploads/2022/10/poppy-playtime-game-cover-altar-of-gaming.jpg', 'video_url': '', 'user_id': 1, 'created_at': datetime.datetime(2024, 6, 27, 23, 34, 37), 'updated_at': datetime.datetime(2024, 6, 30, 23, 26, 11), 'user': {'first_name': 'Tempest', 'last_name': 'Tokumori'}}
+Running Query: 
+        SELECT * FROM users WHERE id = 1;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 1;
+        
+Favorites Query Results: [{'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}, {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}, {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}, {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}]
+Favorite Added: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC'}
+Favorite Added: {'id': 20, 'title': 'Super Mario Odyssey', 'description': "Mario's newest adventure is here. new art, new style and a whole new meaning of adventure enjoy this odyssey spectacular ", 'system': 'Nintendo Switch'}
+Favorite Added: {'id': 21, 'title': 'paper mario the thousand year door remake ', 'description': "this epic game has been remade on the switch. Mario is back to paper and embarking on a journey to save Peach, along the way he meets allies, fights enemies and uncovers a secret laid dormant for a thousand years. a must buy you'll enjoy yourself thoroughly here! ", 'system': 'Nintendo Switch '}
+Favorite Added: {'id': 18, 'title': 'Dead By Daylight ', 'description': '5 Player Horror game where one person plays as the killer and 4 other survivors have to work as a team to escape before all dying. repair generators. heal teammates. tbag a little and then get the hell out. have fun!', 'system': 'PlayStation, PC, Xbox-One. Nintendo Switch'}
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id
+        WHERE videogames.id = 2;
+        
+DEBUG - videogame object: {'id': 2, 'title': 'Poppy Playtime ', 'description': 'Poppy Playtime players are invited to explore the old Playtime Co. Toy Factory where Poppy and the other incredible Playtime Co. toys were created and manufactured. Playtime Co.’s toys are known for their lifelike qualities, but as they come to life to try and kill the player, it quickly becomes apparent that something has gone deeply wrong inside the facility', 'system': 'Playstation, Xbox, Switch, PC', 'image_url': 'https://assets.altarofgaming.com/wp-content/uploads/2022/10/poppy-playtime-game-cover-altar-of-gaming.jpg', 'video_url': '', 'user_id': 1, 'created_at': datetime.datetime(2024, 6, 27, 23, 34, 37), 'updated_at': datetime.datetime(2024, 6, 30, 23, 26, 11), 'user': {'first_name': 'Tempest', 'last_name': 'Tokumori'}}
+Running Query: 
+        SELECT * FROM users WHERE id = 1;
+        
+Running Query: 
+        SELECT videogames.*, users.first_name, users.last_name 
+        FROM videogames
+        JOIN users ON videogames.user_id = users.id;
+        
+Running Query: 
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        FROM favorites
+        JOIN videogames ON favorites.videogame_id = videogames.id
+        WHERE favorites.user_id = 1;
+        
+Favorites Query Results: [2025-07-08 21:39:46 +0000] [7943] [INFO] Handling signal: hup
+[2025-07-08 21:39:46 +0000] [7943] [INFO] Hang up: Master
+[2025-07-08 21:39:46 +0000] [7943] [ERROR] Worker (pid:7944) was sent SIGHUP!
+[2025-07-08 21:39:46 +0000] [7943] [ERROR] Worker (pid:7945) was sent SIGHUP!
+[2025-07-08 21:39:46 +0000] [7943] [ERROR] Worker (pid:7946) was sent SIGHUP!
+[2025-07-08 21:39:46 +0000] [8505] [INFO] Booting worker with pid: 8505
+[2025-07-08 21:39:46 +0000] [8506] [INFO] Booting worker with pid: 8506
+[2025-07-08 21:39:46 +0000] [8507] [INFO] Booting worker with pid: 8507
+[2025-07-08 21:39:47 +0000] [8505] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 34, in <module>
+    from flask_app.controllers import games
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168
+    return render_template("videogame.html", videogame=videogames.__dict__)
+                                                                           ^
+IndentationError: unindent does not match any outer indentation level
+[2025-07-08 21:39:47 +0000] [8506] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 34, in <module>
+    from flask_app.controllers import games
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168
+    return render_template("videogame.html", videogame=videogames.__dict__)
+                                                                           ^
+IndentationError: unindent does not match any outer indentation level
+[2025-07-08 21:39:47 +0000] [8506] [INFO] Worker exiting (pid: 8506)
+[2025-07-08 21:39:47 +0000] [8505] [INFO] Worker exiting (pid: 8505)
+[2025-07-08 21:39:47 +0000] [8507] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/ubuntu/Gamers_Nation/flask_app/__init__.py", line 34, in <module>
+    from flask_app.controllers import games
+  File "/home/ubuntu/Gamers_Nation/flask_app/controllers/games.py", line 168
+    return render_template("videogame.html", videogame=videogames.__dict__)
+                                                                           ^
+IndentationError: unindent does not match any outer indentation level
+[2025-07-08 21:39:47 +0000] [8507] [INFO] Worker exiting (pid: 8507)
+[2025-07-08 21:39:47 +0000] [7943] [ERROR] Worker (pid:8506) exited with code 3
+[2025-07-08 21:39:47 +0000] [7943] [ERROR] Worker (pid:8505) exited with code 3
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 209, in run
+    self.sleep()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 360, in sleep
+    ready = select.select([self.PIPE[0]], [], [], 1.0)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 530, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Gamers_Nation/venv/bin/gunicorn", line 8, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 67, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 236, in run
+    super().run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 72, in run
+    Arbiter(self).run()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 229, in run
+    self.halt(reason=inst.reason, exit_status=inst.exit_status)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 342, in halt
+    self.stop()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 396, in stop
+    time.sleep(0.1)
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ubuntu/Gamers_Nation/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 530, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>

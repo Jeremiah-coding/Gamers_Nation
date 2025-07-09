@@ -165,7 +165,7 @@ def show_videogame(videogames_id):
     if not videogames:
         flash("Videogame not found", "error")
         return redirect("/videogames")
-    return render_template("videogame.html", videogame=videogames.__dict__)
+     return render_template("videogame.html", videogame=videogames.__dict__)
 
 @app.route("/videogames/save", methods=["POST"])
 @login_required

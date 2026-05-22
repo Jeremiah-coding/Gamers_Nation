@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/flavicon.jpg/Bulbasaur.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="/static/study.css">
+    <title>Study &amp; Chill — Gamers Nation</title>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="study-header">
+        <h1>Enjoy your study session &mdash; stay awhile and be productive</h1>
+    </header>
+
+    <!-- Track title notification (pans left → right when track changes) -->
+    <div class="track-notify" id="track-notify">
+        <div class="track-label" id="track-label"></div>
+    </div>
+
+    <!-- Main layout -->
+    <div class="study-layout">
+
+        <!-- Left: rotating images -->
+        <div class="image-panel">
+            <div class="image-rotator">
+                <img class="rotator-img active" src="https://i.pinimg.com/736x/fc/25/e1/fc25e1feb33656a6e0e3fffb7e4d22b0.jpg" alt="Lofi scene 1">
+                <img class="rotator-img" src="https://i.pinimg.com/736x/1b/ac/eb/1baceba1149d0988e08d7901f2196f28.jpg" alt="Lofi scene 2">
+                <img class="rotator-img" src="https://i.pinimg.com/736x/5d/63/93/5d6393ac50464afb53fbaa10d2d0d611.jpg" alt="Lofi scene 3">
+                <img class="rotator-img" src="https://i.pinimg.com/736x/5a/c3/ff/5ac3ffcdbb8aa36e09a770c3148d07b8.jpg" alt="Lofi scene 4">
+                <img class="rotator-img" src="https://i.pinimg.com/736x/2c/4c/01/2c4c0163864c9f2a2671291a5009dfec.jpg" alt="Lofi scene 5">
+            </div>
+        </div>
+
+        <!-- Center/Right: music player + tracklist -->
+        <div class="music-panel">
+            <div class="player-container">
+
+                <div class="now-playing-label">&#9836; Now Playing</div>
+
+                <!-- YouTube player -->
+                <div class="yt-wrapper">
+                    <div id="youtube-player"></div>
+
+                    <!-- Click-to-play overlay (fallback if autoplay blocked) -->
+                    <div class="play-overlay" id="play-overlay">
+                        <div class="play-btn-icon">&#9654;</div>
+                        <span>Click to start</span>
+                    </div>
+                </div>
+
+                <!-- Tracklist -->
+                <div class="tracklist">
+                    <h3>Purrple Cat &mdash; Full Mix</h3>
+                    <ul id="tracklist-ul">
+                        <li class="track-item active" data-seconds="0">
+                            <span class="track-num">01</span>
+                            <span>Wish You Were Here</span>
+                            <span class="track-time">0:00</span>
+                        </li>
+                        <li class="track-item" data-seconds="166">
+                            <span class="track-num">02</span>
+                            <span>Sugar Coat</span>
+                            <span class="track-time">2:46</span>
+                        </li>
+                        <li class="track-item" data-seconds="345">
+                            <span class="track-num">03</span>
+                            <span>Wild Strawberry</span>
+                            <span class="track-time">5:45</span>
+                        </li>
+                        <li class="track-item" data-seconds="505">
+                            <span class="track-num">04</span>
+                            <span>Waiting for the Sun</span>
+                            <span class="track-time">8:25</span>
+                        </li>
+                        <li class="track-item" data-seconds="695">
+                            <span class="track-num">05</span>
+                            <span>Wondering</span>
+                            <span class="track-time">11:35</span>
+                        </li>
+                        <li class="track-item" data-seconds="837">
+                            <span class="track-num">06</span>
+                            <span>Timeless</span>
+                            <span class="track-time">13:57</span>
+                        </li>
+                        <li class="track-item" data-seconds="1026">
+                            <span class="track-num">07</span>
+                            <span>Through the Trees</span>
+                            <span class="track-time">17:06</span>
+                        </li>
+                        <li class="track-item" data-seconds="1218">
+                            <span class="track-num">08</span>
+                            <span>Sugar Coat</span>
+                            <span class="track-time">20:18</span>
+                        </li>
+                        <li class="track-item" data-seconds="1397">
+                            <span class="track-num">09</span>
+                            <span>Supernova</span>
+                            <span class="track-time">23:17</span>
+                        </li>
+                        <li class="track-item" data-seconds="1557">
+                            <span class="track-num">10</span>
+                            <span>Silent Wood</span>
+                            <span class="track-time">25:57</span>
+                        </li>
+                        <li class="track-item" data-seconds="1744">
+                            <span class="track-num">11</span>
+                            <span>Sea of Stars</span>
+                            <span class="track-time">29:04</span>
+                        </li>
+                        <li class="track-item" data-seconds="1885">
+                            <span class="track-num">12</span>
+                            <span>Secrets</span>
+                            <span class="track-time">31:25</span>
+                        </li>
+                        <li class="track-item" data-seconds="2053">
+                            <span class="track-num">13</span>
+                            <span>Rocky Shores</span>
+                            <span class="track-time">34:13</span>
+                        </li>
+                        <li class="track-item" data-seconds="2190">
+                            <span class="track-num">14</span>
+                            <span>Seashells</span>
+                            <span class="track-time">36:30</span>
+                        </li>
+                        <li class="track-item" data-seconds="2368">
+                            <span class="track-num">15</span>
+                            <span>Reflection</span>
+                            <span class="track-time">39:28</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <a href="/videogames" class="back-link">&#8592; Back to Dashboard</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- YouTube IFrame API -->
+    <script>
+        // ── Track data ─────────────────────────────────────────────
+        const TRACKS = [
+            { seconds: 0,    title: "Purrple Cat \u2014 Wish You Were Here" },
+            { seconds: 166,  title: "Purrple Cat \u2014 Sugar Coat" },
+            { seconds: 345,  title: "Purrple Cat \u2014 Wild Strawberry" },
+            { seconds: 505,  title: "Purrple Cat \u2014 Waiting for the Sun" },
+            { seconds: 695,  title: "Purrple Cat \u2014 Wondering" },
+            { seconds: 837,  title: "Purrple Cat \u2014 Timeless" },
+            { seconds: 1026, title: "Purrple Cat \u2014 Through the Trees" },
+            { seconds: 1218, title: "Purrple Cat \u2014 Sugar Coat" },
+            { seconds: 1397, title: "Purrple Cat \u2014 Supernova" },
+            { seconds: 1557, title: "Purrple Cat \u2014 Silent Wood" },
+            { seconds: 1744, title: "Purrple Cat \u2014 Sea of Stars" },
+            { seconds: 1885, title: "Purrple Cat \u2014 Secrets" },
+            { seconds: 2053, title: "Purrple Cat \u2014 Rocky Shores" },
+            { seconds: 2190, title: "Purrple Cat \u2014 Seashells" },
+            { seconds: 2368, title: "Purrple Cat \u2014 Reflection" },
+        ];
+
+        // ── YouTube Player ─────────────────────────────────────────
+        let player = null;
+        let lastTrackIdx = -1;
+        let notifyTimer = null;
+        let trackPollInterval = null;
+
+        // Inject the YouTube IFrame API script
+        (function () {
+            const s = document.createElement('script');
+            s.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(s);
+        })();
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                videoId: '8ZeC-8klo_o',
+                playerVars: {
+                    autoplay: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                    playsinline: 1,
+                },
+                events: {
+                    onReady: onPlayerReady,
+                    onStateChange: onPlayerStateChange,
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Attempt autoplay with sound; if blocked the overlay handles it
+            event.target.playVideo();
+            // Hide overlay after short delay if playing
+            setTimeout(function () {
+                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                    hideOverlay();
+                }
+            }, 1200);
+            startTrackPolling();
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                hideOverlay();
+            }
+        }
+
+        function hideOverlay() {
+            const overlay = document.getElementById('play-overlay');
+            if (overlay) overlay.classList.add('hidden');
+        }
+
+        // Click-to-play overlay
+        document.getElementById('play-overlay').addEventListener('click', function () {
+            if (player && player.playVideo) {
+                player.playVideo();
+                hideOverlay();
+            }
+        });
+
+        // ── Track detection (polls every second) ───────────────────
+        function startTrackPolling() {
+            if (trackPollInterval) clearInterval(trackPollInterval);
+            trackPollInterval = setInterval(function () {
+                if (!player || typeof player.getCurrentTime !== 'function') return;
+                var t = player.getCurrentTime();
+                var idx = getTrackIndex(t);
+                if (idx !== lastTrackIdx) {
+                    lastTrackIdx = idx;
+                    showTrackNotification(TRACKS[idx].title);
+                    highlightTrack(idx);
+                }
+            }, 1000);
+        }
+
+        function getTrackIndex(seconds) {
+            var idx = 0;
+            for (var i = 0; i < TRACKS.length; i++) {
+                if (seconds >= TRACKS[i].seconds) idx = i;
+            }
+            return idx;
+        }
+
+        // ── Track notification (pan animation) ─────────────────────
+        function showTrackNotification(title) {
+            var notify = document.getElementById('track-notify');
+            var label  = document.getElementById('track-label');
+
+            // Reset: force reflow to restart animation
+            notify.classList.remove('visible');
+            if (notifyTimer) clearTimeout(notifyTimer);
+            label.textContent = title;
+            void notify.offsetWidth; // trigger reflow
+
+            notify.classList.add('visible');
+            notifyTimer = setTimeout(function () {
+                notify.classList.remove('visible');
+            }, 5500);
+        }
+
+        // ── Tracklist highlight ─────────────────────────────────────
+        function highlightTrack(idx) {
+            var items = document.querySelectorAll('.track-item');
+            items.forEach(function (item, i) {
+                item.classList.toggle('active', i === idx);
+            });
+            if (items[idx]) {
+                items[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // ── Image rotator (every 60 seconds) ───────────────────────
+        var rotatorImgs = document.querySelectorAll('.rotator-img');
+        var currentImg  = 0;
+
+        function rotateImage() {
+            rotatorImgs[currentImg].classList.remove('active');
+            currentImg = (currentImg + 1) % rotatorImgs.length;
+            rotatorImgs[currentImg].classList.add('active');
+        }
+
+        setInterval(rotateImage, 60000);
+    </script>
+
+</body>
+</html>

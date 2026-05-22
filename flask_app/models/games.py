@@ -91,6 +91,10 @@ class Games:
         query = """
         UPDATE videogames
         SET title = %(title)s, description = %(description)s, `system` = %(system)s, image_url = %(image_url)s, video_url = %(video_url)s, updated_at = NOW()
+        WHERE id = %(id)s;
+        """ if form_data.get("is_admin") else """
+        UPDATE videogames
+        SET title = %(title)s, description = %(description)s, `system` = %(system)s, image_url = %(image_url)s, video_url = %(video_url)s, updated_at = NOW()
         WHERE id = %(id)s AND user_id = %(user_id)s;
         """
         return connectToMySQL(cls._db).query_db(query, form_data)

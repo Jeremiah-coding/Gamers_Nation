@@ -30,14 +30,14 @@
         <img src="{{ videogame.image_url }}" alt="{{ videogame.title }}" class="game-image">
         {% endif %}
 
-        {% if videogame.video_url %}
+        {% set video_id = videogame.video_url | extract_youtube_id %}
+        {% if video_id %}
         <!-- Embed YouTube video -->
-      <p>Video URL raw: {{ videogame.video_url }}</p>
-
         <iframe
             class="game-video"
-            src="https://www.youtube.com/embed/{{ videogame.video_url | extract_youtube_id }}"
+            src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&mute=1&playsinline=1&rel=0"
             frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
         ></iframe>
         {% endif %}
@@ -75,18 +75,5 @@
             <img src="/static/images/Steam.jpg" alt="Steam">
         </a>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const gameVideo = document.querySelector('.game-video');
-            if (gameVideo) {
-                gameVideo.play().catch(error => {
-                    console.log('Error playing video:', error);
-                });
-            } else {
-                console.log('Video element not found');
-            }
-        });
-    </script>
 </body>
 </html>

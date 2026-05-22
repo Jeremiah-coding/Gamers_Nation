@@ -5,6 +5,10 @@ from flask_app.models.user import User
 from flask_app.models.favorites import Favorites
 from functools import wraps
 import requests
+from urllib.parse import urlparse, parse_qs, unquote
+
+
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".avif")
 
 
 def login_required(f):
@@ -25,6 +29,83 @@ def no_cache(view):
         response.headers['Expires'] = '0'
         return response
     return no_cache_view
+
+
+def _looks_like_direct_image(url):
+    parsed = urlparse(url)
+    path = (parsed.path or "").lower()
+    if any(path.endswith(ext) for ext in IMAGE_EXTENSIONS):
+        return True
+
+    query = parse_qs(parsed.query)
+    format_hint = (query.get("format", [""])[0] or "").lower()
+    if format_hint in {"jpg", "jpeg", "png", "gif", "webp", "bmp", "svg", "avif"}:
+        return True
+    return False
+
+
+def _is_valid_image_url(url):
+    headers = {"User-Agent": "Mozilla/5.0"}
+    try:
+        response = requests.head(url, allow_redirects=True, timeout=6, headers=headers)
+        content_type = (response.headers.get("Content-Type") or "").lower()
+        if response.ok and content_type.startswith("image/"):
+            return True
+        if response.status_code in {403, 405} or not content_type:
+            response = requests.get(url, allow_redirects=True, timeout=6, headers=headers, stream=True)
+            content_type = (response.headers.get("Content-Type") or "").lower()
+            if response.ok and content_type.startswith("image/"):
+                return True
+    except requests.RequestException:
+        pass
+
+    return _looks_like_direct_image(url)
+
+
+def _candidate_image_urls(url):
+    cleaned = url.strip()
+    parsed = urlparse(cleaned)
+    host = parsed.netloc.lower()
+    query = parse_qs(parsed.query)
+
+    candidates = [cleaned]
+
+    for key in ("mediaurl", "imgurl", "url", "u"):
+        wrapped = query.get(key, [None])[0]
+        if wrapped:
+            candidates.append(unquote(wrapped))
+
+    if "google." in host and parsed.path == "/imgres":
+        imgurl = query.get("imgurl", [None])[0]
+        if imgurl:
+            candidates.append(unquote(imgurl))
+
+    if "bing.com" in host and parsed.path.startswith("/images/search"):
+        media_url = query.get("mediaurl", [None])[0]
+        if media_url:
+            candidates.append(unquote(media_url))
+
+    unique_candidates = []
+    for candidate in candidates:
+        if candidate and candidate not in unique_candidates:
+            unique_candidates.append(candidate)
+    return unique_candidates
+
+
+def normalize_image_url(url):
+    if not url:
+        return None
+
+    for candidate in _candidate_image_urls(url):
+        if _is_valid_image_url(candidate):
+            return candidate
+    return None
+
+
+def normalize_video_url(url):
+    if not url:
+        return None
+    return url.strip()
 
 
 CLIENT_ID = 'rctfju3cojvlxxl2irml3308q0s9gg'
@@ -137,6 +218,12 @@ def filter_games():
     return jsonify(response.json())
 
 
+@app.route("/study")
+@login_required
+def study_page():
+    return render_template("study.html")
+
+
 @app.route("/videogames")
 @login_required
 @no_cache
@@ -149,7 +236,7 @@ def all_Games():
     removed_from_favorites = request.args.get('removed_from_favorites')
     created_success = request.args.get('created_success')
     updated_success = request.args.get('updated_success')
-    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success, current_user_id=user_id)
+    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success, current_user_id=user_id, is_admin=user.is_admin)
 
 @app.route("/videogames/form")
 @login_required
@@ -172,12 +259,18 @@ def show_videogame(videogames_id):
 @no_cache
 def save_videogame():
     user_id = session.get('user_id')
+    raw_image_url = request.form.get("image_url")
+    normalized_image_url = normalize_image_url(raw_image_url)
+    if raw_image_url and not normalized_image_url:
+        flash("Please provide a direct image link (Google/Bing/Reddit wrappers are supported when detectable).", "show")
+        return redirect("/videogames/form")
+
     form_data = {
         "title": request.form["title"],
         "description": request.form["description"],
         "system": request.form["system"],
-        "image_url": request.form.get("image_url"),
-        "video_url": request.form.get("video_url"),
+        "image_url": normalized_image_url,
+        "video_url": normalize_video_url(request.form.get("video_url")),
         "user_id": user_id
     }
 
@@ -192,7 +285,11 @@ def save_videogame():
 @no_cache
 def edit_videogame_form(videogames_id):
     videogame = Games.get_by_id(videogames_id)
-    if not videogame or videogame.user_id != session.get('user_id'):
+    current_user = User.find_by_user_id(session.get('user_id'))
+    if not videogame or not current_user:
+        flash("Videogame not found", "error")
+        return redirect("/videogames")
+    if not current_user.is_admin and videogame.user_id != current_user.id:
         flash("You are not authorized to edit this Videogame", "error")
         return redirect("/videogames")
     return render_template("edit.html", videogame=videogame)
@@ -202,14 +299,30 @@ def edit_videogame_form(videogames_id):
 @no_cache
 def update_videogame(videogames_id):
     user_id = session.get('user_id')
+    current_user = User.find_by_user_id(user_id)
+    videogame = Games.get_by_id(videogames_id)
+    if not current_user or not videogame:
+        flash("Videogame not found", "error")
+        return redirect("/videogames")
+    if not current_user.is_admin and videogame.user_id != current_user.id:
+        flash("You are not authorized to update this Videogame", "error")
+        return redirect("/videogames")
+
+    raw_image_url = request.form.get("image_url")
+    normalized_image_url = normalize_image_url(raw_image_url)
+    if raw_image_url and not normalized_image_url:
+        flash("Please provide a direct image link (Google/Bing/Reddit wrappers are supported when detectable).", "show")
+        return redirect(f"/videogames/{videogames_id}/edit")
+
     form_data = {
         "id": videogames_id,
         "title": request.form["title"],
         "description": request.form["description"],
         "system": request.form["system"],
-        "image_url": request.form.get("image_url"),
-        "video_url": request.form.get("video_url"),
-        "user_id": user_id
+        "image_url": normalized_image_url,
+        "video_url": normalize_video_url(request.form.get("video_url")),
+        "user_id": user_id,
+        "is_admin": current_user.is_admin
     }
 
     if not Games.validate_Games(form_data):
@@ -225,8 +338,12 @@ def update_videogame(videogames_id):
 @no_cache
 def delete_videogame(videogames_id):
     user_id = session.get('user_id')
+    current_user = User.find_by_user_id(user_id)
     videogames = Games.get_by_id(videogames_id)
-    if not videogames or videogames.user_id != user_id:
+    if not videogames or not current_user:
+        flash("Videogame not found", "error")
+        return redirect("/videogames")
+    if not current_user.is_admin and videogames.user_id != user_id:
         flash("You are not authorized to delete this Videogame", "error")
         return redirect("/videogames")
     Games.delete({"id": videogames_id})

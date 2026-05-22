@@ -30,6 +30,8 @@ venv.bak/
 
 # Database files
 *.sqlite3
+*.db
+data/
 
 # Python virtual environment
 venv/

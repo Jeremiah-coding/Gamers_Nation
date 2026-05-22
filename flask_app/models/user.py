@@ -13,6 +13,7 @@ class User:
         self.first_name = data["first_name"]
         self.last_name = data["last_name"]
         self.email = data["email"]
+        self.is_admin = bool(data.get("is_admin", 0))
         self.password = data.get("password")
         self.google_id = data.get("google_id")
         self.facebook_id = data.get("facebook_id")
@@ -143,3 +144,20 @@ class User:
         query = "DELETE FROM users WHERE id = %(id)s;"
         data = {"id": user_id}
         return connectToMySQL(cls._db).query_db(query, data)
+
+    @classmethod
+    def set_admin_by_email(cls, email):
+        query = "UPDATE users SET is_admin = TRUE WHERE email = %(email)s;"
+        data = {"email": email}
+        return connectToMySQL(cls._db).query_db(query, data)
+
+    @classmethod
+    def set_admin_by_id(cls, user_id):
+        query = "UPDATE users SET is_admin = TRUE WHERE id = %(id)s;"
+        data = {"id": user_id}
+        return connectToMySQL(cls._db).query_db(query, data)
+
+    @classmethod
+    def list_users(cls):
+        query = "SELECT id, first_name, last_name, email, is_admin FROM users ORDER BY id;"
+        return connectToMySQL(cls._db).query_db(query)

@@ -155,12 +155,36 @@ button:hover, .btn:hover {
     display: flex;
     overflow: hidden;
     justify-content: center;
+    position: relative;
+    min-height: 340px;
 }
 
 .game-slide {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 18px) scale(0.98);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
     text-align: center;
     cursor: pointer;
+    transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s ease;
+}
+
+.game-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, 0) scale(1);
+}
+
+.game-slide.from-next {
+    transform: translate(-45%, 0) scale(1);
+}
+
+.game-slide.from-prev {
+    transform: translate(-55%, 0) scale(1);
 }
 
 .game-cover {
@@ -192,6 +216,7 @@ button:hover, .btn:hover {
     cursor: pointer; /* Pointer cursor */
     position: absolute;
     top: 35%;
+    z-index: 5;
 }
 
 .arrow:hover {
@@ -319,4 +344,35 @@ tr:hover {
     transform: translateY(-3px); /* Slight hover up effect */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow on hover */
     background-color: rgba(255, 0, 0, 0.3); /* Light red transparent background */
+}
+
+.bottom-right-kirby {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 4;
+}
+
+.bottom-right-kirby img {
+    width: 120px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bottom-right-kirby img:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.45);
+}
+
+@media screen and (max-width: 768px) {
+    .bottom-right-kirby {
+        right: 12px;
+        bottom: 12px;
+    }
+
+    .bottom-right-kirby img {
+        width: 90px;
+    }
 }

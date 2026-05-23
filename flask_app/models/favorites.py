@@ -22,7 +22,7 @@ class Favorites:
     @classmethod
     def get_favorites_by_user_id(cls, user_id):
         query = """
-        SELECT videogames.id, videogames.title, videogames.description, videogames.system
+        SELECT videogames.id, videogames.title, videogames.description, videogames.system, videogames.image_url
         FROM favorites
         JOIN videogames ON favorites.videogame_id = videogames.id
         WHERE favorites.user_id = %(user_id)s;
@@ -37,7 +37,8 @@ class Favorites:
                     "id": row["id"],
                     "title": row["title"],
                     "description": row["description"],
-                    "system": row["system"]
+                    "system": row["system"],
+                    "image_url": row["image_url"]
                 }
                 favorites.append(favorite)
                 print("Favorite Added:", favorite)  

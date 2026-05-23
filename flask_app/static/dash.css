@@ -29,15 +29,15 @@ body {
 }
 
 .left-pic-container {
-    left: 0;
+    left: -24px;
 }
 
 .right-pic-container {
-    right: 0;
+    right: -24px;
 }
 
 .Pics {
-    width: 400px; /* Adjusted size to make the images twice as big */
+    width: 500px;
     height: auto;
 }
 
@@ -71,6 +71,19 @@ h1, h2 {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.flash.success.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.flash.success.is-hiding {
+    opacity: 0;
+    transform: translateY(-8px);
 }
 
 /* Dropdown Styling */
@@ -79,6 +92,7 @@ h1, h2 {
     top: 10px;
     right: 10px;
     display: inline-block;
+    z-index: 40;
 }
 
 .dropdown .dropbtn {
@@ -104,6 +118,168 @@ h1, h2 {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+}
+
+.dashboard-music-panel {
+    position: fixed;
+    top: 122px;
+    right: 10px;
+    z-index: 12;
+    padding: 10px;
+    background: rgba(7, 13, 22, 0.95);
+    min-width: 320px;
+    border: 1px solid rgba(0, 255, 204, 0.24);
+    border-radius: 10px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+.music-panel-toggle {
+    width: 100%;
+    margin: 0;
+    color: #00ffcc;
+    background: rgba(0, 255, 204, 0.08);
+    border: 1px solid rgba(0, 255, 204, 0.26);
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    box-shadow: none;
+    text-align: left;
+}
+
+.music-panel-toggle:hover {
+    background: rgba(0, 255, 204, 0.2);
+    color: #d6fff7;
+}
+
+.music-panel-body {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transform: translateY(-4px);
+    transition: max-height 0.32s ease, opacity 0.25s ease, transform 0.25s ease, margin-top 0.25s ease;
+}
+
+.dashboard-music-panel.is-open .music-panel-body {
+    max-height: 260px;
+    opacity: 1;
+    margin-top: 10px;
+    transform: translateY(0);
+}
+
+.music-menu-now {
+    margin: 0 0 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#music-menu-track-title {
+    color: #f2fffb;
+    font-size: 0.82rem;
+}
+
+#music-menu-track-artist {
+    color: rgba(190, 255, 240, 0.74);
+    font-size: 0.74rem;
+}
+
+.music-track-select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    color: #e9fffa;
+    background: rgba(18, 31, 46, 0.95);
+    border: 1px solid rgba(0, 255, 204, 0.35);
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+}
+
+.music-controls-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.music-control-btn {
+    background: rgba(0, 255, 204, 0.12);
+    color: #d8fff5;
+    border: 1px solid rgba(0, 255, 204, 0.35);
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 0.72rem;
+    box-shadow: none;
+}
+
+.music-control-btn:hover {
+    background: rgba(0, 255, 204, 0.8);
+    color: #062231;
+}
+
+.music-control-btn.is-active {
+    background: rgba(0, 255, 204, 0.82);
+    color: #062231;
+}
+
+.music-now-toast {
+    position: fixed;
+    top: 86px;
+    left: 16px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    background: rgba(8, 20, 32, 0.94);
+    border: 1px solid rgba(0, 255, 204, 0.38);
+    border-radius: 10px;
+    padding: 10px 16px;
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.35);
+    white-space: nowrap;
+}
+
+.music-now-toast.is-visible {
+    animation: musicToastFade 5.4s ease forwards;
+}
+
+@keyframes musicToastFade {
+    0% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    12% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    78% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+}
+
+.music-toast-label {
+    margin: 0;
+    color: #8ff3df;
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.music-toast-title {
+    margin: 3px 0 0;
+    color: #edfff9;
+    font-size: 0.9rem;
+}
+
+.music-toast-artist {
+    margin: 2px 0 0;
+    color: #8ff3df;
+    font-size: 0.74rem;
 }
 
 .dropdown-content a:hover {
@@ -153,10 +329,10 @@ button:hover, .btn:hover {
 .carousel-slide {
     width: 100%;
     display: flex;
-    overflow: hidden;
+    overflow: visible;
     justify-content: center;
     position: relative;
-    min-height: 340px;
+    min-height: 430px;
 }
 
 .game-slide {
@@ -170,6 +346,10 @@ button:hover, .btn:hover {
     text-align: center;
     cursor: pointer;
     transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .game-slide.is-active {
@@ -188,8 +368,8 @@ button:hover, .btn:hover {
 }
 
 .game-cover {
-    width: 350px;
-    height: 230px;
+    width: 390px;
+    height: 255px;
     object-fit: cover;
     border-radius: 10px;
     position: relative;
@@ -201,10 +381,75 @@ button:hover, .btn:hover {
                 0 0 25px 20px rgba(255, 255, 255, 0.5); /* White glow */
 }
 
-.actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+.actions-dropdown {
+    position: relative;
+    margin-top: 2px;
+    padding-bottom: 6px;
+    z-index: 6;
+}
+
+.actions-toggle {
+    background-color: rgba(0, 0, 0, 0.72);
+    color: #00ffcc;
+    border: 1px solid rgba(0, 255, 204, 0.5);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    padding: 8px 14px;
+}
+
+.actions-dropdown-content {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 2px);
+    transform: translateX(-50%);
+    margin-top: 0;
+    min-width: 170px;
+    border: 1px solid rgba(0, 255, 204, 0.35);
+    background-color: rgba(10, 15, 24, 0.96);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    animation: dropdownFadeIn 0.25s ease;
+}
+
+.actions-dropdown:hover .actions-dropdown-content,
+.actions-dropdown:focus-within .actions-dropdown-content {
+    display: block;
+}
+
+.action-item {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: left;
+    padding: 10px 12px;
+    text-decoration: none;
+    background: transparent;
+    color: #d6fff6;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    box-shadow: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.action-item:hover {
+    color: #1b2735;
+    background-color: #00ffcc;
+    transform: none;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 .arrow {
@@ -233,51 +478,123 @@ button:hover, .btn:hover {
 }
 
 /* Games list and game card styling for favorite games */
-.table.new-game {
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-    z-index: 1;
+.favorites-hover-zone {
+    width: min(760px, 92vw);
+    margin: -8px auto 20px;
+    border: 1px solid rgba(0, 255, 204, 0.28);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(8, 20, 32, 0.88), rgba(16, 32, 42, 0.84));
+    box-shadow: 0 0 16px rgba(0, 255, 204, 0.12);
+    overflow: hidden;
 }
 
-th, td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #444;
+.favorites-hover-label {
+    margin: 0;
+    text-align: center;
+    padding: 14px;
+    color: #a8f7e8;
+    letter-spacing: 0.04em;
 }
 
-th {
-    background-color: #222;
-    color: #00ffcc;
+.favorites-flyout {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 18px;
+    overflow: hidden;
+    transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease;
 }
 
-td a.title-link {
-    color: #00ffcc;
+.favorites-hover-zone:hover .favorites-flyout {
+    max-height: 64vh;
+    opacity: 1;
+    padding: 6px 18px 16px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 204, 0.45) rgba(8, 20, 32, 0.3);
+}
+
+.favorites-flyout::-webkit-scrollbar {
+    width: 8px;
+}
+
+.favorites-flyout::-webkit-scrollbar-track {
+    background: rgba(8, 20, 32, 0.3);
+    border-radius: 8px;
+}
+
+.favorites-flyout::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 204, 0.45);
+    border-radius: 8px;
+}
+
+.favorites-flyout::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 204, 0.65);
+}
+
+.favorites-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.favorite-list-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    transition-delay: calc(var(--favorite-index, 0) * 0.09s);
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 204, 0.18);
+    background: rgba(14, 28, 36, 0.7);
+}
+
+.favorites-hover-zone:hover .favorite-list-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.favorite-card-link {
+    display: contents;
+    color: inherit;
     text-decoration: none;
 }
 
-td a.title-link:hover {
-    text-decoration: underline;
+.favorite-cover {
+    width: 220px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.34);
 }
 
-tr:nth-child(even) {
-    background-color: #2a2a2a;
+.favorite-meta h3 {
+    margin: 0 0 10px;
+    color: #00ffcc;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
 }
 
-tr:hover {
-    background-color: #333;
-    cursor: pointer;
+.favorite-meta p {
+    margin: 0;
+    line-height: 1.55;
+    color: #d8f6ff;
 }
 
-.new-game td {
-    background-color: #555; /* Default grey background for new games */
-    transition: background-color 0.3s;
+.favorite-remove {
+    justify-self: start;
+    margin-top: 14px;
 }
 
-.new-game:hover td {
-    background-color: #777; /* Lighter grey on hover */
-    cursor: pointer;
+.favorites-empty {
+    margin: 8px 0 10px;
+    color: #b8d3da;
+    text-align: center;
 }
 
 /* Responsive Design for Mobile */
@@ -286,10 +603,49 @@ tr:hover {
         padding: 10px;
     }
 
+    .left-pic-container,
+    .right-pic-container {
+        display: none;
+    }
+
+    .actions-dropdown {
+        margin-top: 6px;
+    }
+
+    .favorite-list-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .favorite-cover {
+        width: 100%;
+        max-width: 260px;
+        height: 160px;
+    }
+
     .button-container {
         flex-direction: column;
         top: 10px;
         right: 10px;
+    }
+
+    .dashboard-music-panel {
+        position: static;
+        margin: 10px auto 6px;
+        width: min(94vw, 420px);
+    }
+
+    .dashboard-music-panel.is-open .music-panel-body {
+        max-height: 320px;
+    }
+
+    .game-cover {
+        width: 320px;
+        height: 220px;
+    }
+
+    .music-now-toast {
+        top: 76px;
     }
 
     h1, h2 {
@@ -319,15 +675,19 @@ tr:hover {
 * Additional styles for the images and their positioning */
       /* Container for the images in the bottom left corner */
 .bottom-left-container {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+    position: fixed;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(760px, 68vw);
     display: flex;
-    gap: 10px; /* Space between the images */
+    justify-content: center;
+    gap: 40px;
+    z-index: 3;
 }
 
 .bottom-left-container img {
-    width: 100px; /* Adjust size as needed */
+    width: 170px;
     height: auto;
     border-radius: 5px; /* Optional: add rounded corners */
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
@@ -367,6 +727,16 @@ tr:hover {
 }
 
 @media screen and (max-width: 768px) {
+    .bottom-left-container {
+        width: min(94vw, 460px);
+        gap: 16px;
+        bottom: 10px;
+    }
+
+    .bottom-left-container img {
+        width: 135px;
+    }
+
     .bottom-right-kirby {
         right: 12px;
         bottom: 12px;

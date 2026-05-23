@@ -31,8 +31,36 @@
             <a href="/users/logout" class="btn logout">Logout</a>
             <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
             <a href="/user/account" class="btn account">Account</a>
-            <a href="/videogames/igdb/login" class="btn logout">All Games</a>
+            <a href="/videogames/igdb/login" class="btn logout">Twitch Hub</a>
+            <a href="https://play.pokemonshowdown.com/" class="btn" target="_blank" rel="noopener noreferrer">Pokemon Showdown</a>
         </div>
+    </div>
+
+    <aside class="dashboard-music-panel" id="dashboard-music-panel">
+        <button type="button" class="music-panel-toggle" id="music-panel-toggle" aria-expanded="false">
+            Dashboard Playlist
+        </button>
+        <div class="music-panel-body" id="music-panel-body">
+            <p class="music-menu-now">
+                <span id="music-menu-track-title">Akihibara</span>
+                <span id="music-menu-track-artist">Venny</span>
+            </p>
+            <select id="music-track-select" class="music-track-select"></select>
+            <div class="music-controls-row">
+                <button type="button" id="music-pause-btn" class="music-control-btn">Pause</button>
+                <button type="button" id="music-restart-btn" class="music-control-btn">Start Over</button>
+            </div>
+            <div class="music-controls-row">
+                <button type="button" id="music-shuffle-btn" class="music-control-btn">Shuffle</button>
+                <button type="button" id="music-repeat-btn" class="music-control-btn">Repeat</button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="music-now-toast" id="music-now-toast" aria-live="polite">
+        <p class="music-toast-label">Currently Playing</p>
+        <p class="music-toast-title">Akihibara</p>
+        <p class="music-toast-artist">Venny</p>
     </div>
 
     <div class="header-container">
@@ -78,16 +106,18 @@
         <div class="carousel-slide">
             {% for videogame in videogames %}
             <div class="game-slide" data-url="/videogames/{{ videogame.id }}">
-                <img src="{{ videogame.image_url }}" alt="{{ videogame.title }}" class="game-cover">
-                <p class="system">{{ videogame.system }}</p>
-                <div class="actions">
+                <img src="{{ videogame.image_url if videogame.image_url else '/static/images/First_Girl.png' }}" alt="{{ videogame.title }}" class="game-cover" onerror="this.onerror=null;this.src='/static/images/First_Girl.png';">
+                <div class="actions-dropdown">
+                    <button type="button" class="actions-toggle">Actions &#9662;</button>
+                    <div class="actions-dropdown-content">
                     {% if videogame.user_id == current_user_id or is_admin %}
-                    <a href="/videogames/{{ videogame.id }}/edit" class="btn">Edit</a>
+                    <a href="/videogames/{{ videogame.id }}/edit" class="action-item">Edit</a>
                     <form action="/videogames/{{ videogame.id }}/delete" method="POST" style="display:inline;">
-                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete this video game?');">Delete</button>
+                        <button type="submit" class="action-item" onclick="return confirm('Are you sure you want to delete this video game?');">Delete</button>
                     </form>
                     {% endif %}
-                    <a href="/favorites/add/{{ videogame.id }}" class="btn add-to-favorites">Add to Favorites</a>
+                    <a href="/favorites/add/{{ videogame.id }}" class="action-item">Add to Favorites</a>
+                    </div>
                 </div>
             </div>
             {% endfor %}
@@ -101,28 +131,31 @@
     </div>
 
     <h2>Your Favorite Games</h2>
-    <table class="table new-game">
-        <thead>
-            <tr class="words">
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">System</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for favorite in favorites %}
-            <tr>
-                <td><a href="/videogames/{{ favorite.id }}" class="title-link">{{ favorite.title }}</a></td>
-                <td>{{ favorite.description | truncate(10) }}</td> <!-- Truncate to 10 characters -->
-                <td>{{ favorite.system }}</td>
-                <td>
-                    <a href="/favorites/remove/{{ favorite.id }}" class="btn">Remove from Favorites</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="favorites-hover-zone" id="favorites-hover-zone">
+        <p class="favorites-hover-label">Hover here to browse your favorites</p>
+        <div class="favorites-flyout">
+            {% if favorites %}
+            <ul class="favorites-list">
+                {% for favorite in favorites %}
+                <li class="favorite-list-item" style="--favorite-index: {{ loop.index0 }};">
+                    <a href="/videogames/{{ favorite.id }}" class="favorite-card-link">
+                        {% if favorite.image_url %}
+                        <img src="{{ favorite.image_url }}" alt="{{ favorite.title }}" class="favorite-cover">
+                        {% endif %}
+                        <div class="favorite-meta">
+                            <h3>{{ favorite.title }}</h3>
+                            <p>{{ favorite.description | truncate(22) }}</p>
+                        </div>
+                    </a>
+                    <a href="/favorites/remove/{{ favorite.id }}" class="btn favorite-remove">Remove from Favorites</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="favorites-empty">No favorites yet. Add one from the carousel above.</p>
+            {% endif %}
+        </div>
+    </div>
 
     <!-- Crunchyroll and Manga images with links -->
     <div class="bottom-left-container">
@@ -140,9 +173,27 @@
         </a>
     </div>
 
+    <script src="/static/app_music.js"></script>
+
+    <script>
+        window.GNMusic && window.GNMusic.init({
+            titleSelector: '#music-menu-track-title',
+            artistSelector: '#music-menu-track-artist',
+            selectSelector: '#music-track-select',
+            pauseSelector: '#music-pause-btn',
+            restartSelector: '#music-restart-btn',
+            shuffleSelector: '#music-shuffle-btn',
+            repeatSelector: '#music-repeat-btn',
+            toastSelector: '#music-now-toast'
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.game-slide');
+            const flashMessages = document.querySelectorAll('.flash.success');
+            const musicPanel = document.getElementById('dashboard-music-panel');
+            const musicToggle = document.getElementById('music-panel-toggle');
             let currentSlide = 0;
 
             if (!slides.length) {
@@ -170,10 +221,47 @@
             });
 
             slides.forEach(slide => {
+                slide.querySelectorAll('a, button, form').forEach((interactiveElement) => {
+                    interactiveElement.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                    });
+                });
                 slide.addEventListener('click', function() {
                     window.location.href = slide.getAttribute('data-url');
                 });
             });
+
+            flashMessages.forEach((message, index) => {
+                setTimeout(function() {
+                    message.classList.add('is-visible');
+                }, 120 + (index * 120));
+
+                setTimeout(function() {
+                    message.classList.remove('is-visible');
+                    message.classList.add('is-hiding');
+                }, 3600 + (index * 120));
+
+                setTimeout(function() {
+                    message.remove();
+                }, 4700 + (index * 120));
+            });
+
+            if (musicPanel && musicToggle) {
+                musicToggle.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const isOpen = musicPanel.classList.toggle('is-open');
+                    musicToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                });
+
+                musicPanel.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+
+                document.addEventListener('click', function() {
+                    musicPanel.classList.remove('is-open');
+                    musicToggle.setAttribute('aria-expanded', 'false');
+                });
+            }
 
             updateSlides('next'); // Initialize carousel
         });

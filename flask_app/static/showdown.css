@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Cinzel', serif;
+    color: #ecfffa;
+    background: radial-gradient(circle at top, #1b2735 0%, #090a0f 70%);
+    padding: 20px;
+}
+
+.dropdown {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+}
+
+.dropbtn {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: #333;
+    min-width: 180px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 11px 14px;
+}
+
+.dropdown-content a:hover {
+    background: #4a4a4a;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.showdown-header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.showdown-header h1 {
+    margin: 0;
+    color: #00ffcc;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.7);
+}
+
+.showdown-header p {
+    margin: 8px 0 0;
+    color: #c4fff2;
+}
+
+.showdown-shell {
+    width: min(1400px, 96vw);
+    margin: 24px auto 0;
+}
+
+.showdown-frame-wrap {
+    border: 1px solid rgba(0, 255, 204, 0.35);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(5, 10, 16, 0.85);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
+}
+
+.showdown-frame {
+    width: 100%;
+    height: calc(100vh - 220px);
+    min-height: 620px;
+    border: 0;
+    background: #000;
+}
+
+.showdown-note {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: rgba(210, 255, 245, 0.72);
+    text-align: center;
+}
+
+.showdown-fallback {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid rgba(0, 255, 204, 0.28);
+    border-radius: 10px;
+    background: rgba(10, 18, 28, 0.9);
+    text-align: center;
+}
+
+.showdown-fallback.is-visible {
+    display: block;
+}
+
+.showdown-launch-btn {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.86rem;
+    color: #08252f;
+    background: #00ffcc;
+}
+
+.showdown-launch-btn:hover {
+    background: #7bffd8;
+}
+
+.showdown-back-link {
+    display: inline-block;
+    margin-left: 14px;
+    color: #9ef8e5;
+    font-size: 0.82rem;
+    text-decoration: none;
+}
+
+.showdown-back-link:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    .showdown-shell {
+        width: 100%;
+        margin-top: 18px;
+    }
+
+    .showdown-frame {
+        min-height: 74vh;
+        height: 74vh;
+    }
+}

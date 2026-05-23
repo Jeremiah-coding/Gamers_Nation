@@ -224,6 +224,12 @@ def study_page():
     return render_template("study.html")
 
 
+@app.route("/showdown")
+@login_required
+def showdown_page():
+    return render_template("showdown.html")
+
+
 @app.route("/videogames")
 @login_required
 @no_cache

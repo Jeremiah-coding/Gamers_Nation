@@ -17,6 +17,7 @@
                 <a href="/users/logout" class="btn logout">Logout</a>
                 <a href="/videogames/form" class="btn add-videogame">Add A Videogame</a>
                 <a href="/user/account" class="btn account">Account</a>
+                <a href="https://play.pokemonshowdown.com/" class="btn" target="_blank" rel="noopener noreferrer">Pokemon Showdown</a>
                 <a href="/videogames" class="btn">Hub</a>
             </div>
         </div>
@@ -154,6 +155,10 @@
         } else {
             console.error('No access token found.');
         }
+    </script>
+    <script src="/static/app_music.js"></script>
+    <script>
+        window.GNMusic && window.GNMusic.init({ stopOnLoad: true });
     </script>
 </body>
 </html>

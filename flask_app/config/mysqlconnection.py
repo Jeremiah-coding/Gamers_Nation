@@ -69,6 +69,17 @@ class SQLiteConnection:
                 UNIQUE(user_id, videogame_id)
             );
             """,
+            """
+            CREATE TABLE IF NOT EXISTS minigame_scores (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                game_key TEXT NOT NULL,
+                user_id INTEGER NOT NULL,
+                score INTEGER NOT NULL CHECK(score >= 0),
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );
+            """,
+            "CREATE INDEX IF NOT EXISTS idx_minigame_scores_leaderboard ON minigame_scores(game_key, score DESC, created_at);",
         ]
 
         conn = sqlite3.connect(os.getenv("SQLITE_DB_PATH") or cls._default_class_db_path())
@@ -191,6 +202,17 @@ class PostgreSQLConnection:
                 CONSTRAINT favorites_unique_user_game UNIQUE(user_id, videogame_id)
             );
             """,
+            """
+            CREATE TABLE IF NOT EXISTS minigame_scores (
+                id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                game_key TEXT NOT NULL,
+                user_id INTEGER NOT NULL,
+                score INTEGER NOT NULL CHECK(score >= 0),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT fk_minigame_scores_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );
+            """,
+            "CREATE INDEX IF NOT EXISTS idx_minigame_scores_leaderboard ON minigame_scores(game_key, score DESC, created_at);",
         ]
 
         conn = pg_connect(cls._class_dsn())

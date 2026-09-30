@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090a0f">
+    <title>Mini Games | Gamers Nation</title>
+    <link rel="stylesheet" href="/static/minigames.css">
+</head>
+<body class="minigames-page">
+    <header class="mini-topbar">
+        <a class="mini-brand" href="/videogames">Gamers <span>Nation</span></a>
+        <nav aria-label="Main navigation">
+            <a href="/videogames">Hub</a>
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main class="minigames-shell">
+        <section class="mini-hero">
+            <p class="mini-eyebrow">A little friendly competition</p>
+            <h1>Try some of these games</h1>
+            <p>Pick a game, beat your personal best, and see how you stack up against the community.</p>
+        </section>
+
+        <section class="game-grid" aria-label="Choose a mini game">
+            {% for game_key, game_title in minigames.items() %}
+            <article class="game-card" data-game-card="{{ game_key }}">
+                <div class="game-card-icon" aria-hidden="true"></div>
+                <div class="game-card-copy">
+                    <h2>{{ game_title }}</h2>
+                    <p></p>
+                </div>
+                <button type="button" class="mini-button game-select" data-game="{{ game_key }}">Play game</button>
+            </article>
+            {% endfor %}
+        </section>
+
+        <section class="game-stage" id="game-stage" aria-live="polite" hidden>
+            <div class="stage-heading">
+                <div>
+                    <p class="mini-eyebrow">Now playing</p>
+                    <h2 id="stage-title"></h2>
+                    <p id="stage-instructions" class="stage-instructions"></p>
+                </div>
+                <button type="button" class="text-button" id="back-to-games">← All games</button>
+            </div>
+            <div class="stage-toolbar">
+                <span id="stage-status">Ready when you are</span>
+                <span class="score-chip">Score <strong id="live-score">0</strong></span>
+            </div>
+            <div id="game-content" class="game-content"></div>
+            <button type="button" class="mini-button start-button" id="start-game">Start game</button>
+        </section>
+    </main>
+
+    <div class="score-overlay" id="score-overlay" hidden>
+        <section class="score-dialog" role="dialog" aria-modal="true" aria-labelledby="score-title">
+            <button type="button" class="dialog-close" id="close-score" aria-label="Close scoreboard">×</button>
+            <p class="mini-eyebrow">Run complete</p>
+            <h2 id="score-title">Scoreboard</h2>
+            <div class="score-columns">
+                <div class="your-score-card">
+                    <span>Your score</span>
+                    <strong id="final-score">0</strong>
+                    <p id="score-save-status">Posting your score…</p>
+                </div>
+                <div class="leaderboard-card">
+                    <h3>Top 5 scores</h3>
+                    <ol id="leaderboard-list"></ol>
+                </div>
+            </div>
+            <div class="dialog-actions">
+                <button type="button" class="mini-button" id="play-again">Play again</button>
+                <button type="button" class="text-button" id="close-score-secondary">Choose another game</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="/static/minigames.js"></script>
+</body>
+</html>

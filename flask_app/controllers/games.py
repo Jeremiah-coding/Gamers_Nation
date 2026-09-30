@@ -1,21 +1,28 @@
-from flask import render_template, request, redirect, session, flash, make_response, url_for, jsonify
+from flask import render_template, request, redirect, session, flash, make_response, url_for, jsonify, send_from_directory, send_file, abort
 from flask_app import app
 from flask_app.models.games import Games
 from flask_app.models.user import User
 from flask_app.models.favorites import Favorites
+from flask_app.models.minigame_scores import GAMES as MINIGAMES, MinigameScores
 from functools import wraps
 import requests
+import os
+import hashlib
+import tempfile
 from urllib.parse import urlparse, parse_qs, unquote
 
 
 IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".avif")
+GIF_DIRECTORY = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "Gifs"))
+GIF_CACHE_DIRECTORY = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "dashboard_gif_cache"))
+GIF_SLOW_FACTOR = 1.25
 
 
-def login_required(f):
+def visitor_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
-            flash("You must be logged in first", "error")
+            flash("Enter your first name to continue.", "visitor")
             return redirect("/")
         return f(*args, **kwargs)
     return decorated_function
@@ -29,6 +36,54 @@ def no_cache(view):
         response.headers['Expires'] = '0'
         return response
     return no_cache_view
+
+
+@app.get("/dashboard-gifs/<path:filename>")
+@visitor_required
+def dashboard_gif(filename):
+    source_path = os.path.abspath(os.path.join(GIF_DIRECTORY, filename))
+    if os.path.commonpath([GIF_DIRECTORY, source_path]) != GIF_DIRECTORY or not os.path.isfile(source_path):
+        abort(404)
+
+    source_stat = os.stat(source_path)
+    cache_key = hashlib.sha256(
+        f"{filename}:{source_stat.st_mtime_ns}:{source_stat.st_size}:{GIF_SLOW_FACTOR}".encode("utf-8")
+    ).hexdigest()
+    cached_path = os.path.join(GIF_CACHE_DIRECTORY, f"{cache_key}.gif")
+    if not os.path.isfile(cached_path):
+        from PIL import Image, ImageSequence
+
+        os.makedirs(GIF_CACHE_DIRECTORY, exist_ok=True)
+        with Image.open(source_path) as source:
+            source_info = source.info.copy()
+            frames = [frame.copy() for frame in ImageSequence.Iterator(source)]
+            if len(frames) > 1:
+                default_duration = source_info.get("duration", 100)
+                durations = [
+                    max(20, int(frame.info.get("duration", default_duration) * GIF_SLOW_FACTOR))
+                    for frame in ImageSequence.Iterator(source)
+                ]
+                save_options = {
+                    "save_all": True,
+                    "append_images": frames[1:],
+                    "duration": durations,
+                    "loop": source_info.get("loop", 0),
+                    "optimize": False,
+                }
+                if "transparency" in source_info:
+                    save_options["transparency"] = source_info["transparency"]
+                descriptor, temp_path = tempfile.mkstemp(suffix=".gif", dir=GIF_CACHE_DIRECTORY)
+                os.close(descriptor)
+                try:
+                    frames[0].save(temp_path, format="GIF", **save_options)
+                    os.replace(temp_path, cached_path)
+                finally:
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
+            else:
+                return send_from_directory(GIF_DIRECTORY, filename, conditional=True)
+
+    return send_file(cached_path, mimetype="image/gif", conditional=True, max_age=3600)
 
 
 def _looks_like_direct_image(url):
@@ -219,19 +274,51 @@ def filter_games():
 
 
 @app.route("/study")
-@login_required
+@visitor_required
 def study_page():
     return render_template("study.html")
 
 
 @app.route("/showdown")
-@login_required
+@visitor_required
 def showdown_page():
     return render_template("showdown.html")
 
 
+@app.get("/minigames")
+@visitor_required
+@no_cache
+def minigames_page():
+    return render_template("minigames.html", minigames=MINIGAMES)
+
+
+@app.post("/minigames/scores")
+def submit_minigame_score():
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Enter your name before posting a score."}), 401
+
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return jsonify({"error": "Invalid score submission."}), 400
+    game_key = payload.get("game")
+    score = payload.get("score")
+    if not isinstance(game_key, str) or game_key not in MINIGAMES or type(score) is not int or not 0 <= score <= 1_000_000:
+        return jsonify({"error": "Invalid game or score."}), 400
+
+    saved_id = MinigameScores.submit(game_key, user_id, score)
+    if saved_id is False:
+        return jsonify({"error": "Could not save this score. Please try again."}), 500
+
+    return jsonify({
+        "game": MINIGAMES[game_key],
+        "score": score,
+        "top_scores": MinigameScores.top_five(game_key),
+    })
+
+
 @app.route("/videogames")
-@login_required
+@visitor_required
 @no_cache
 def all_Games():
     user_id = session.get('user_id')
@@ -242,16 +329,21 @@ def all_Games():
     removed_from_favorites = request.args.get('removed_from_favorites')
     created_success = request.args.get('created_success')
     updated_success = request.args.get('updated_success')
-    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success, current_user_id=user_id, is_admin=user.is_admin)
+    dashboard_gifs = [
+        url_for("dashboard_gif", filename=filename)
+        for filename in sorted(os.listdir(GIF_DIRECTORY))
+        if filename.lower().endswith(".gif")
+    ] if os.path.isdir(GIF_DIRECTORY) else []
+    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success, current_user_id=user_id, is_admin=user.is_admin, dashboard_gifs=dashboard_gifs)
 
 @app.route("/videogames/form")
-@login_required
+@visitor_required
 @no_cache
 def videogame_form():
     return render_template("videogame_form.html")
 
 @app.route("/videogames/<int:videogames_id>")
-@login_required
+@visitor_required
 @no_cache
 def show_videogame(videogames_id):
     videogames = Games.get_by_id(videogames_id)
@@ -261,7 +353,7 @@ def show_videogame(videogames_id):
     return render_template("videogame.html", videogame=videogames)
 
 @app.route("/videogames/save", methods=["POST"])
-@login_required
+@visitor_required
 @no_cache
 def save_videogame():
     user_id = session.get('user_id')
@@ -287,7 +379,7 @@ def save_videogame():
     return redirect(url_for('all_Games', created_success=True))
 
 @app.route("/videogames/<int:videogames_id>/edit")
-@login_required
+@visitor_required
 @no_cache
 def edit_videogame_form(videogames_id):
     videogame = Games.get_by_id(videogames_id)
@@ -295,13 +387,13 @@ def edit_videogame_form(videogames_id):
     if not videogame or not current_user:
         flash("Videogame not found", "error")
         return redirect("/videogames")
-    if not current_user.is_admin and videogame.user_id != current_user.id:
-        flash("You are not authorized to edit this Videogame", "error")
+    if not current_user.is_admin:
+        flash("Only the Tempest superuser can edit games.", "error")
         return redirect("/videogames")
     return render_template("edit.html", videogame=videogame)
 
 @app.route("/videogames/<int:videogames_id>/update", methods=["POST"])
-@login_required
+@visitor_required
 @no_cache
 def update_videogame(videogames_id):
     user_id = session.get('user_id')
@@ -310,8 +402,8 @@ def update_videogame(videogames_id):
     if not current_user or not videogame:
         flash("Videogame not found", "error")
         return redirect("/videogames")
-    if not current_user.is_admin and videogame.user_id != current_user.id:
-        flash("You are not authorized to update this Videogame", "error")
+    if not current_user.is_admin:
+        flash("Only the Tempest superuser can edit games.", "error")
         return redirect("/videogames")
 
     raw_image_url = request.form.get("image_url")
@@ -340,7 +432,7 @@ def update_videogame(videogames_id):
     return redirect(url_for('all_Games', updated_success=True))
 
 @app.route("/videogames/<int:videogames_id>/delete", methods=["POST"])
-@login_required
+@visitor_required
 @no_cache
 def delete_videogame(videogames_id):
     user_id = session.get('user_id')
@@ -349,8 +441,8 @@ def delete_videogame(videogames_id):
     if not videogames or not current_user:
         flash("Videogame not found", "error")
         return redirect("/videogames")
-    if not current_user.is_admin and videogames.user_id != user_id:
-        flash("You are not authorized to delete this Videogame", "error")
+    if not current_user.is_admin:
+        flash("Only the Tempest superuser can delete games.", "error")
         return redirect("/videogames")
     Games.delete({"id": videogames_id})
     flash("Videogame deleted successfully", "success")
@@ -359,21 +451,21 @@ def delete_videogame(videogames_id):
     return redirect(url_for('all_Games', deleted_success=True))
 
 @app.route("/favorites/add/<int:videogame_id>")
-@login_required
+@visitor_required
 def add_to_favorites(videogame_id):
     user_id = session['user_id']
     Favorites.add(user_id, videogame_id)
     return redirect(url_for('all_Games', added_to_favorites=True))
 
 @app.route("/favorites/remove/<int:videogame_id>")
-@login_required
+@visitor_required
 def remove_from_favorites(videogame_id):
     user_id = session['user_id']
     Favorites.remove(user_id, videogame_id)
     return redirect(url_for('all_Games', removed_from_favorites=True))
 
 @app.route("/user/account")
-@login_required
+@visitor_required
 def user_account():
     user_id = session['user_id']
     user = User.find_by_user_id(user_id)

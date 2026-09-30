@@ -1,55 +1,17 @@
 from flask import render_template, request, redirect, session, flash, url_for, make_response
-from authlib.integrations.flask_client import OAuth
-from flask_app import app, bcrypt
+from flask_app import app
 from flask_app.models.user import User
 from flask_app.models.games import Games
 from functools import wraps
-import json
+import hmac
 import os
-import requests
 
-# Load client secrets from JSON file
-try:
-    with open(os.path.join(os.path.dirname(__file__), '..', 'client_secret.json')) as f:
-        secrets = json.load(f)
-except FileNotFoundError:
-    print("The client_secret.json file was not found.")
-    secrets = {}
-except json.JSONDecodeError:
-    print("The client_secret.json file is not a valid JSON file.")
-    secrets = {}
-
-oauth = OAuth(app)
-
-# Configure OAuth with Google
-google = oauth.register(
-    name='google',
-    client_id=secrets['web']['client_id'],
-    client_secret=secrets['web']['client_secret'],
-    authorize_url=secrets['web']['auth_uri'],
-    access_token_url=secrets['web']['token_uri'],
-    jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
-    client_kwargs={'scope': 'openid profile email'},
-    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo'
-)
-
-# Configure OAuth with Facebook
-facebook = oauth.register(
-    name='facebook',
-    client_id=secrets['facebook']['client_id'],
-    client_secret=secrets['facebook']['client_secret'],
-    authorize_url='https://www.facebook.com/v10.0/dialog/oauth',
-    access_token_url='https://graph.facebook.com/v10.0/oauth/access_token',
-    userinfo_endpoint='https://graph.facebook.com/me?fields=id,name,email,picture',
-    client_kwargs={'scope': 'email'},
-)
-
-def login_required(f):
+def visitor_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
-            flash("You must be logged in first", "error")
-            return redirect(url_for('google_login'))
+            flash("Enter your first name to continue.", "visitor")
+            return redirect(url_for('index'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -67,141 +29,57 @@ def no_cache(view):
 def index():
     return render_template('index.html')
 
-@app.route("/users/register", methods=['POST'])
-def register():
-    if not User.validate_register(request.form):
-        flash("Invalid registration data", "register")
-        return redirect('/')
-
-    potential_user = User.find_by_email(request.form["email"])
-
-    if potential_user:
-        flash("Email is in use. Please login.", "register")
-        return redirect("/")
-
-    hashed_pw = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
-    user_data = {
-        "first_name": request.form['first_name'],
-        "last_name": request.form['last_name'],
-        "email": request.form['email'],
-        "password": hashed_pw,
-        "avatar_url": "/static/images/Shadow.gif"  # Default avatar URL
-    }
-    user_id = User.register(user_data)
-    session["user_id"] = user_id
-    return redirect("/videogames")
-
-@app.route("/users/login", methods=['POST'])
-def login():
-    if not User.validate_login(request.form):
-        flash("Invalid login data", "login")
-        return redirect("/")
-
-    potential_user = User.find_by_email(request.form["email"])
-    if not potential_user or not bcrypt.check_password_hash(potential_user.password, request.form['password']):
-        flash("Invalid Credentials", "login")
-        return redirect("/")
-
-    session['user_id'] = potential_user.id
-    return redirect("/videogames")
-
-@app.route('/login')
-def google_login():
-    redirect_uri = url_for('authorize', _external=True)
-    return google.authorize_redirect(redirect_uri)
-
-@app.route('/login/callback')
-def authorize():
-    try:
-        token = google.authorize_access_token()
-        print("Token received:", token)
-        
-        user_info = google.parse_id_token(token, nonce=token.get('nonce'))
-        print("User info received:", user_info)
-        
-        user = User.find_by_email(user_info['email'])
-
-        if not user:
-            # Create a new user if one doesn't exist
-            user_data = {
-                'first_name': user_info.get('given_name', ''),
-                'last_name': user_info.get('family_name', ''),
-                'email': user_info['email'],
-                'google_id': user_info['sub'],
-                'avatar_url': user_info['picture'],
-                'password': None  # Set password to None for OAuth users
-            }
-            user_id = User.create_google(user_data)
-            user = User.find_by_user_id(user_id)
-
-        session['user_id'] = user.id
-        flash('You have successfully logged in.', 'success')
-        return redirect(url_for('all_Games'))
-    except Exception as e:
-        # Print the exception for debugging purposes
-        print("Error during authorization:", str(e))
-        
-        # Log JWKS URI and response for debugging
-        jwks_response = requests.get(secrets['web']['auth_provider_x509_cert_url'])
-        print("JWKS URI:", secrets['web']['auth_provider_x509_cert_url'])
-        print("JWKS URI response:", jwks_response.text)
-        
-        flash('Authorization failed. Please try again.', 'error')
+@app.post('/users/enter')
+def enter_as_visitor():
+    first_name = request.form.get('first_name', '').strip()
+    if len(first_name) < 2 or len(first_name) > 50:
+        flash('Your name must be between 2 and 50 characters long.', 'visitor')
         return redirect(url_for('index'))
 
-@app.route('/login/facebook')
-def facebook_login():
-    redirect_uri = url_for('facebook_authorize', _external=True)
-    return facebook.authorize_redirect(redirect_uri)
+    if first_name.casefold() == 'tempest':
+        configured_passcode = os.environ.get('TEMPEST_ADMIN_PASSCODE', '135047')
+        submitted_passcode = request.form.get('admin_passcode', '')
+        if not configured_passcode or not hmac.compare_digest(submitted_passcode, configured_passcode):
+            flash('That superuser name is reserved. Enter the valid superuser passcode or choose another name.', 'visitor')
+            return redirect(url_for('index'))
 
-@app.route('/login/facebook/callback')
-def facebook_authorize():
-    try:
-        token = facebook.authorize_access_token()
-        print("Token received:", token)
-        
-        resp = facebook.get('https://graph.facebook.com/me?fields=id,name,email,picture', token=token)
-        user_info = resp.json()
-        print("User info received:", user_info)
-
-        # Handle the case where email is not available
-        email = user_info.get('email', f"{user_info['id']}@facebook.com")
-        
-        user = User.find_by_email(email)
-
+        user = User.find_superuser_by_first_name('Tempest')
         if not user:
-            # Create a new user if one doesn't exist
-            user_data = {
-                'first_name': user_info.get('name', '').split(' ')[0],
-                'last_name': user_info.get('name', '').split(' ')[-1],
-                'email': email,
-                'facebook_id': user_info['id'],
-                'avatar_url': user_info['picture']['data']['url'],
-                'password': None  # Set password to None for OAuth users
-            }
-            user_id = User.create_facebook(user_data)
-            user = User.find_by_user_id(user_id)
+            if User.find_by_first_name('Tempest'):
+                flash('The Tempest superuser account needs administrator setup. Please choose another name for now.', 'visitor')
+                return redirect(url_for('index'))
+            user_id = User.create_visitor('Tempest', is_admin=True)
+        else:
+            user_id = user.id
+        visitor_name = 'Tempest'
+    else:
+        if User.find_by_first_name(first_name):
+            flash('That name is already in use. Please try another name.', 'visitor')
+            return redirect(url_for('index'))
+        user_id = User.create_visitor(first_name)
+        visitor_name = first_name
 
-        session['user_id'] = user.id
-        flash('You have successfully logged in.', 'success')
-        return redirect(url_for('all_Games'))
-    except Exception as e:
-        print("Error during authorization:", str(e))
-        flash('Authorization failed. Please try again.', 'error')
+    if not user_id:
+        flash('We could not open your visitor session. Please try again.', 'visitor')
         return redirect(url_for('index'))
 
-@app.route("/users/logout")
+    session.clear()
+    session['user_id'] = user_id
+    session['visitor_mode'] = True
+    session['visitor_name'] = visitor_name
+    return redirect(url_for('all_Games'))
+
+@app.get('/users/logout')
 def logout():
     session.clear()
-    flash("You have been logged out.", "info")
-    response = make_response(redirect("/"))
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'  # HTTP 1.1.
-    response.headers['Pragma'] = 'no-cache'  # HTTP 1.0.
-    response.headers['Expires'] = '0'  # Proxies.
+    response = make_response(redirect(url_for('index')))
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
     return response
 
 @app.route("/user/account")
-@login_required
+@visitor_required
 @no_cache
 def account():
     user_id = session.get('user_id')
@@ -210,7 +88,7 @@ def account():
     return render_template("account.html", user=user, videogames=videogames)
 
 @app.route("/user/account/update", methods=["POST"])
-@login_required
+@visitor_required
 @no_cache
 def update_account():
     user_id = session.get('user_id')
@@ -220,57 +98,71 @@ def update_account():
         flash("User not found", "error")
         return redirect("/")
 
-    form_data = {
-        "id": user_id,
-        "first_name": request.form["first_name"],
-        "last_name": request.form["last_name"],
-        "email": request.form["email"],
-        "avatar_url": request.form["avatar_url"]
-    }
-
-    if not User.validate_update(form_data):
+    first_name = request.form.get("first_name", "").strip()
+    if user.is_admin:
+        if first_name.casefold() != "tempest":
+            flash("The Tempest superuser name cannot be changed.", "update")
+            return redirect("/user/account")
+        first_name = "Tempest"
+    if len(first_name) < 2 or len(first_name) > 50:
+        flash("Your name must be between 2 and 50 characters long.", "update")
+        return redirect("/user/account")
+    existing_user = User.find_by_first_name(first_name)
+    if existing_user and existing_user.id != user_id:
+        flash("That name is already in use. Please try another name.", "update")
         return redirect("/user/account")
 
+    form_data = {
+        "id": user_id,
+        "first_name": first_name,
+        "avatar_url": request.form.get("avatar_url", user.avatar_url)
+    }
+
     User.update_user(form_data)
+    session["visitor_name"] = first_name
     flash("Account updated successfully", "success")
     return redirect("/user/account")
 
 @app.route("/user/account/delete/<int:videogames_id>")
-@login_required
+@visitor_required
 @no_cache
 def delete_user_videogames(videogames_id):
     user_id = session.get('user_id')
-    if not user_id:
+    current_user = User.find_by_user_id(user_id)
+    if not current_user or not current_user.is_admin:
+        flash('Only the Tempest superuser can delete games.', 'error')
         return redirect("/")
 
     videogames = Games.get_by_id(videogames_id)
-    if not videogames or videogames.user_id != user_id:
-        flash("You are not authorized to delete this videogame", "error")
-    else:
+    if videogames:
         Games.delete({"id": videogames_id})
         flash("Videogame deleted successfully", "success")
+    else:
+        flash("Videogame not found", "error")
 
     return redirect("/user/account")
 # Route to initiate account deletion (shows confirmation message)
-@app.route("/user/account/delete", methods=["GET", "POST"])
-@login_required
+@app.post("/user/account/delete")
+@visitor_required
 @no_cache
 def delete_account():
-    if request.method == "POST":
-        user_id = session.get('user_id')
-        user = User.find_by_user_id(user_id)
+    user_id = session.get('user_id')
+    user = User.find_by_user_id(user_id)
 
-        if not user:
-            flash("User not found", "error")
-            return redirect("/")
-
-        # Perform the deletion
-        User.delete_user(user_id)
-        session.clear()  # Clear session after deletion
-        flash("Your account has been deleted successfully.", "success")
+    if not user:
+        flash("User not found", "error")
+        session.clear()
         return redirect(url_for('index'))
-    
-    # If GET request, just show the confirmation page
-    flash("Are you sure you want to delete your account? This action cannot be undone.", "warning")
-    return render_template("confirm_delete.html")
+
+    if user.is_admin:
+        flash("The Tempest superuser account cannot be deleted.", "error")
+        return redirect("/user/account")
+
+    if User.delete_user(user_id) is False:
+        flash("Your account could not be deleted. Please try again.", "error")
+        return redirect("/user/account")
+
+    session.clear()
+    flash("Your account has been deleted successfully.", "success")
+    return redirect(url_for('index'))
 

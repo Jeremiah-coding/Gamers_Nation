@@ -4,102 +4,85 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HeyyFriend</title>
+    <title>Gamers Nation</title>
     <link rel="icon" href="/static/flavicon.jpg/Bulbasaur.jpg" type="image/jpeg">
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul class="flashes">
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
+    <main class="container">
         <div class="header-container">
-            <img src="/static/images/teddiursa.gif" alt="GIF Image" class="header-gif teddiursa-gif"> 
-            <img src="/static/images/Gengar.gif" alt="GIF Image" class="header-gif" >
-            <img src="/static/images/Umbreon.gif" alt="GIF Image" class="header-gif">
+            <img src="/static/images/teddiursa.gif" alt="Teddiursa" class="header-gif teddiursa-gif">
+            <img src="/static/images/Gengar.gif" alt="Gengar" class="header-gif">
+            <img src="/static/images/Umbreon.gif" alt="Umbreon" class="header-gif">
             <h1>Gamers Nation</h1>
-            <img src="/static/images/Bulbasaur.gif" alt="GIF Image" class="header-gif"> 
-            <img src="/static/images/Mew.gif" alt="GIF Image" class="header-gif" >
-            <img src="/static/images/Victini.gif" alt="GIF Image" class="header-gif">
+            <img src="/static/images/Bulbasaur.gif" alt="Bulbasaur" class="header-gif">
+            <img src="/static/images/Mew.gif" alt="Mew" class="header-gif">
+            <img src="/static/images/Victini.gif" alt="Victini" class="header-gif">
         </div>
-        <div class="forms-container">
-            <div class="form-container">
-                <h2>Register</h2>
-                <!-- register errors here -->
-                <ul class="flashes">
-                    {% with messages = get_flashed_messages(category_filter=["register"]) %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <li>{{message}}</li>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                </ul>
-                <form action="/users/register" method="post">
-                    <div class="label">
-                        <label for="first_name">First Name</label>
-                        <input type="text" name="first_name" id="first_name">
-                    </div>
-                    <div class="label">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" name="last_name" id="last_name">
-                    </div>
-                    <div class="label">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email">
-                    </div>
-                    <div class="label">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
-                    </div>
-                    <div class="label">
-                        <label for="confirm_password">Confirm Password</label>
-                        <input type="password" name="confirm_password" id="confirm_password">
-                    </div>
-                    <button class="btn" type="submit">Register</button>
-                </form>
-            </div>
-            <div class="form-container">
-                <h2>Login</h2>
-                <!-- login errors here -->
-                <ul class="flashes">
-                    {% with messages = get_flashed_messages(category_filter=["login"]) %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <li>{{message}}</li>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                </ul>
-                <form action="/users/login" method="post">
-                    <div class="label">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email">
-                    </div>
-                    <div class="label">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
-                    </div>
-                    <button class="btn" type="submit">Login</button>
-                </form>
-                <div class="google-login-container">
-                    <a href="{{ url_for('google_login') }}" class="btn google-btn">Login with Google</a>
+
+        <section class="entry-panel" aria-labelledby="entry-heading">
+            <h2 id="entry-heading">Welcome, player!</h2>
+            <p>Enter your first name to step into Gamers Nation.</p>
+            {% with messages = get_flashed_messages(category_filter=['visitor']) %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}<li role="alert">{{ message }}</li>{% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <form action="/users/enter" method="post" class="visitor-form">
+                <label for="visitor_first_name">First name</label>
+                <input type="text" name="first_name" id="visitor_first_name" minlength="2" maxlength="50" autocomplete="given-name" required autofocus>
+                <div id="admin-passcode-group" hidden>
+                    <label for="admin_passcode">Tempest passcode</label>
+                    <input type="password" name="admin_passcode" id="admin_passcode" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code">
                 </div>
-                <div class="facebook-login-container">
-                    <a href="{{ url_for('facebook_login') }}" class="btn facebook-btn">Login with Facebook</a>
-                </div>
-                <div class="pikachu-container">
-                    <img src="/static/images/Pikachu.gif" alt="Pikachu GIF" class="pikachu-gif">
-                </div>
-            </div>
-        </div>
-    </div>
+                <button class="btn" type="submit">Enter</button>
+            </form>
+            <img src="/static/images/Pikachu.gif" alt="Pikachu" class="pikachu-gif">
+        </section>
+
+        <section class="creator-bio" aria-labelledby="creator-bio-heading">
+            <p class="bio-eyebrow">Behind the pixels</p>
+            <h2 id="creator-bio-heading">Meet the Creator</h2>
+            <p>Hello, and welcome to Gamers Nation! I’m Jeremiah Douglas, a Full Stack Software Developer with a genuine love and passion for software engineering, technology, gaming, and the creativity behind bringing an idea to life through code.</p>
+
+            <p>My journey into software development began while attending Atlanta Metropolitan State College. During college, I had the opportunity to begin my professional career through an internship with NCR Voyix in Atlanta—an experience that helped turn my interest in technology into a true passion for software engineering. Since then, I’ve continued growing as a developer, working across frontend, backend, cloud, databases, APIs, and modern application architecture.</p>
+
+            <p>Gamers Nation is especially important to me because it’s more than just another project in my portfolio. This website is something I poured my personality, creativity, and love for the art of software engineering into. I wanted to build a place that reflects the things I enjoy while also showing what can be created when technology and imagination come together.</p>
+
+            <p>Here, you can explore some of the games I’ve been playing, add your own games to the community, study, watch anime, read manga, or even jump in and play a few of the games I’ve built directly into the website. Gamers Nation was built using JavaScript, Python, Docker, PostgreSQL, and SQL, bringing together both frontend and backend technologies to create the full experience you’re exploring today.</p>
+
+            <p>If you’re interested in the technical side of Gamers Nation and want to see how everything works behind the scenes, feel free to check out my <a href="https://github.com/Jeremiah-coding/Gamers_Nation" target="_blank" rel="noopener noreferrer">GitHub project</a>. If you’d like to contact me directly, you can reach me at <a href="mailto:jeremiahdouglas808@gmail.com">jeremiahdouglas808@gmail.com</a>.</p>
+
+            <p>Thank you again for taking the time to explore my website. Whether you came here for the technology, the games, the anime, or simply stumbled across my little corner of the internet, I truly appreciate you being here.</p>
+
+            <p class="bio-signoff">I hope you have a wonderful day—and most importantly, <strong>keep gaming. 🎮</strong></p>
+        </section>
+    </main>
+    <p class="creator-credit">Made by Jeremiah Douglas</p>
+    <script src="/static/app_music.js"></script>
+    <script>
+        const visitorForm = document.querySelector('.visitor-form');
+        if (visitorForm && window.GNMusic) {
+            visitorForm.addEventListener('submit', window.GNMusic.prepareForEntry);
+        }
+        const nameInput = document.getElementById('visitor_first_name');
+        const passcodeGroup = document.getElementById('admin-passcode-group');
+        const passcodeInput = document.getElementById('admin_passcode');
+        let wasTempest = false;
+        nameInput.addEventListener('input', function () {
+            const isTempest = nameInput.value.trim().toLowerCase() === 'tempest';
+            passcodeGroup.hidden = !isTempest;
+            passcodeInput.required = isTempest;
+            if (isTempest && !wasTempest) {
+                passcodeInput.focus();
+            } else if (!isTempest) {
+                passcodeInput.value = '';
+            }
+            wasTempest = isTempest;
+        });
+    </script>
 </body>
 </html>

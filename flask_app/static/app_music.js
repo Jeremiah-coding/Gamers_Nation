@@ -14,7 +14,8 @@
         { id: "kkvJhbmqMmg", title: "FineLine (Instrumental)", artist: "Harry Styles" },
         { id: "Out8v0sS5ZM", title: "Calm", artist: "Vex King" },
         { id: "Jha6Rqq_88w", title: "My Dark Fantasy (Slowed)", artist: "Rexlity" },
-        { id: "RZVlwTEdlEA", title: "Firefly City", artist: "Yuforia" }
+        { id: "RZVlwTEdlEA", title: "Firefly City", artist: "Yuforia" },
+        { id: "NA_Jfyvmcu0", title: "Vibez - Dior", artist: "" }
     ];
 
     let player = null;
@@ -23,6 +24,7 @@
     let updateTimer = null;
     let currentTrackIndex = normalizeTrackIndex(state.trackIndex);
     let isSwitchingTrack = false;
+    let isPausingForContext = false;
     let optionsRef = null;
 
     function loadState() {
@@ -57,13 +59,6 @@
             return 0;
         }
         return i;
-    }
-
-    function shouldStopForPath(pathname) {
-        const isVideogameDetail = /^\/videogames\/\d+$/.test(pathname);
-        const isStudy = pathname === "/study";
-        const isTwitchApi = pathname === "/oauth/callback" || pathname === "/videogames/igdb/login";
-        return isVideogameDetail || isStudy || isTwitchApi;
     }
 
     function loadYouTubeApi() {
@@ -323,9 +318,10 @@
             return;
         }
         state.currentTime = Number(player.getCurrentTime ? player.getCurrentTime() : state.currentTime) || 0;
-        state.isPaused = true;
+        state.trackIndex = currentTrackIndex;
         state.lastUpdated = Date.now();
         saveState();
+        isPausingForContext = true;
         player.pauseVideo();
         syncUiState();
     }
@@ -353,6 +349,8 @@
         const mount = ensurePlayerMount();
 
         player = new window.YT.Player(mount, {
+            width: "1",
+            height: "1",
             videoId: PLAYLIST[currentTrackIndex].id,
             playerVars: {
                 autoplay: stopOnLoad ? 0 : 1,
@@ -363,6 +361,19 @@
             },
             events: {
                 onReady: function (event) {
+                    const iframe = event.target.getIframe();
+                    iframe.setAttribute("title", "Background music player");
+                    iframe.setAttribute("aria-hidden", "true");
+                    iframe.tabIndex = -1;
+                    Object.assign(iframe.style, {
+                        position: "fixed",
+                        width: "1px",
+                        height: "1px",
+                        opacity: "0",
+                        pointerEvents: "none",
+                        left: "-9999px",
+                        top: "-9999px"
+                    });
                     setNowPlaying(PLAYLIST[currentTrackIndex]);
                     syncUiState();
                     bindUiHandlers();
@@ -400,12 +411,22 @@
                     }
 
                     if (event.data === 2) {
+                        if (isPausingForContext) {
+                            isPausingForContext = false;
+                            return;
+                        }
                         state.isPaused = true;
                         state.currentTime = Number(player.getCurrentTime ? player.getCurrentTime() : state.currentTime) || 0;
                         state.lastUpdated = Date.now();
                         saveState();
                         syncUiState();
                     }
+                },
+                onAutoplayBlocked: function () {
+                    state.isPaused = true;
+                    state.lastUpdated = Date.now();
+                    saveState();
+                    syncUiState();
                 }
             }
         });
@@ -418,8 +439,7 @@
         initialized = true;
 
         optionsRef = options || {};
-        const pathname = window.location.pathname || "";
-        const stopOnLoad = Boolean(optionsRef.stopOnLoad) || shouldStopForPath(pathname);
+        const stopOnLoad = Boolean(optionsRef.stopOnLoad);
 
         currentTrackIndex = normalizeTrackIndex(state.trackIndex);
         bindUiHandlers();
@@ -429,6 +449,17 @@
         loadYouTubeApi().then(() => {
             initPlayer(stopOnLoad);
         });
+
+        document.addEventListener("click", (event) => {
+            const link = event.target.closest && event.target.closest("a[href]");
+            if (!link) {
+                return;
+            }
+            const destination = new URL(link.href, window.location.href);
+            if (destination.origin === window.location.origin && /^\/videogames\/\d+$/.test(destination.pathname)) {
+                pauseForContext();
+            }
+        }, true);
 
         window.addEventListener("beforeunload", () => {
             if (player && typeof player.getCurrentTime === "function") {
@@ -440,7 +471,15 @@
         });
     }
 
+    function prepareForEntry() {
+        state.isPaused = false;
+        state.lastUpdated = Date.now();
+        saveState();
+    }
+
     window.GNMusic = {
-        init: init
+        init: init,
+        prepareForEntry: prepareForEntry,
+        pauseForContext: pauseForContext
     };
 })();

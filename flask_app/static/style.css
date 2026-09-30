@@ -12,6 +12,7 @@ body {
 }
 
 .container {
+    box-sizing: border-box;
     width: 100%;
     max-width: 1200px;
     padding: 0 20px;
@@ -122,6 +123,149 @@ body {
 .facebook-btn:hover {
     background-color: #ff69b4; 
 }
+
+.container {
+    margin: auto;
+}
+
+.header-container {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 34px;
+}
+
+.header-container h1 {
+    color: #00ffcc;
+    text-align: center;
+    text-shadow: 0 0 18px rgba(0, 255, 204, 0.4);
+}
+
+.entry-panel {
+    width: min(100%, 460px);
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 32px;
+    border: 1px solid rgba(0, 255, 204, 0.35);
+    border-radius: 18px;
+    background: rgba(18, 29, 43, 0.9);
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.entry-panel h2 {
+    margin: 0 0 8px;
+    color: #fff;
+}
+
+.entry-panel > p {
+    margin: 0 0 22px;
+    color: #c3d1df;
+}
+
+.visitor-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    text-align: left;
+}
+
+.visitor-form label {
+    color: #e8f4f5;
+    font-weight: 700;
+}
+
+.visitor-form input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #637486;
+    border-radius: 8px;
+    background: #0b1420;
+    color: #fff;
+    font: inherit;
+}
+
+.visitor-form input:focus {
+    outline: 2px solid #00ffcc;
+    outline-offset: 2px;
+}
+
+.visitor-form .btn {
+    margin-top: 8px;
+}
+
+.entry-panel .pikachu-gif {
+    width: 110px;
+    margin-top: 22px;
+}
+
+.creator-bio {
+    box-sizing: border-box;
+    width: min(100%, 900px);
+    margin: 38px auto 48px;
+    padding: clamp(24px, 5vw, 48px);
+    border: 1px solid rgba(0, 255, 204, 0.22);
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(22, 37, 53, 0.96), rgba(10, 16, 26, 0.96));
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+    color: #d6e2ec;
+    font-family: Arial, sans-serif;
+    line-height: 1.8;
+}
+
+.creator-bio .bio-eyebrow {
+    margin: 0 0 6px;
+    color: #00ffcc;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.creator-bio h2 {
+    margin: 0 0 22px;
+    color: #fff;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.7rem, 4vw, 2.25rem);
+}
+
+.creator-bio p {
+    margin: 0 0 18px;
+}
+
+.creator-bio a {
+    color: #00ffcc;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.creator-bio a:hover {
+    color: #ff69b4;
+}
+
+.creator-bio .bio-signoff {
+    margin: 24px 0 0;
+    color: #fff;
+    font-size: 1.05rem;
+}
+
+.creator-bio .bio-signoff strong {
+    color: #00ffcc;
+}
+
+.creator-credit {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 18px 12px;
+    margin: 0;
+    color: #c3d1df;
+    font-family: Arial, sans-serif;
+    font-size: 0.85rem;
+    text-align: right;
+    text-shadow: 0 1px 4px #000;
+}
+
 /* Responsive Design for Mobile */
 @media screen and (max-width: 768px) {
     body {
@@ -151,6 +295,15 @@ body {
 
     .table {
         font-size: 0.9rem;
+    }
+
+    .entry-panel {
+        padding: 24px 18px;
+    }
+
+    .creator-credit {
+        padding: 0 10px 8px;
+        font-size: 0.75rem;
     }
 
     .selected, .option img {

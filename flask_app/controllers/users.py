@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, session, flash, url_for, make_response
-from flask_app import app
+from flask_app import app, bcrypt
 from flask_app.models.user import User
 from flask_app.models.games import Games
 from functools import wraps
@@ -32,14 +32,21 @@ def index():
 @app.post('/users/enter')
 def enter_as_visitor():
     first_name = request.form.get('first_name', '').strip()
+    pin = request.form.get('pin', '').strip()
+    account_mode = request.form.get('mode', 'sign_in')
     if len(first_name) < 2 or len(first_name) > 50:
         flash('Your name must be between 2 and 50 characters long.', 'visitor')
+        return redirect(url_for('index'))
+    if account_mode not in {'sign_in', 'create'}:
+        flash('Choose whether to sign in or create a name.', 'visitor')
+        return redirect(url_for('index'))
+    if len(pin) != 6 or not pin.isascii() or not pin.isdigit():
+        flash('Enter a six-digit PIN.', 'visitor')
         return redirect(url_for('index'))
 
     if first_name.casefold() == 'tempest':
         configured_passcode = os.environ.get('TEMPEST_ADMIN_PASSCODE', '')
-        submitted_passcode = request.form.get('admin_passcode', '')
-        if not configured_passcode or not hmac.compare_digest(submitted_passcode, configured_passcode):
+        if not configured_passcode or not hmac.compare_digest(pin, configured_passcode):
             flash('That superuser name is reserved. Enter the valid superuser passcode or choose another name.', 'visitor')
             return redirect(url_for('index'))
 
@@ -53,11 +60,46 @@ def enter_as_visitor():
             user_id = user.id
         visitor_name = 'Tempest'
     else:
-        if User.find_by_first_name(first_name):
-            flash('That name is already in use. Please try another name.', 'visitor')
+        user = User.find_by_first_name(first_name)
+        if user and user.password:
+            try:
+                pin_matches = bcrypt.check_password_hash(user.password, pin)
+            except ValueError:
+                pin_matches = False
+            if not pin_matches:
+                flash('That name and PIN did not match. Please try again.', 'visitor')
+                return redirect(url_for('index'))
+            user_id = user.id
+            visitor_name = user.first_name
+            name_taken_notice = account_mode == 'create'
+            pin_created_notice = False
+        elif user:
+            pin_hash = bcrypt.generate_password_hash(pin).decode('utf-8')
+            pin_update = User.set_visitor_pin(user.id, pin_hash)
+            if pin_update is False:
+                flash('We could not save your PIN. Please try again.', 'visitor')
+                return redirect(url_for('index'))
+            user = User.find_by_user_id(user.id)
+            try:
+                pin_matches = user and bcrypt.check_password_hash(user.password, pin)
+            except (TypeError, ValueError):
+                pin_matches = False
+            if not pin_matches:
+                flash('That name and PIN did not match. Please try again.', 'visitor')
+                return redirect(url_for('index'))
+            user_id = user.id
+            visitor_name = user.first_name
+            name_taken_notice = account_mode == 'create' and pin_update == 0
+            pin_created_notice = pin_update > 0
+        elif account_mode == 'sign_in':
+            flash('No account was found with that name. Choose Create name to register it.', 'visitor')
             return redirect(url_for('index'))
-        user_id = User.create_visitor(first_name)
-        visitor_name = first_name
+        else:
+            pin_hash = bcrypt.generate_password_hash(pin).decode('utf-8')
+            user_id = User.create_visitor(first_name, pin_hash=pin_hash)
+            visitor_name = first_name
+            name_taken_notice = False
+            pin_created_notice = False
 
     if not user_id:
         flash('We could not open your visitor session. Please try again.', 'visitor')
@@ -67,7 +109,11 @@ def enter_as_visitor():
     session['user_id'] = user_id
     session['visitor_mode'] = True
     session['visitor_name'] = visitor_name
-    return redirect(url_for('all_Games'))
+    return redirect(url_for(
+        'all_Games',
+        name_taken='true' if first_name.casefold() != 'tempest' and name_taken_notice else None,
+        pin_created='true' if first_name.casefold() != 'tempest' and pin_created_notice else None,
+    ))
 
 @app.get('/users/logout')
 def logout():

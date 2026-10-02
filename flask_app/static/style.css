@@ -175,6 +175,37 @@ body {
     font-weight: 700;
 }
 
+.visitor-mode-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid rgba(0, 255, 204, 0.22);
+    border-radius: 10px;
+    background: #0b1420;
+}
+
+.visitor-mode-button {
+    min-height: 40px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #c3d1df;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.visitor-mode-button.is-active {
+    background: #00ffcc;
+    color: #10202a;
+}
+
+.visitor-mode-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
 .visitor-form input {
     box-sizing: border-box;
     width: 100%;

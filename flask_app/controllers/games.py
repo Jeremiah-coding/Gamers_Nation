@@ -357,12 +357,14 @@ def all_Games():
     removed_from_favorites = request.args.get('removed_from_favorites')
     created_success = request.args.get('created_success')
     updated_success = request.args.get('updated_success')
+    name_taken = request.args.get('name_taken') == 'true'
+    pin_created = request.args.get('pin_created') == 'true'
     dashboard_gifs = [
         url_for("dashboard_gif", filename=filename)
         for filename in sorted(os.listdir(GIF_DIRECTORY))
         if filename.lower().endswith(".gif")
     ] if os.path.isdir(GIF_DIRECTORY) else []
-    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success, current_user_id=user_id, is_admin=user.is_admin, dashboard_gifs=dashboard_gifs)
+    return render_template("dashboard.html", videogames=videogames, user=user, favorites=favorites, added_to_favorites=added_to_favorites, removed_from_favorites=removed_from_favorites, created_success=created_success, updated_success=updated_success, name_taken=name_taken, pin_created=pin_created, current_user_id=user_id, is_admin=user.is_admin, dashboard_gifs=dashboard_gifs)
 
 @app.route("/videogames/form")
 @visitor_required

@@ -100,18 +100,28 @@ class User:
         return cls(results[0]) if results else None
 
     @classmethod
-    def create_visitor(cls, first_name, is_admin=False):
+    def create_visitor(cls, first_name, is_admin=False, pin_hash=None):
         query = """
         INSERT INTO users (first_name, last_name, email, password, avatar_url, is_admin)
-        VALUES (%(first_name)s, '', %(email)s, NULL, %(avatar_url)s, %(is_admin)s);
+        VALUES (%(first_name)s, '', %(email)s, %(password)s, %(avatar_url)s, %(is_admin)s);
         """
         data = {
             "first_name": first_name,
             "email": f"visitor-{uuid4().hex}@gamersnation.local",
+            "password": pin_hash,
             "avatar_url": "/static/images/Shadow.gif",
             "is_admin": is_admin,
         }
         return connectToMySQL(cls._db).query_db(query, data)
+
+    @classmethod
+    def set_visitor_pin(cls, user_id, pin_hash):
+        query = """
+        UPDATE users
+        SET password = %(password)s, updated_at = NOW()
+        WHERE id = %(id)s AND password IS NULL AND is_admin = FALSE;
+        """
+        return connectToMySQL(cls._db).query_db(query, {"id": user_id, "password": pin_hash})
 
     @classmethod
     def find_by_email(cls, email):

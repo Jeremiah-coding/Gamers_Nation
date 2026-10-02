@@ -71,6 +71,14 @@
     <div class="header-container">
         <h1 class="text">Welcome To Your Hub, {{ session.get('visitor_name') or user.first_name }}{% if not session.get('visitor_name') and user.last_name %} {{ user.last_name }}{% endif %}</h1>
     </div>
+
+    {% if name_taken %}
+    <div class="flash success is-visible" role="status">That name is already taken. You signed in successfully.</div>
+    {% endif %}
+
+    {% if pin_created %}
+    <div class="flash success is-visible" role="status">Your PIN is set. You can use it to sign in to this name next time.</div>
+    {% endif %}
     
     {% if added_to_favorites %}
     <div class="flash success">

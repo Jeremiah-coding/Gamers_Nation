@@ -34,11 +34,14 @@
             <form action="/users/enter" method="post" class="visitor-form">
                 <label for="visitor_first_name">First name</label>
                 <input type="text" name="first_name" id="visitor_first_name" minlength="2" maxlength="50" autocomplete="given-name" required autofocus>
-                <div id="admin-passcode-group" hidden>
-                    <label for="admin_passcode">Tempest passcode</label>
-                    <input type="password" name="admin_passcode" id="admin_passcode" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code">
+                <div class="visitor-mode-switch" role="group" aria-label="Account access mode">
+                    <button type="button" class="visitor-mode-button is-active" data-mode="sign_in" aria-pressed="true">Sign in</button>
+                    <button type="button" class="visitor-mode-button" data-mode="create" aria-pressed="false">Create name</button>
                 </div>
-                <button class="btn" type="submit">Enter</button>
+                <input type="hidden" name="mode" id="visitor_mode" value="sign_in">
+                <label for="visitor_pin" id="visitor-pin-label">PIN</label>
+                <input type="password" name="pin" id="visitor_pin" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="current-password" required>
+                <button class="btn" type="submit" id="visitor-submit">Sign in</button>
             </form>
             <img src="/static/images/Pikachu.gif" alt="Pikachu" class="pikachu-gif">
         </section>
@@ -69,20 +72,43 @@
             visitorForm.addEventListener('submit', window.GNMusic.prepareForEntry);
         }
         const nameInput = document.getElementById('visitor_first_name');
-        const passcodeGroup = document.getElementById('admin-passcode-group');
-        const passcodeInput = document.getElementById('admin_passcode');
-        let wasTempest = false;
+        const pinInput = document.getElementById('visitor_pin');
+        const pinLabel = document.getElementById('visitor-pin-label');
+        const modeInput = document.getElementById('visitor_mode');
+        const submitButton = document.getElementById('visitor-submit');
+        const modeButtons = document.querySelectorAll('.visitor-mode-button');
+
+        function setEntryMode(mode) {
+            modeInput.value = mode;
+            modeButtons.forEach(function (button) {
+                const isActive = button.dataset.mode === mode;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+
+            const isTempest = nameInput.value.trim().toLowerCase() === 'tempest';
+            pinLabel.textContent = isTempest ? 'Tempest passcode' : (mode === 'create' ? 'Create a 6-digit PIN' : 'PIN');
+            submitButton.textContent = mode === 'create' && !isTempest ? 'Create name and enter' : 'Sign in';
+            pinInput.autocomplete = mode === 'create' && !isTempest ? 'new-password' : 'current-password';
+        }
+
+        modeButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                setEntryMode(button.dataset.mode);
+            });
+        });
+
         nameInput.addEventListener('input', function () {
             const isTempest = nameInput.value.trim().toLowerCase() === 'tempest';
-            passcodeGroup.hidden = !isTempest;
-            passcodeInput.required = isTempest;
-            if (isTempest && !wasTempest) {
-                passcodeInput.focus();
-            } else if (!isTempest) {
-                passcodeInput.value = '';
+            if (isTempest && modeInput.value === 'create') {
+                setEntryMode('sign_in');
+            } else {
+                setEntryMode(modeInput.value);
             }
-            wasTempest = isTempest;
+            pinInput.value = '';
+            if (isTempest) pinInput.focus();
         });
+        setEntryMode('sign_in');
     </script>
 </body>
 </html>

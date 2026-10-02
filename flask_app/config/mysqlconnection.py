@@ -283,7 +283,16 @@ class PostgreSQLConnection:
 
 
 def connectToMySQL(db):
-    backend = os.getenv("DB_BACKEND", "sqlite").strip().lower()
+    app_environment = os.getenv("APP_ENV", "development").strip().lower()
+    if app_environment == "production":
+        if not os.getenv("DATABASE_URL"):
+            raise RuntimeError("DATABASE_URL must be configured in production.")
+        backend = "postgres"
+    else:
+        backend = os.getenv("DB_BACKEND", "postgres").strip().lower()
+
     if backend in {"postgres", "postgresql", "pg"}:
         return PostgreSQLConnection(db)
-    return SQLiteConnection(db)
+    if backend == "sqlite" and app_environment != "production":
+        return SQLiteConnection(db)
+    raise ValueError(f"Unsupported database backend: {backend}")

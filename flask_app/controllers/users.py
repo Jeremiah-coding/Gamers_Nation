@@ -37,7 +37,7 @@ def enter_as_visitor():
         return redirect(url_for('index'))
 
     if first_name.casefold() == 'tempest':
-        configured_passcode = os.environ.get('TEMPEST_ADMIN_PASSCODE', '135047')
+        configured_passcode = os.environ.get('TEMPEST_ADMIN_PASSCODE', '')
         submitted_passcode = request.form.get('admin_passcode', '')
         if not configured_passcode or not hmac.compare_digest(submitted_passcode, configured_passcode):
             flash('That superuser name is reserved. Enter the valid superuser passcode or choose another name.', 'visitor')

@@ -22,6 +22,7 @@ if ($InstallDeps) {
 
 Write-Host "Preparing PostgreSQL and environment variables..."
 . (Join-Path $PSScriptRoot "setup_postgres.ps1")
+$env:LOCAL_DB_BACKEND = "postgres"
 
 Write-Host "Starting Flask development server..."
 & $pythonExe server.py

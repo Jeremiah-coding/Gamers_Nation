@@ -15,7 +15,8 @@
         { id: "Out8v0sS5ZM", title: "Calm", artist: "Vex King" },
         { id: "Jha6Rqq_88w", title: "My Dark Fantasy (Slowed)", artist: "Rexlity" },
         { id: "RZVlwTEdlEA", title: "Firefly City", artist: "Yuforia" },
-        { id: "NA_Jfyvmcu0", title: "Vibez - Dior", artist: "" }
+        { id: "NA_Jfyvmcu0", title: "Vibez - Dior", artist: "" },
+        { id: "C3X1nI55I3k", title: "Great Fairy Fountain- Ocarina Of Time", artist: "" }
     ];
 
     let player = null;

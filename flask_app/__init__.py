@@ -1,12 +1,22 @@
 from flask import Flask
 from flask_bcrypt import Bcrypt
+import os
 import re
 from urllib.parse import urlparse, parse_qs
 
 app = Flask(__name__)
 
-# Set a secret key for session management
-app.secret_key = 'Keep_It_Low_Key'
+app_environment = os.getenv("APP_ENV", "development").lower()
+session_secret = os.getenv("SECRET_KEY")
+if app_environment == "production" and not session_secret:
+    raise RuntimeError("SECRET_KEY must be configured in production.")
+
+app.config.update(
+    SECRET_KEY=session_secret or os.urandom(32),
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=app_environment == "production",
+)
 
 # Initialize Flask-Bcrypt
 bcrypt = Bcrypt(app)

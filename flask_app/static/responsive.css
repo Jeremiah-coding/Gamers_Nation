@@ -1,0 +1,171 @@
+/* Shared mobile/tablet fixes, loaded after each page's own stylesheet. */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img, video, canvas, iframe {
+    max-width: 100%;
+}
+
+table {
+    max-width: 100%;
+}
+
+input, select, textarea, button {
+    max-width: 100%;
+    font-size: max(16px, 1em); /* prevents iOS zoom on focus */
+}
+
+/* Tablets and phones in portrait */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container, .content {
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    .forms-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    .header-container h1 {
+        font-size: 1.6rem;
+    }
+
+    .header-gif {
+        width: 60px;
+    }
+
+    .game-cover, .favorite-cover {
+        max-width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .dropdown-content {
+        max-width: calc(100vw - 20px);
+    }
+
+    .dropdown-content a {
+        padding: 14px 16px; /* larger touch targets */
+    }
+
+    .dashboard-music-panel {
+        min-width: 0;
+        max-width: calc(100vw - 20px);
+        box-sizing: border-box;
+    }
+}
+
+/* Small phones */
+@media screen and (max-width: 420px) {
+    .avatar-gif {
+        width: 140px;
+        height: 140px;
+    }
+
+    .header-container {
+        margin-top: 150px;
+    }
+
+    .bottom-left-container img {
+        width: 100px;
+    }
+}
+
+/* Phones/tablets held horizontally (short viewport) */
+@media screen and (max-height: 520px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+    }
+
+    .avatar-gif {
+        width: 110px;
+        height: 110px;
+    }
+
+    .top-gif-container {
+        top: 10px;
+    }
+
+    .header-container {
+        margin-top: 130px;
+    }
+
+    .left-pic-container,
+    .right-pic-container {
+        display: none;
+    }
+
+    /* Fixed footers would cover content on short screens */
+    .bottom-left-container,
+    .bottom-right-kirby {
+        position: static;
+        transform: none;
+        width: auto;
+        margin: 16px auto;
+        flex-wrap: wrap;
+    }
+
+    .bottom-left-container img {
+        width: 110px;
+    }
+
+    .bottom-right-kirby img {
+        width: 70px;
+    }
+
+    .dashboard-music-panel {
+        position: static;
+        margin: 10px auto;
+        width: min(94vw, 420px);
+    }
+
+    .dashboard-music-panel.is-open .music-panel-body {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .score-overlay {
+        align-items: start;
+    }
+
+    .game-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .dropdown-content {
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+}
+
+/* Wide phones in landscape (width up to ~900px) */
+@media screen and (min-width: 769px) and (max-width: 940px) and (orientation: landscape) {
+    .Pics, .dashboard-gif-stage {
+        width: 30vw;
+    }
+
+    .dashboard-quote-stage {
+        width: 26vw;
+    }
+}

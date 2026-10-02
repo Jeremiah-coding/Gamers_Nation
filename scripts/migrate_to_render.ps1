@@ -25,14 +25,22 @@ pg_dump "$SOURCE_DATABASE_URL" --no-owner --no-acl --format=custom --file=/tmp/g
 pg_restore --no-owner --no-acl --exit-on-error --dbname="$TARGET_DATABASE_URL" /tmp/gamers_nation.dump
 echo "Database migration completed."
 '@
+    $migrationScript = $migrationScript -replace "`r`n", "`n" -replace "`r", "`n"
 
     $sourceUrl = "postgresql://postgres:postgres@host.docker.internal:15432/videogames_schema"
-    docker run --rm `
+    $dockerOutput = $migrationScript | & docker run --rm -i `
         -e "SOURCE_DATABASE_URL=$sourceUrl" `
         -e "TARGET_DATABASE_URL=$targetUrl" `
-        postgres:16-alpine sh -c $migrationScript
-    if ($LASTEXITCODE -ne 0) {
-        throw "Database migration failed. No source database data was changed."
+        postgres:16-alpine sh -s 2>&1 | Out-String
+    $dockerExitCode = $LASTEXITCODE
+    $safeOutput = $dockerOutput.Replace($targetUrl, "[REDACTED DATABASE URL]")
+    $safeOutput = $safeOutput.Replace($sourceUrl, "[LOCAL DATABASE URL]")
+    $safeOutput = $safeOutput -replace 'postgres(?:ql)?://[^:\s]+:[^@\s]+@', 'postgresql://[REDACTED]@'
+    if ($safeOutput.Trim()) {
+        Write-Host $safeOutput.TrimEnd()
+    }
+    if ($dockerExitCode -ne 0) {
+        throw "Database migration failed (docker exit $dockerExitCode). The local source was not modified, but the Render target might be partially restored. Inspect the sanitized error above before retrying."
     }
 }
 finally {

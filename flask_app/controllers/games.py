@@ -9,7 +9,7 @@ import requests
 import os
 import hashlib
 import tempfile
-from urllib.parse import urlparse, parse_qs, unquote
+from urllib.parse import urlparse, parse_qs, unquote, urlencode
 
 
 IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".avif")
@@ -163,17 +163,37 @@ def normalize_video_url(url):
     return url.strip()
 
 
-CLIENT_ID = 'rctfju3cojvlxxl2irml3308q0s9gg'
-REDIRECT_URI = 'HTTP://localhost:5000/oauth/callback'
+CLIENT_ID = os.getenv("TWITCH_CLIENT_ID", "rctfju3cojvlxxl2irml3308q0s9gg")
+
+
+def _twitch_redirect_uri():
+    configured_uri = os.getenv("TWITCH_REDIRECT_URI")
+    if configured_uri:
+        return configured_uri
+
+    render_hostname = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+    if render_hostname:
+        return f"https://{render_hostname.rstrip('/')}/oauth/callback"
+    return "HTTP://localhost:5000/oauth/callback"
+
+
+def _igdb_access_token():
+    authorization = request.headers.get("Authorization", "")
+    scheme, separator, token = authorization.partition(" ")
+    if separator and scheme.casefold() == "bearer":
+        return token.strip()
+    return ""
 
 
 
 @app.route('/videogames/igdb/login')
 def igdb_login():
-    auth_url = (
-        f"https://id.twitch.tv/oauth2/authorize?client_id={CLIENT_ID}"
-        f"&redirect_uri={REDIRECT_URI}&response_type=token&scope=user:read:email"
-    )
+    auth_url = "https://id.twitch.tv/oauth2/authorize?" + urlencode({
+        "client_id": CLIENT_ID,
+        "redirect_uri": _twitch_redirect_uri(),
+        "response_type": "token",
+        "scope": "user:read:email",
+    })
     return redirect(auth_url)
 @app.route('/oauth/callback')
 def oauth_callback():
@@ -182,7 +202,9 @@ def oauth_callback():
     return render_template('database.html')
 @app.route('/fetch-games')
 def fetch_games():
-    access_token = request.args.get('access_token')
+    access_token = _igdb_access_token()
+    if not access_token:
+        return jsonify({"error": "Missing IGDB access token."}), 401
     url = 'https://api.igdb.com/v4/games'
     headers = {
         'Client-ID': 'rctfju3cojvlxxl2irml3308q0s9gg',
@@ -194,7 +216,9 @@ def fetch_games():
     return jsonify(response.json())
 @app.route('/search-games')
 def search_games():
-    access_token = request.args.get('access_token')
+    access_token = _igdb_access_token()
+    if not access_token:
+        return jsonify({"error": "Missing IGDB access token."}), 401
     query = request.args.get('query')
     url = 'https://api.igdb.com/v4/games'
     headers = {
@@ -214,7 +238,9 @@ def search_games():
     return jsonify(response.json())
 @app.route('/fetch-top-games')
 def fetch_top_games():
-    access_token = request.args.get('access_token')
+    access_token = _igdb_access_token()
+    if not access_token:
+        return jsonify({"error": "Missing IGDB access token."}), 401
     url = 'https://api.igdb.com/v4/games'
     headers = {
         'Client-ID': 'rctfju3cojvlxxl2irml3308q0s9gg',
@@ -233,7 +259,9 @@ def fetch_top_games():
     return jsonify(response.json())
 @app.route('/filter-games')
 def filter_games():
-    access_token = request.args.get('access_token')
+    access_token = _igdb_access_token()
+    if not access_token:
+        return jsonify({"error": "Missing IGDB access token."}), 401
     genre_name = request.args.get('genre')
 
     # Map genre names to IGDB genre IDs (example IDs, replace with actual IDs)

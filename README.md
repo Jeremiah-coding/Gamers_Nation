@@ -72,7 +72,8 @@ The repository includes a paid Render Blueprint in `render.yaml`. It creates a P
 3. Review the paid web and database plans and monthly estimate before applying the Blueprint. Render will generate `SECRET_KEY`; enter a new private `TEMPEST_ADMIN_PASSCODE` when prompted. Do not reuse the old local passcode, which has appeared in Git history.
 4. Before inviting visitors, copy the existing local PostgreSQL data to the newly created, empty Render database. Run `scripts/migrate_to_render.ps1` from PowerShell with Docker Desktop running, then paste the Render **External Database URL** into its secure prompt. The script aborts rather than overwriting a target that already has a `users` table. Keep the local database as a backup.
 5. After migration, restrict the Render database IP allowlist to internal Render connections. The web service uses the private database URL; only reopen external access when you need to do another maintenance migration.
-6. Open the Render service URL, test Tempest access, existing games, game creation, mini-game scoreboards, and GIF/quote rotations. Add a custom domain afterward if desired.
+6. In the Twitch Developer Console, add the exact Render callback `https://<render-service-hostname>/oauth/callback` to the Twitch application's OAuth Redirect URLs. Render provides the hostname as `RENDER_EXTERNAL_HOSTNAME`; set `TWITCH_REDIRECT_URI` manually if you later use a custom domain.
+7. Open the Render service URL, test Tempest access, existing games, game creation, mini-game scoreboards, GIF/quote rotations, and Twitch/IGDB access. Add a custom domain afterward if desired.
 
 The app reads `DATABASE_URL`, `SECRET_KEY`, `TEMPEST_ADMIN_PASSCODE`, and `APP_ENV` from the deployment environment. Production startup fails if the database URL or session secret is missing. Never put hosted credentials in source files or commit them to GitHub.
 

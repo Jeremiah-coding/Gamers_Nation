@@ -54,10 +54,9 @@
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
         const accessToken = params.get('access_token');
+        const authHeaders = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 
         if (accessToken) {
-            console.log('Access Token:', accessToken);
-
             // Prepopulate the top-rated games when the page loads
             fetchTopRatedGames(accessToken);
 
@@ -80,7 +79,7 @@
 
             function fetchTopRatedGames(accessToken) {
                 // Make the API call to fetch top-rated games via the Flask server-side proxy
-                fetch(`/fetch-top-games?access_token=${accessToken}`)
+                fetch('/fetch-top-games', { headers: authHeaders })
                 .then(response => {
                     console.log('Response status:', response.status); // Log response status
                     if (!response.ok) {
@@ -97,7 +96,7 @@
 
             function searchGames(query, accessToken) {
                 // Make the API call to search games via the Flask server-side proxy
-                fetch(`/search-games?access_token=${accessToken}&query=${encodeURIComponent(query)}`)
+                fetch(`/search-games?query=${encodeURIComponent(query)}`, { headers: authHeaders })
                 .then(response => {
                     console.log('Response status:', response.status); // Log response status
                     if (!response.ok) {
@@ -114,7 +113,7 @@
 
             function filterGamesByGenre(genre, accessToken) {
                 // Make the API call to filter games by genre via the Flask server-side proxy
-                fetch(`/filter-games?access_token=${accessToken}&genre=${encodeURIComponent(genre)}`)
+                fetch(`/filter-games?genre=${encodeURIComponent(genre)}`, { headers: authHeaders })
                 .then(response => {
                     console.log('Response status:', response.status); // Log response status
                     if (!response.ok) {

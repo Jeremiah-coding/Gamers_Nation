@@ -435,3 +435,42 @@ input, select, textarea, button {
         max-width: 500px;
     }
 }
+
+/* Videogame detail page: stack the store links and promo box in flow */
+@media screen and (max-width: 768px) {
+    .game-video {
+        aspect-ratio: 16 / 9;
+        height: auto;
+    }
+
+    body > div > p {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1rem;
+        overflow-wrap: anywhere;
+    }
+
+    .bottom-right,
+    .bottom-right-images {
+        position: static;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .bottom-right {
+        margin-top: 8px;
+        padding: 0;
+    }
+
+    .bottom-right-images {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 0 0 24px;
+    }
+
+    .bottom-right-images img {
+        width: 60px;
+        max-width: 60px;
+    }
+}

@@ -1,4 +1,4 @@
-/* Shared mobile/tablet fixes, loaded after each page's own stylesheet. */
+﻿/* Shared mobile/tablet fixes, loaded after each page's own stylesheet. */
 html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -83,10 +83,6 @@ input, select, textarea, button {
         height: 140px;
     }
 
-    .header-container {
-        margin-top: 150px;
-    }
-
     .bottom-left-container img {
         width: 100px;
     }
@@ -104,11 +100,11 @@ input, select, textarea, button {
     }
 
     .top-gif-container {
-        top: 10px;
+        position: static;
     }
 
     .header-container {
-        margin-top: 130px;
+        margin-top: 0;
     }
 
     .left-pic-container,
@@ -167,5 +163,275 @@ input, select, textarea, button {
 
     .dashboard-quote-stage {
         width: 26vw;
+    }
+}
+
+
+
+/* ===== Mobile reflow (phones/tablets, up to 768px) ===== */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
+        line-height: 1.15;
+    }
+
+    h2 {
+        font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+        line-height: 1.2;
+        margin-bottom: 14px;
+    }
+
+    /* Leave room for the fixed menu button */
+    body:has(> .dropdown) {
+        padding-top: 64px;
+    }
+
+    .dropdown {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+    }
+
+    .dropdown .dropbtn {
+        border-radius: 8px;
+        padding: 10px 16px;
+    }
+
+    .dropdown:focus-within .dropdown-content,
+    .dropdown.is-open .dropdown-content {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 58px;
+        right: 10px;
+        width: min(240px, calc(100vw - 20px));
+        max-height: calc(100vh - 72px);
+        overflow-y: auto;
+        padding: 6px;
+        gap: 4px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 255, 204, 0.35);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+        z-index: 1000;
+    }
+
+    .dropdown-content .btn {
+        display: block;
+        margin: 0;
+        text-align: left;
+        box-sizing: border-box;
+    }
+
+    .button-container {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 0 0 14px;
+    }
+
+    /* Dashboard: everything flows top to bottom, nothing is absolutely placed */
+    .top-gif-container {
+        position: static;
+        width: auto;
+        margin: 4px 0 8px;
+    }
+
+    .avatar-gif {
+        width: 110px;
+        height: 110px;
+    }
+
+    .left-pic-container,
+    .right-pic-container {
+        position: static;
+        transform: none;
+        display: grid;
+        width: 100%;
+        left: auto;
+        right: auto;
+    }
+
+    .dashboard-gif-stage {
+        width: 100%;
+        height: 190px;
+    }
+
+    .Pics {
+        width: 100%;
+        height: 190px;
+    }
+
+    .dashboard-quote-stage,
+    .right-pic-container.dashboard-quote-stage {
+        width: 100%;
+        height: auto;
+        min-height: 130px;
+        right: auto;
+    }
+
+    .dashboard-quote {
+        padding: 8px 12px;
+    }
+
+    .dashboard-quote-text {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+    }
+
+    .dashboard-quote-author {
+        margin-top: 8px;
+        font-size: 1rem;
+    }
+
+    .dashboard-music-panel {
+        position: static;
+        width: min(94vw, 420px);
+        margin: 8px auto;
+    }
+
+    .music-now-toast {
+        top: 64px;
+        left: 10px;
+        max-width: calc(100vw - 130px);
+        white-space: normal;
+    }
+
+    .header-container {
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+
+    .carousel-container {
+        width: 100%;
+        touch-action: pan-y;
+    }
+
+    .carousel-slide {
+        min-height: 310px;
+    }
+
+    .game-cover {
+        width: min(80vw, 340px);
+        height: auto;
+        aspect-ratio: 3 / 2;
+    }
+
+    /* Arrows were black on a dark background; make them visible touch targets */
+    .arrow {
+        top: 80px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.6rem;
+        line-height: 1;
+        color: #00ffcc;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 255, 204, 0.6);
+        border-radius: 50%;
+        box-shadow: none;
+    }
+
+    #prev-arrow { left: 4px; }
+    #next-arrow { right: 4px; }
+
+    .favorites-hover-zone {
+        width: 94vw;
+        margin: 8px auto 20px;
+    }
+
+    .favorites-hover-zone .favorites-flyout {
+        max-height: none;
+        opacity: 1;
+        padding: 6px 12px 14px;
+    }
+
+    .favorites-hover-zone .favorite-list-item {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Add / edit videogame: one column, scrollable, no side artwork */
+    body.form-page {
+        display: block;
+        overflow: auto;
+        padding: 12px;
+    }
+
+    body.form-page .background-container {
+        display: none;
+    }
+
+    body.form-page .content {
+        display: block;
+        padding: 0;
+        width: 100%;
+    }
+
+    body.form-page .container {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto 24px;
+        padding: 22px 16px;
+        box-sizing: border-box;
+    }
+
+    /* Account: table rows become cards */
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table tr {
+        margin-bottom: 18px;
+        padding: 16px;
+        border: 1px solid rgba(0, 255, 204, 0.35);
+        border-radius: 12px;
+        background: rgba(25, 25, 25, 0.92);
+    }
+
+    .table td {
+        padding: 8px 0;
+        border-bottom: 0;
+        background: transparent;
+        overflow-wrap: anywhere;
+    }
+
+    .table tr:hover td {
+        background: transparent;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 2px;
+        color: #00ffcc;
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .table td:first-child {
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+
+    .table td:first-child::before {
+        display: none;
+    }
+
+    .table .row-actions form {
+        display: inline-block;
+    }
+
+    /* Account page body: keep forms inside the screen */
+    form {
+        width: 100%;
+        max-width: 500px;
     }
 }

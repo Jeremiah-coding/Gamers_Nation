@@ -240,6 +240,23 @@
                 updateSlides('next');
             });
 
+            const carouselEl = document.querySelector('.carousel-container');
+            let touchStartX = null;
+            carouselEl.addEventListener('touchstart', function(event) {
+                touchStartX = event.touches[0].clientX;
+            }, { passive: true });
+            carouselEl.addEventListener('touchend', function(event) {
+                if (touchStartX === null) return;
+                const deltaX = event.changedTouches[0].clientX - touchStartX;
+                touchStartX = null;
+                if (Math.abs(deltaX) < 50 || !slides.length) return;
+                const goingNext = deltaX < 0;
+                currentSlide = goingNext
+                    ? (currentSlide + 1) % slides.length
+                    : (currentSlide === 0 ? slides.length - 1 : currentSlide - 1);
+                updateSlides(goingNext ? 'next' : 'prev');
+            }, { passive: true });
+
             slides.forEach(slide => {
                 slide.querySelectorAll('a, button, form').forEach((interactiveElement) => {
                     interactiveElement.addEventListener('click', function(event) {

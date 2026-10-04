@@ -100,10 +100,10 @@
         <tbody>
             {% for videogame in videogames %}
             <tr>
-                <td>{{ videogame.title }}</td>
-                <td>{{ videogame.description }}</td>
-                <td>{{ videogame.system }}</td>
-                <td>
+                <td data-label="Title">{{ videogame.title }}</td>
+                <td data-label="Description">{{ videogame.description }}</td>
+                <td data-label="System">{{ videogame.system }}</td>
+                <td data-label="Actions" class="row-actions">
                     {% if user.is_admin %}
                     <a href="/videogames/{{ videogame.id }}/edit" class="btn">Edit</a>
                     <form action="/videogames/{{ videogame.id }}/delete" method="POST" style="display:inline;">
